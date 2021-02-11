@@ -17,7 +17,6 @@ class UserResource extends JsonResource
         return [
             'name' => $this->name,
             'email' => $this->email,
-            'secrets' => SecretResource::collection($this->secrets),
             'created_at' => $this->created_at
         ];
     }

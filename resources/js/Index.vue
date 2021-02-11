@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom">
-      <router-link :to="{ name: 'home' }" class="navbar-brand mr-auto">SFV</router-link>
+      <router-link :to="{ name: 'home' }" class="navbar-brand mr-auto">Dorastorm</router-link>
       <ul class="navbar-nav">
         <li class="nav-item" v-if="!isLoggedIn">
           <router-link :to="{ name: 'login' }" class="nav-link">
