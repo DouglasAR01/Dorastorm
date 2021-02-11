@@ -2247,11 +2247,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     name: null,
     email: null,
-    created_at: null
+    created_at: null,
+    role: null
   }
 });
 
@@ -39648,6 +39650,11 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("hr"),
+    _vm._v(" "),
+    _c("p", { staticClass: "card-text" }, [
+      _c("strong", [_vm._v("Role:")]),
+      _vm._v(" " + _vm._s(_vm.role))
+    ]),
     _vm._v(" "),
     _c("p", { staticClass: "card-text text-muted" }, [
       _vm._v("Member since: " + _vm._s(_vm._f("fromNow")(_vm.created_at)))

@@ -4,6 +4,7 @@
     <hr />
     <p class="card-text"><strong>Email:</strong> {{ email }}</p>
     <hr />
+    <p class="card-text"><strong>Role:</strong> {{ role }}</p>
     <p class="card-text text-muted">Member since: {{ created_at | fromNow}}</p>
   </div>
 </template>
@@ -13,6 +14,7 @@ export default {
     name: null,
     email: null,
     created_at: null,
+    role: null,
   },
 };
 </script>
