@@ -7,8 +7,8 @@
     <div class="" v-if="roles.length > 0">
       <p class="card-text">
         <strong>Roles:</strong>
-        <span v-for="role in roles" :key="role.role_id" class="d-block">
-          {{ role.role_name }}
+        <span v-for="role in roles" :key="role.id" class="d-block">
+          {{ role.name }}
         </span>
       </p>
       <hr />

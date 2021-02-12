@@ -39669,11 +39669,9 @@ var render = function() {
               _c("strong", [_vm._v("Roles:")]),
               _vm._v(" "),
               _vm._l(_vm.roles, function(role) {
-                return _c(
-                  "span",
-                  { key: role.role_id, staticClass: "d-block" },
-                  [_vm._v("\n        " + _vm._s(role.role_name) + "\n      ")]
-                )
+                return _c("span", { key: role.id, staticClass: "d-block" }, [
+                  _vm._v("\n        " + _vm._s(role.name) + "\n      ")
+                ])
               })
             ],
             2
