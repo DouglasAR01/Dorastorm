@@ -16,11 +16,12 @@ class RoleUserTableSeeder extends Seeder
     public function run()
     {
         $users = User::all();
-        $roles = Role::where('name','!=','STANDARD')->get()->pluck('id');
-        $standard_id = Role::where('name','STANDARD')->first()->id;
+        $roles = Role::all()->pluck('id');
+        $random = [true,false];
         foreach ($users as $user) {
-            $user->roles()->attach($standard_id);
-            $user->roles()->attach($roles->random());
+            if(array_rand($random)){
+                $user->roles()->attach($roles->random());
+            }
         }
     }
 }

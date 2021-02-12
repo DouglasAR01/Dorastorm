@@ -30,10 +30,6 @@ class RoleTableSeeder extends Seeder
             'update' => true,
             'delete' => true
         ]);
-        Role::create([
-            'name' => 'STANDARD',
-            'read' => true,
-        ]);
 
         Role::reguard();
     }
