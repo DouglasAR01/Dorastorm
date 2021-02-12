@@ -2248,12 +2248,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     name: null,
     email: null,
     created_at: null,
-    role: null
+    roles: null
   }
 });
 
@@ -39651,10 +39660,28 @@ var render = function() {
     _vm._v(" "),
     _c("hr"),
     _vm._v(" "),
-    _c("p", { staticClass: "card-text" }, [
-      _c("strong", [_vm._v("Role:")]),
-      _vm._v(" " + _vm._s(_vm.role))
-    ]),
+    _vm.roles.length > 0
+      ? _c("div", {}, [
+          _c(
+            "p",
+            { staticClass: "card-text" },
+            [
+              _c("strong", [_vm._v("Roles:")]),
+              _vm._v(" "),
+              _vm._l(_vm.roles, function(role) {
+                return _c(
+                  "span",
+                  { key: role.role_id, staticClass: "d-block" },
+                  [_vm._v("\n        " + _vm._s(role.role_name) + "\n      ")]
+                )
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c("hr")
+        ])
+      : _vm._e(),
     _vm._v(" "),
     _c("p", { staticClass: "card-text text-muted" }, [
       _vm._v("Member since: " + _vm._s(_vm._f("fromNow")(_vm.created_at)))
