@@ -46,4 +46,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class);
     }
+
+    public function hasRole($role)
+    {
+        foreach($this->roles as $userRole){
+            if ($userRole->name == $role){
+                return true;
+            }
+        }
+        return false;
+    }
 }

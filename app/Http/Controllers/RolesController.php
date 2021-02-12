@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class RolesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:isADMIN');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +18,7 @@ class RolesController extends Controller
      */
     public function index()
     {
-        //
+        return Role::all();
     }
 
     /**

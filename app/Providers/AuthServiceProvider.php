@@ -25,6 +25,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        // Combine both default roles and custom roles array, then create the gates following the pattern is{ROLE}
+        $roles = array_merge(config('roles.default'), config('roles.custom'));
+        foreach ($roles as $role){
+            Gate::define('is'.$role, function($user) use ($role){
+                return $user->hasRole($role);
+            });
+        }
     }
 }
