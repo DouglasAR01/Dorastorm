@@ -14,10 +14,13 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('/posts','PostController@index')->name('posts.index');
+Route::get('/posts/{post}','PostController@show')->name('posts.show');
 
 Route::middleware('auth:sanctum')->group(function () {
     // Your protected routes goes here
     Route::get('/user', 'UserController@showMe');
-    Route::resource('/roles','RolesController')->except(['create', 'edit']);
+    Route::resource('/roles','RoleController')->except(['create', 'edit']);
+    Route::resource('/posts','PostController@store')->only(['store','update','delete']);
 });
 

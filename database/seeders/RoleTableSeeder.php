@@ -26,9 +26,9 @@ class RoleTableSeeder extends Seeder
             'update_users' => true,
             'delete_users' => true,
 
-            'create_post' => true,
-            'update_elses_post' => true,
-            'delete_elses_post' => true,
+            'create_posts' => true,
+            'update_elses_posts' => true,
+            'delete_elses_posts' => true,
 
             'update_elses_comments' => true,
             'delete_elses_comments' => true,
@@ -42,7 +42,7 @@ class RoleTableSeeder extends Seeder
             'name' => 'EDITOR',
             'hierarchy' => 1,
 
-            'create_post' => true,
+            'create_posts' => true,
         ]);
 
         Role::reguard();
