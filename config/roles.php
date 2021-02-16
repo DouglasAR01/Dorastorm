@@ -7,20 +7,32 @@ return [
     | The following roles are the default ones. Do NOT modify them unless you 
     | know what you are doing.
     */
-    'default' => [
-        'ADMIN',
-        'EDITOR'
-    ],
+    'permissions' => [
+        'core' => [
+            // Users related
+            'create_users',
+            'read_users',
+            'update_users',
+            'delete_users',
 
-    /*
-    | --------------------------------------------------------------------------
-    | CUSTOM ROLES
-    | --------------------------------------------------------------------------
-    | The roles listed here will be converted to gates. You could use them using
-    | the "can" middleware.
-    */
-    'custom' => [
+            // Post related
+            'create_post',
+            'update_elses_post',
+            'delete_elses_post',
 
+            // Comments related
+            'update_elses_comments',
+            'delete_elses_comments',
+
+            // Roles related
+            'create_roles',
+            'read_roles',
+            'update_roles',
+            'delete_roles',
+        ],
+        'extended' => [
+            
+        ]
     ],
 
 ];

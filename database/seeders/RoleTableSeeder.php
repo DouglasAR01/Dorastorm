@@ -18,6 +18,9 @@ class RoleTableSeeder extends Seeder
         
         Role::create([
             'name' => 'ADMIN',
+            'description' => 'Administrator',
+            'hierarchy' => 0,
+
             'create_users' => true,
             'read_users' => true,
             'update_users' => true,
@@ -37,6 +40,7 @@ class RoleTableSeeder extends Seeder
         ]);
         Role::create([
             'name' => 'EDITOR',
+            'hierarchy' => 1,
 
             'create_post' => true,
         ]);
