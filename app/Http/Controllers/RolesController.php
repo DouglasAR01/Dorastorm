@@ -7,10 +7,6 @@ use Illuminate\Http\Request;
 
 class RolesController extends Controller
 {
-    public function __construct()
-    {
-        //$this->middleware('can:isADMIN');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -18,21 +14,10 @@ class RolesController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->user()->cannot('viewAny', Role::class)){
+        if ($request->user()->cannot('viewAny', Role::class)) {
             abort(403);
         }
         return Role::all();
-        
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -43,7 +28,25 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = $request->user();
+        // STANDARD role users should never enter here.
+        if ($user->cannot('create', Role::class)) {
+            abort(403);
+        }
+        $validation_rules = [
+            'name' => 'required|unique:roles|min:2|max:50',
+            'hierarchy' => 'required|unique:roles|gt:' . $user->role->hierarchy,
+            'description' => 'string'
+        ];
+        $data = $request->validate($this->fullValidationRules($validation_rules));
+
+        $newRole = new Role();
+        $newRole->name = $data['name'];
+        $newRole->description = $data['description'];
+        $newRole->hierarchy = $data['hierarchy'];
+
+        $newRole = $this->assignPermissions($user, $data, $newRole);
+        $newRole->save();
     }
 
     /**
@@ -52,20 +55,13 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        $role = Role::findOrFail($id);
+        if ($request->user()->cannot('view', $role)) {
+            abort(403);
+        }
+        return $role;
     }
 
     /**
@@ -77,7 +73,25 @@ class RolesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = $request->user();
+        $role = Role::findOrFail($id);
+        // STANDARD role users should never enter here.
+        if ($user->cannot('update', $role)) {
+            abort(403);
+        }
+        $validation_rules = [
+            'name' => 'required|unique:roles,name,' . $role->id . '|min:2|max:50',
+            'hierarchy' => 'required|unique:roles,hierarchy,' . $role->id . '|gt:' . $user->role->hierarchy,
+            'description' => 'string'
+        ];
+        $data = $request->validate($this->fullValidationRules($validation_rules));
+
+        $role->name = $data['name'];
+        $role->hierarchy = $data['hierarchy'];
+        $role->description = $data['description'];
+
+        $role = $this->assignPermissions($user,$data,$role);
+        $role->save();
     }
 
     /**
@@ -86,8 +100,54 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
+    {   
+        $role = Role::findOrFail($id);
+        if($request->user()->cannot('delete',$role)){
+            abort(403);
+        }
+        $role->delete();
+    }
+
+    private function getAllPermissions()
     {
-        //
+        return array_merge(config('roles.permissions.core'), config('roles.permissions.extended'));
+    }
+
+    private function fullValidationRules($validation_rules)
+    {
+        $permissions = $this->getAllPermissions();
+        foreach ($permissions as $permission) {
+            $validation_rules[$permission] = 'boolean';
+        }
+        return $validation_rules;
+    }
+
+    private function assignPermissions($user, array $data, Role $role)
+    {
+        // Check the current user permissions. The user can not create roles with more permissions than
+        // his own role.
+        $allowed_permissions = $this->contrastCurrentPermissions($user);
+        return $this->fillRolePermissions($data, $allowed_permissions, $role);
+    }
+
+    private function contrastCurrentPermissions($user)
+    {
+        $user_permissions = [];
+        $permissions = $this->getAllPermissions();
+        foreach ($permissions as $permission) {
+            if ($user->role->$permission) {
+                array_push($user_permissions, $permission);
+            }
+        }
+        return $user_permissions;
+    }
+
+    private function fillRolePermissions(array $data, array $allowed_permissions, Role $role)
+    {
+        foreach ($allowed_permissions as $permission) {
+            $role->$permission = $data[$permission] ?? $role->$permission ?? false;
+        }
+        return $role;
     }
 }
