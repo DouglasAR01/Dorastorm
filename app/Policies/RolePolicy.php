@@ -94,6 +94,6 @@ class RolePolicy
 
     private function checkHierarchy(User $user, Role $role)
     {
-        return $user->role->hierarchy >= $role->hierarchy;
+        return $user->role->hierarchy <= $role->hierarchy;
     }
 }
