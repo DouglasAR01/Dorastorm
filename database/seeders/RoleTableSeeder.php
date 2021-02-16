@@ -18,17 +18,27 @@ class RoleTableSeeder extends Seeder
         
         Role::create([
             'name' => 'ADMIN',
-            'create' => true,
-            'read' => true,
-            'update' => true,
-            'delete' => true
+            'create_users' => true,
+            'read_users' => true,
+            'update_users' => true,
+            'delete_users' => true,
+
+            'create_post' => true,
+            'update_elses_post' => true,
+            'delete_elses_post' => true,
+
+            'update_elses_comments' => true,
+            'delete_elses_comments' => true,
+
+            'create_roles' => true,
+            'read_roles' => true,
+            'update_roles' => true,
+            'delete_roles' => true,
         ]);
         Role::create([
             'name' => 'EDITOR',
-            'create' => true,
-            'read' => true,
-            'update' => true,
-            'delete' => true
+
+            'create_post' => true,
         ]);
 
         Role::reguard();

@@ -4,10 +4,10 @@
     <hr />
     <p class="card-text"><strong>Email:</strong> {{ email }}</p>
     <hr />
-    <div class="" v-if="roles.length > 0">
+    <div class="" v-if="role">
       <p class="card-text">
-        <strong>Roles:</strong>
-        <span v-for="role in roles" :key="role.id" class="d-block">
+        <strong>Role:</strong>
+        <span>
           {{ role.name }}
         </span>
       </p>
@@ -23,7 +23,7 @@ export default {
     name: null,
     email: null,
     created_at: null,
-    roles: null,
+    role: null,
   },
 };
 </script>

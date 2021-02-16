@@ -13,7 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        'App\Models\Role' => 'App\Policies\RolePolicy',
     ];
 
     /**
@@ -26,11 +26,11 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         // Combine both default roles and custom roles array, then create the gates following the pattern is{ROLE}
-        $roles = array_merge(config('roles.default'), config('roles.custom'));
-        foreach ($roles as $role){
-            Gate::define('is'.$role, function($user) use ($role){
-                return $user->hasRole($role);
-            });
-        }
+        // $roles = array_merge(config('roles.default'), config('roles.custom'));
+        // foreach ($roles as $role){
+        //     Gate::define('is'.$role, function($user) use ($role){
+        //         return $user->hasRole($role);
+        //     });
+        // }
     }
 }

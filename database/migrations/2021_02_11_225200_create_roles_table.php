@@ -17,10 +17,26 @@ class CreateRolesTable extends Migration
             $table->id();
             $table->string('name',50)->unique();
             $table->text('description')->nullable();
-            $table->boolean('create')->default(false);
-            $table->boolean('read')->default(false);
-            $table->boolean('update')->default(false);
-            $table->boolean('delete')->default(false);
+            $table->unsignedMediumInteger('hierarchy')->unique();
+            // Users related
+            $table->boolean('create_users')->default(false);
+            $table->boolean('read_users')->default(false);
+            $table->boolean('update_users')->default(false);
+            $table->boolean('delete_users')->default(false);
+            // Post related
+            $table->boolean('create_post')->default(false);
+            $table->boolean('update_elses_post')->default(false);
+            $table->boolean('delete_elses_post')->default(false);
+            // Comments related
+            $table->boolean('update_elses_comments')->default(false);
+            $table->boolean('delete_elses_comments')->default(false);
+
+            // Roles related
+            $table->boolean('create_roles')->default(false);
+            $table->boolean('read_roles')->default(false);
+            $table->boolean('update_roles')->default(false);
+            $table->boolean('delete_roles')->default(false);
+            
             $table->timestamps();
         });
     }

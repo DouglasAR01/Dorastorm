@@ -9,16 +9,20 @@ class RolesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:isADMIN');
+        //$this->middleware('can:isADMIN');
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if($request->user()->cannot('viewAny', Role::class)){
+            abort(403);
+        }
         return Role::all();
+        
     }
 
     /**

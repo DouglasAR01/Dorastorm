@@ -17,11 +17,12 @@ class RoleUserTableSeeder extends Seeder
     {
         $users = User::all();
         $roles = Role::all()->pluck('id');
-        $random = [true,false];
+        $random = [true,true,false];
         foreach ($users as $user) {
             if(array_rand($random)){
-                $user->roles()->attach($roles->random());
+                $user->role_id = $roles->random();
             }
+            $user->save();
         }
     }
 }

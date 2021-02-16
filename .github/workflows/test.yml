@@ -31,5 +31,5 @@ jobs:
           # tags like 'v1.0.0' will be recognized.
           short_tags: true
           # If this is set to true, *every* commit will be treated as a new version.
-          bump_each_commit: false
+          bump_each_commit: true
 

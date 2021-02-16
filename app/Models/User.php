@@ -42,18 +42,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function roles()
+    public function role()
     {
-        return $this->belongsToMany(Role::class);
-    }
-
-    public function hasRole($role)
-    {
-        foreach($this->roles as $userRole){
-            if ($userRole->name == $role){
-                return true;
-            }
-        }
-        return false;
+        return $this->belongsTo(Role::class)->withDefault([
+            'name' => 'STANDARD'
+        ]);
     }
 }

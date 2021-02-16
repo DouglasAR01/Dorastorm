@@ -2262,7 +2262,7 @@ __webpack_require__.r(__webpack_exports__);
     name: null,
     email: null,
     created_at: null,
-    roles: null
+    role: null
   }
 });
 
@@ -39660,22 +39660,15 @@ var render = function() {
     _vm._v(" "),
     _c("hr"),
     _vm._v(" "),
-    _vm.roles.length > 0
+    _vm.role
       ? _c("div", {}, [
-          _c(
-            "p",
-            { staticClass: "card-text" },
-            [
-              _c("strong", [_vm._v("Roles:")]),
-              _vm._v(" "),
-              _vm._l(_vm.roles, function(role) {
-                return _c("span", { key: role.id, staticClass: "d-block" }, [
-                  _vm._v("\n        " + _vm._s(role.name) + "\n      ")
-                ])
-              })
-            ],
-            2
-          ),
+          _c("p", { staticClass: "card-text" }, [
+            _c("strong", [_vm._v("Role:")]),
+            _vm._v(" "),
+            _c("span", [
+              _vm._v("\n        " + _vm._s(_vm.role.name) + "\n      ")
+            ])
+          ]),
           _vm._v(" "),
           _c("hr")
         ])
