@@ -15,6 +15,7 @@
     </div>
 
     <p class="card-text text-muted">Member since: {{ created_at | fromNow }}</p>
+    <p>Esta es una prueba</p>
   </div>
 </template>
 <script>
