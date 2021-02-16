@@ -2,10 +2,11 @@
 return [
     /*
     | --------------------------------------------------------------------------
-    | DEFAULT ROLES
+    | ROLE PERMISSIONS
     | --------------------------------------------------------------------------
-    | The following roles are the default ones. Do NOT modify them unless you 
-    | know what you are doing.
+    | Do not modify the core permissions unless you know what you are doing.
+    | Add your custom module permissions at the 'extended' section.
+    | If you add or remove a permission, you may have to rerun the 'create_roles_table' migration.
     */
     'permissions' => [
         'core' => [
@@ -30,8 +31,9 @@ return [
             'update_roles',
             'delete_roles',
         ],
+        
         'extended' => [
-            
+
         ]
     ],
 
