@@ -21,6 +21,6 @@ Route::middleware('auth:sanctum')->group(function () {
     // Your protected routes goes here
     Route::get('/user', 'UserController@showMe');
     Route::resource('/roles','RoleController')->except(['create', 'edit']);
-    Route::resource('/posts','PostController@store')->only(['store','update','delete']);
+    Route::resource('/posts','PostController')->only(['store','update','destroy']);
 });
 

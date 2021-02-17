@@ -17,9 +17,9 @@ return [
             'delete_users',
 
             // Post related
-            'create_post',
-            'update_elses_post',
-            'delete_elses_post',
+            'create_posts',
+            'update_elses_posts',
+            'delete_elses_posts',
 
             // Comments related
             'update_elses_comments',
