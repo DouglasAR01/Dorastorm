@@ -3,6 +3,7 @@ import { isLoggedIn } from "./shared/utils/auth";
 import Home from "./components/Home";
 import Login from "./components/auth/Login";
 import UserHome from "./components/users/UserHome";
+import Error404 from "./components/Error404";
 const routes = [
     {
         path: "/",
@@ -24,6 +25,11 @@ const routes = [
         meta: {
             auth: true
         }
+    },
+    {
+        path: '*',
+        component: Error404,
+        name: '404'
     }
 ];
 
