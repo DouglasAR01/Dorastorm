@@ -3,18 +3,18 @@
     <div v-if="loading">Loading...</div>
     <div v-else>
       <div class="row mr-auto mb-4">
-        <user v-bind="user" class="col-md-12" />
+        <user-data-card v-bind="user" class="col-md-12" />
       </div>
     </div>
   </div>
 </template>
 <script>
-import User from "./users/User";
-import item_arrangement from "../shared/mixins/item_arrangement";
+import UserDataCard from "./UserDataCard";
+import item_arrangement from "../../shared/mixins/item_arrangement";
 export default {
   mixins: [item_arrangement],
   components: {
-    User,
+    UserDataCard
   },
   data() {
     return {

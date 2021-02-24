@@ -2,7 +2,7 @@ import VueRouter from "vue-router";
 import { isLoggedIn } from "./shared/utils/auth";
 import Home from "./components/Home";
 import Login from "./components/auth/Login";
-import UserHome from "./components/UserHome";
+import UserHome from "./components/users/UserHome";
 const routes = [
     {
         path: "/",
