@@ -70,7 +70,7 @@ export default {
         await axios.get("/sanctum/csrf-cookie");
         try {
           await axios.post("/api/login", this.user);
-          this.$store.dispatch('login');
+          await this.$store.dispatch('login');
           this.$router.push({name:'me'});
         } catch (error) {
           if (is422(error)) {

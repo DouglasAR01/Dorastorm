@@ -14,9 +14,17 @@ class RoleResource extends JsonResource
      */
     public function toArray($request)
     {
+        $role_permissions = [];
+        $all_permissions = array_merge(config('roles.permissions.core'), config('roles.permissions.extended'));
+        foreach ($all_permissions as $permission) {
+            if($this->$permission == true){
+                array_push($role_permissions, $permission);
+            }
+        }
         return [
             'id' => $this->id,
-            'name' => $this->name
+            'name' => $this->name,
+            'permissions' => $role_permissions
         ];
     }
 }

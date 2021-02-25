@@ -22,13 +22,9 @@ export default {
       user: null,
     };
   },
-  async created() {
+  created() {
     this.loading = true;
-    try {
-      this.user = (await axios.get("/api/user")).data.data;
-    } catch (error) {
-      //
-    }
+    this.user = this.$store.state.user;
     this.loading = false;
   },
 };

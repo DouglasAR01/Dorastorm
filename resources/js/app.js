@@ -6,7 +6,7 @@
 
 require('./bootstrap');
 
-import router from "./routes";
+import router from "./services/routes";
 import VueRouter from "vue-router";
 import Vuex from "vuex";
 import Index from "./Index";
@@ -23,7 +23,7 @@ Vue.filter('fromNow', value => dayjs(value).fromNow());
 Vue.filter('humanDate', value => dayjs(value).format('YYYY/MM/DD'));
 
 // Datastore creation
-import DataStore from "./store";
+import DataStore from "./services/store";
 const store = new Vuex.Store(DataStore);
 
 
