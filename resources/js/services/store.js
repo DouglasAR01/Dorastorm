@@ -18,6 +18,7 @@ export default {
             context.commit('setUser', null);
         },
         login(context, payload) {
+            console.log(context);
             context.commit('setLoggedIn', true);
             context.commit('setUser', payload);
         },

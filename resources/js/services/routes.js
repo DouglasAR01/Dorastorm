@@ -1,6 +1,7 @@
 import VueRouter from "vue-router";
 import * as Auth from "./auth";
 import Store from "./store";
+import store from "vuex";
 import Permissions from "./role-permissions";
 // Components
 import Home from "../components/Home";
@@ -81,6 +82,11 @@ router.beforeEach((to, from, next) => {
             // Ensure the user is going to be unauthenticated in order to prevent 
             // constant redirections in worst case scenario.
             Auth.logOut();
+            // Dirty dispatch('logout'). This should be changed 
+            // if the context object is known.
+            // Anyway, this could only happen if the user is hacking...
+            Store.state.isLoggedIn = false;
+            Store.state.user = null;
             next({
                 name: 'login',
                 query: { redirect: to.fullPath }
