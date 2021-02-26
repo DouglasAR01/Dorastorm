@@ -6,7 +6,7 @@
     <ul class="navbar-nav">
       <li class="nav-item" v-if="!isLoggedIn">
         <router-link :to="{ name: 'login' }" class="nav-link">
-          Log-in
+          Log in
         </router-link>
       </li>
       <li class="nav-item dropdown" v-if="isLoggedIn">
@@ -40,7 +40,7 @@
         </div>
       </li>
       <li class="nav-item" v-if="isLoggedIn">
-        <a href="#" class="nav-link" @click.prevent="logout">Log-out</a>
+        <a href="#" class="nav-link" @click.prevent="logout" :class="[{'disabled':isLoggingOut}]">Log out</a>
       </li>
     </ul>
   </nav>
@@ -50,6 +50,11 @@ import { mapState } from "vuex";
 import Permissions from "../services/role-permissions";
 // Log-in and Log-out buttons logic idea taken from https://www.youtube.com/watch?v=8Uwn5M6WTe0
 export default {
+  data () {
+    return {
+      isLoggingOut: false
+    };
+  },
   computed: {
     ...mapState({
       isLoggedIn: (state) => state.isLoggedIn,
@@ -61,12 +66,14 @@ export default {
   },
   methods: {
     async logout() {
+      this.isLoggingOut = true;
       try {
         await axios.post("/api/logout");
       } catch (error) {
         // No internet conection
       }
       this.$store.dispatch("logout");
+      this.isLoggingOut = false;
       this.$router.push({ name: "login" });
     },
   },
