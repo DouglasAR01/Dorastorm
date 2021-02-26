@@ -14,14 +14,12 @@ export default {
     },
     actions: {
         logout(context) {
-            auth.logOut();
             context.commit('setLoggedIn', false);
             context.commit('setUser', null);
         },
-        async login(context) {
-            await context.dispatch('loadUser');
-            auth.logIn();
+        login(context, payload) {
             context.commit('setLoggedIn', true);
+            context.commit('setUser', payload);
         },
         loadSavedData(context) {
             // Here comes all the commits that have to be made everytime the app initialize
@@ -37,15 +35,6 @@ export default {
                 }
             }
         },
-        async loadUser(context) {
-            try {
-                const user = (await axios.get("/api/user")).data.data;
-                context.commit('setUser', user);
-                auth.saveUser(user);
-            } catch (error) {
-                context.dispatch('logout');
-            }
-        }
     },
     getters: {
 

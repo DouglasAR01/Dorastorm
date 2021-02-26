@@ -48,6 +48,7 @@
 import { is422 } from "../../shared/utils/responses";
 import error_traits from "../../shared/mixins/error_traits";
 import ValidationError from "../../shared/components/ValidationError";
+import {logIn as authLogIn} from "../../services/auth";
 export default {
   mixins: [error_traits],
   components: {
@@ -71,8 +72,8 @@ export default {
         try {
           // Laravel uses $request->filled('remember'), thats why if it is false you must set it to null
           this.user.remember = (this.user.remember == false) ? null : true;
-          await axios.post("/api/login", this.user);
-          await this.$store.dispatch('login');
+          const user = await authLogIn(this.user);
+          this.$store.dispatch('login', user);
           this.$router.push({name:'me'});
         } catch (error) {
           if (is422(error)) {

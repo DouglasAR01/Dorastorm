@@ -48,6 +48,7 @@
 <script>
 import { mapState } from "vuex";
 import Permissions from "../services/role-permissions";
+import {logOut as authLogOut } from "../services/auth";
 // Log-in and Log-out buttons logic idea taken from https://www.youtube.com/watch?v=8Uwn5M6WTe0
 export default {
   data () {
@@ -67,11 +68,7 @@ export default {
   methods: {
     async logout() {
       this.isLoggingOut = true;
-      try {
-        await axios.post("/api/logout");
-      } catch (error) {
-        // No internet conection
-      }
+      await authLogOut();
       this.$store.dispatch("logout");
       this.isLoggingOut = false;
       this.$router.push({ name: "login" });

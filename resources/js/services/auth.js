@@ -1,9 +1,31 @@
-export const logIn = function () {
-    localStorage.setItem('happy', 'true');
+export const logIn = async function (userPayload) {
+    try {
+        await axios.post("/api/login", userPayload);
+        try {
+            // User successfully logged in
+            const user = (await axios.get("/api/user")).data.data;
+            saveUser(user);
+            localStorage.setItem('happy', 'true');
+            return user;
+        } catch (error) {
+            // For some reason, the user could log in but his data cannot be
+            // retreived.
+            await logOut();
+            throw error;
+        }
+    } catch (error) {
+        // Couldn't log in for some reason
+        throw error;
+    }
 }
-export const logOut = function () {
-    localStorage.removeItem('happy');
-    localStorage.removeItem('user');
+export const logOut = async function () {
+    try {
+        await axios.post("/api/logout");
+        localStorage.removeItem('happy');
+        localStorage.removeItem('user');
+    } catch (error) {
+        // No internet connection
+    }    
 }
 export const isLoggedIn = function () {
     return !!localStorage.getItem('happy');
