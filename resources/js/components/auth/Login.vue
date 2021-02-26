@@ -69,6 +69,8 @@ export default {
       try {
         await axios.get("/sanctum/csrf-cookie");
         try {
+          // Laravel uses $request->filled('remember'), thats why if it is false you must set it to null
+          this.user.remember = (this.user.remember == false) ? null : true;
           await axios.post("/api/login", this.user);
           await this.$store.dispatch('login');
           this.$router.push({name:'me'});
