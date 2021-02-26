@@ -16,17 +16,29 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
+// Datastore creation
+import DataStore from "./services/store";
+
+
+// Toast notifications
+import VueMyToast from 'vue-my-toasts';
+import BootstrapComponent from "vue-my-toasts/src/components/toasts/BootstrapComponent";
+
 window.Vue = require('vue');
 Vue.use(VueRouter);
 Vue.use(Vuex);
+// Vue.use(VueMyToast, {
+//     component: BootstrapComponent,
+//     options: {
+//         width: '400px',
+//         position: 'bottom-right',
+//         padding: '1rem'
+//     }
+// });
 Vue.filter('fromNow', value => dayjs(value).fromNow());
 Vue.filter('humanDate', value => dayjs(value).format('YYYY/MM/DD'));
 
-// Datastore creation
-import DataStore from "./services/store";
 const store = new Vuex.Store(DataStore);
-
-
 // GLOBAL COMPONENT REGISTRATION
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
@@ -39,20 +51,17 @@ window.axios.interceptors.response.use(
         // 401 = unauthenticated
         if (error.response.status == 401) {
             store.dispatch('logout');
-            router.push({name:'login'});
+            router.push({ name: 'login' });
         }
         return Promise.reject(error);
     }
 );
-
+store.dispatch('loadSavedData');
 const app = new Vue({
     el: '#app',
     router: router,
     store: store,
     components: {
         "index": Index
-    },
-    beforeCreate() {
-        this.$store.dispatch('loadSavedData');
     }
 });

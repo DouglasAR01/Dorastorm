@@ -1,6 +1,6 @@
 const permissions = {
     core: {
-        CREATE_USERS : 'create_users',
+        CREATE_USERS: 'create_users',
         READ_USERS: 'read_users',
         UPDATE_USERS: 'update_users',
         DELETE_USERS: 'delete_users',
@@ -22,6 +22,13 @@ const permissions = {
     },
     extended: {
 
+    },
+
+    checkUserPermission: function (user, permission) {
+        if (user && user.role && user.role.permissions) {
+            return user.role.permissions.includes(permission);
+        }
+        return false;
     }
 }
 export default permissions;

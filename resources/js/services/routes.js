@@ -1,11 +1,13 @@
 import VueRouter from "vue-router";
-import * as auth from "./auth";
+import * as Auth from "./auth";
+import Store from "./store";
+import Permissions from "./role-permissions";
+// Components
 import Home from "../components/Home";
 import Login from "../components/auth/Login";
 import UserHome from "../components/users/UserHome";
 import Error404 from "../components/errors/Error404";
 import Error403 from "../components/errors/Error403";
-import Permissions from "./role-permissions";
 const routes = [
     {
         path: "/",
@@ -53,6 +55,7 @@ const router = new VueRouter({
     mode: 'history',
     routes: routes,
 });
+
 // The logic in the method below is stupidly complex because the next() method
 // must be called EXACTLY ONE (1) time and if the method is called it DOESN'T 
 // stop the function. DO NOT try to change the logic if you are not sure of 
@@ -61,10 +64,10 @@ router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.auth)) {
         // this route requires auth, check if logged in
         // if not, redirect to login page.
-        if (auth.isLoggedIn() && auth.isUserHere()) {
+        if (Auth.isLoggedIn() && Auth.isUserHere()) {
             // Check if the route have any permission tag, if not, continue.
             if (to.meta.permission) {
-                if (auth.checkUserPermission(to.meta.permission)) {
+                if (Permissions.checkUserPermission(Store.state.user, to.meta.permission)) {
                     next();
                 } else {
                     next({
@@ -77,8 +80,7 @@ router.beforeEach((to, from, next) => {
         } else {
             // Ensure the user is going to be unauthenticated in order to prevent 
             // constant redirections in worst case scenario.
-            console.log('aquí');
-            auth.logOut();
+            Auth.logOut();
             next({
                 name: 'login',
                 query: { redirect: to.fullPath }
@@ -87,7 +89,7 @@ router.beforeEach((to, from, next) => {
     } else if (to.matched.some(record => record.meta.guest)) {
         // this route requires to be a guest, check if user is logged in
         // if not, continue.
-        if (auth.isLoggedIn()) {
+        if (Auth.isLoggedIn()) {
             next({
                 name: 'me',
                 query: { redirect: to.fullPath }

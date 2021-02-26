@@ -17,6 +17,3 @@ export const saveUser = function (user) {
 export const loadUser = function() {
     return JSON.parse(localStorage.getItem('user'));
 }
-export const checkUserPermission = function (permission) {
-    return !!loadUser().role.permissions.find(p => p === permission);
-}

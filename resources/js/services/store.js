@@ -2,9 +2,7 @@ import * as auth from "./auth";
 export default {
     state: {
         isLoggedIn: false,
-        user: {
-
-        }
+        user: null
     },
     mutations: {
         setLoggedIn(state, payload) {
@@ -18,7 +16,7 @@ export default {
         logout(context) {
             auth.logOut();
             context.commit('setLoggedIn', false);
-            context.commit('setUser', {});
+            context.commit('setUser', null);
         },
         async login(context) {
             await context.dispatch('loadUser');
