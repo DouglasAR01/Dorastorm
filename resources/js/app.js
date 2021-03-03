@@ -22,19 +22,20 @@ import DataStore from "./services/store";
 
 // Toast notifications
 import VueMyToast from 'vue-my-toasts';
+import 'vue-my-toasts/dist/vue-my-toasts.css'
 import BootstrapComponent from "vue-my-toasts/src/components/toasts/BootstrapComponent";
 
 window.Vue = require('vue');
 Vue.use(VueRouter);
 Vue.use(Vuex);
-// Vue.use(VueMyToast, {
-//     component: BootstrapComponent,
-//     options: {
-//         width: '400px',
-//         position: 'bottom-right',
-//         padding: '1rem'
-//     }
-// });
+Vue.use(VueMyToast, {
+    component: BootstrapComponent,
+    options: {
+        width: '400px',
+        position: 'bottom-right',
+        padding: '1rem'
+    }
+});
 Vue.filter('fromNow', value => dayjs(value).fromNow());
 Vue.filter('humanDate', value => dayjs(value).format('YYYY/MM/DD'));
 

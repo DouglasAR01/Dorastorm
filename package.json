@@ -25,7 +25,7 @@
     },
     "dependencies": {
         "dayjs": "^1.9.8",
-        "vue-my-toasts": "^1.0.5",
+        "vue-my-toasts": "^1.1.0",
         "vue-router": "^3.4.9",
         "vuex": "^3.6.0"
     }
