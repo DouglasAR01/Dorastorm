@@ -10,9 +10,9 @@
 </template>
 <script>
 import UserDataCard from "./UserDataCard";
-import item_arrangement from "../../shared/mixins/item_arrangement";
+import ItemArrangement from "../../shared/mixins/item-arrangement";
 export default {
-  mixins: [item_arrangement],
+  mixins: [ItemArrangement],
   components: {
     UserDataCard
   },

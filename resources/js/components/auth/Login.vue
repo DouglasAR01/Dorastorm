@@ -46,11 +46,11 @@
 </template>
 <script>
 import { is422 } from "../../shared/utils/responses";
-import error_traits from "../../shared/mixins/error_traits";
+import ErrorTraits from "../../shared/mixins/error-traits";
 import ValidationError from "../../shared/components/ValidationError";
 import { logIn as authLogIn } from "../../services/auth";
 export default {
-  mixins: [error_traits],
+  mixins: [ErrorTraits],
   components: {
     ValidationError,
   },
