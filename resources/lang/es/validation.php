@@ -130,9 +130,10 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
-        ],
+        'user_role' => 'El :attribute debe ser menos importante que el suyo.',
+        'user_destroy' => [
+            'sole_admin' => 'Usted es el único administrador restante.'
+        ]
     ],
 
     /*
@@ -146,6 +147,8 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'role_id' => 'rol'
+    ],
 
 ];

@@ -45,7 +45,8 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class)->withDefault([
-            'name' => 'STANDARD'
+            'name' => 'STANDARD',
+            'hierarchy' => 16777215
         ]);
     }
 

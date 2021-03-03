@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\RoleResource;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
@@ -40,13 +41,13 @@ class RoleController extends Controller
         ];
         $data = $request->validate($this->fullValidationRules($validation_rules));
 
-        $newRole = new Role();
-        $newRole->name = $data['name'];
-        $newRole->description = $data['description'];
-        $newRole->hierarchy = $data['hierarchy'];
+        $new_role = new Role();
+        $new_role->name = $data['name'];
+        $new_role->description = $data['description'];
+        $new_role->hierarchy = $data['hierarchy'];
 
-        $newRole = $this->assignPermissions($user, $data, $newRole);
-        $newRole->save();
+        $new_role = $this->assignPermissions($user, $data, $new_role);
+        $new_role->save();
     }
 
     /**
@@ -64,6 +65,14 @@ class RoleController extends Controller
         return $role;
     }
 
+    public function showRolesBelow(Request $request)
+    {
+        $user_hierarchy = $request->user()->role->hierarchy;
+        // If the user is an ADMIN (hierarchy = 0), search for all roles        
+        $roles_below = Role::where('hierarchy','>', ($user_hierarchy===0) ? -1 : $user_hierarchy )->get();
+        return RoleResource::collection($roles_below);
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -76,6 +85,7 @@ class RoleController extends Controller
         $user = $request->user();
         $role = Role::findOrFail($id);
         // STANDARD role users should never enter here.
+        // ADMIN role can not edit the ADMIN role. As it should be.
         if ($user->cannot('update', $role)) {
             abort(403);
         }
