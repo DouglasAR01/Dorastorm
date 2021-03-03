@@ -1,7 +1,6 @@
 import VueRouter from "vue-router";
 import * as Auth from "./auth";
 import Store from "./store";
-import store from "vuex";
 import Permissions from "./role-permissions";
 // Components
 import Home from "../components/Home";
