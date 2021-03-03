@@ -9,6 +9,38 @@
           Log in
         </router-link>
       </li>
+      <li
+        class="nav-item dropdown"
+        v-if="
+          isLoggedIn &&
+          checkUserAnyPermission(user, [
+            corePms.CREATE_USERS,
+            corePms.READ_USERS,
+            corePms.UPDATE_USERS,
+            corePms.DELETE_USERS,
+          ])
+        "
+      >
+        <a
+          href="#"
+          class="nav-link dropdown-toggle"
+          role="button"
+          data-toggle="dropdown"
+          id="users"
+          aria-haspopup="true"
+          aria-expanded="false"
+          >Users</a
+        >
+        <div class="dropdown-menu" id="users">
+          <router-link
+            :to="{ name: 'users-create' }"
+            v-if="checkUserPermission(user, corePms.CREATE_USERS)"
+            class="nav-link"
+          >
+            Create users
+          </router-link>
+        </div>
+      </li>
       <li class="nav-item dropdown" v-if="isLoggedIn">
         <a
           class="nav-link dropdown-toggle"
@@ -25,9 +57,7 @@
           <router-link
             :to="{ name: 'me2' }"
             class="nav-link"
-            v-if="
-              permissions.checkUserPermission(user, permissions.core.READ_USERS)
-            "
+            v-if="checkUserPermission(user, corePms.READ_USERS)"
           >
             Showed only if you have permission
           </router-link>
@@ -40,7 +70,13 @@
         </div>
       </li>
       <li class="nav-item" v-if="isLoggedIn">
-        <a href="#" class="nav-link" @click.prevent="logout" :class="[{'disabled':isLoggingOut}]">Log out</a>
+        <a
+          href="#"
+          class="nav-link"
+          @click.prevent="logout"
+          :class="[{ disabled: isLoggingOut }]"
+          >Log out</a
+        >
       </li>
     </ul>
   </nav>
@@ -48,12 +84,14 @@
 <script>
 import { mapState } from "vuex";
 import Permissions from "../services/role-permissions";
-import {logOut as authLogOut } from "../services/auth";
+import PermissionsHandling from "../shared/mixins/permissions-handling";
+import { logOut as authLogOut } from "../services/auth";
 // Log-in and Log-out buttons logic idea taken from https://www.youtube.com/watch?v=8Uwn5M6WTe0
 export default {
-  data () {
+  mixins: [PermissionsHandling],
+  data() {
     return {
-      isLoggingOut: false
+      isLoggingOut: false,
     };
   },
   computed: {
@@ -61,9 +99,6 @@ export default {
       isLoggedIn: (state) => state.isLoggedIn,
       user: (state) => state.user,
     }),
-    permissions() {
-      return Permissions;
-    },
   },
   methods: {
     async logout() {
