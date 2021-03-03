@@ -6,6 +6,7 @@ import Permissions from "./role-permissions";
 import Home from "../components/Home";
 import Login from "../components/auth/Login";
 import UserHome from "../components/users/UserHome";
+import UserCreate from "../components/users/UserCreate";
 import Error404 from "../components/errors/Error404";
 import Error403 from "../components/errors/Error403";
 const routes = [
@@ -34,6 +35,15 @@ const routes = [
         path: '/me2',
         component: UserHome,
         name: 'me2',
+        meta: {
+            auth: true,
+            permission: Permissions.core.READ_USERS
+        }
+    },
+    {
+        path: '/users/create',
+        component: UserCreate,
+        name: 'users-create',
         meta: {
             auth: true,
             permission: Permissions.core.CREATE_USERS
