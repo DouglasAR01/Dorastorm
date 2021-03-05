@@ -13,11 +13,10 @@
         class="nav-item dropdown"
         v-if="
           isLoggedIn &&
-          checkUserAnyPermission(user, [
+          checkUserAnyPermission(loggedUser, [
             corePms.CREATE_USERS,
             corePms.READ_USERS,
             corePms.UPDATE_USERS,
-            corePms.DELETE_USERS,
           ])
         "
       >
@@ -33,8 +32,15 @@
         >
         <div class="dropdown-menu" id="users">
           <router-link
+            :to="{ name: 'users-index' }"
+            v-if="checkUserPermission(loggedUser, corePms.READ_USERS)"
+            class="nav-link"
+          >
+            View all users
+          </router-link>
+          <router-link
             :to="{ name: 'users-create' }"
-            v-if="checkUserPermission(user, corePms.CREATE_USERS)"
+            v-if="checkUserPermission(loggedUser, corePms.CREATE_USERS)"
             class="nav-link"
           >
             Create users
@@ -57,7 +63,7 @@
           <router-link
             :to="{ name: 'me2' }"
             class="nav-link"
-            v-if="checkUserPermission(user, corePms.READ_USERS)"
+            v-if="checkUserPermission(loggedUser, corePms.READ_USERS)"
           >
             Showed only if you have permission
           </router-link>
@@ -82,8 +88,6 @@
   </nav>
 </template>
 <script>
-import { mapState } from "vuex";
-import Permissions from "../services/role-permissions";
 import PermissionsHandling from "../shared/mixins/permissions-handling";
 import { logOut as authLogOut } from "../services/auth";
 // Log-in and Log-out buttons logic idea taken from https://www.youtube.com/watch?v=8Uwn5M6WTe0
@@ -93,12 +97,6 @@ export default {
     return {
       isLoggingOut: false,
     };
-  },
-  computed: {
-    ...mapState({
-      isLoggedIn: (state) => state.isLoggedIn,
-      user: (state) => state.user,
-    }),
   },
   methods: {
     async logout() {

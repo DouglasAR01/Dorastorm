@@ -21,16 +21,16 @@ class UserController extends Controller
         if ($request->user()->cannot('viewAny', User::class)) {
             abort(403);
         }
-        return User::all();
+        return UserResource::collection(User::all());
     }
 
-    public function view(Request $request, $id)
+    public function show(Request $request, $id)
     {
         $user = User::findOrFail($id);
         if ($request->user()->cannot('view', $user)) {
             abort(403);
         }
-        return $user;
+        return new UserResource($user);
     }
 
     public function store(Request $request)
