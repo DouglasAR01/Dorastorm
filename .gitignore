@@ -23,6 +23,6 @@ Homestead.json
 .phpunit.result.cache
 
 # CUSTOM
-public/js/*.*
-public/css/*.*
-public/fonts/vendor/*.*
+public/js/
+public/css/
+public/fonts/vendor/
