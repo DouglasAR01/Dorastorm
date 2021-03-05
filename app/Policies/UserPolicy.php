@@ -64,7 +64,11 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        return ($user->role->delete_users && $user->role->hierarchy <= $model->role->hierarchy) || $user->id === $model->id;
+        // Users with the DELETE_USERS permission could not delete another users whose hierarchy is lower.
+        // The admins are the only users who can delete users with the same hierarchy level.
+        // Any user can delete himself. 
+        return ($user->role->delete_users && ($user->role->hierarchy < $model->role->hierarchy || $user->role->hierarchy < 1))
+            || $user->id === $model->id;
     }
 
     /**
