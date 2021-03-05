@@ -29,6 +29,10 @@ const permissions = {
             return user.role.permissions.includes(permission);
         }
         return false;
+    },
+    checkUserAnyPermission: function (user, permissions_array) {
+        return permissions_array.some(permission =>
+            this.checkUserPermission(user, permission));
     }
 }
 export default permissions;
