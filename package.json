@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-free": "^5.15.2",
         "dayjs": "^1.9.8",
         "vue-my-toasts": "^1.1.0",
         "vue-router": "^3.4.9",
