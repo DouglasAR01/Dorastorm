@@ -54,6 +54,10 @@ window.axios.interceptors.response.use(
             store.dispatch('logout');
             router.push({ name: 'login' });
         }
+        // 403 = Forbidden
+        if (error.response.status == 403) {
+            router.push({ name: '403' });
+        }
         return Promise.reject(error);
     }
 );
