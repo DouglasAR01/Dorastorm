@@ -18,6 +18,7 @@ dayjs.extend(relativeTime);
 
 // Datastore creation
 import DataStore from "./services/store";
+import {logOut} from "./services/auth";
 
 
 // Toast notifications
@@ -48,9 +49,10 @@ const store = new Vuex.Store(DataStore);
 // This is useful if the session is destroyed but the Happy token is still in the localStorage
 window.axios.interceptors.response.use(
     response => response,
-    error => {
+    async error => {
         // 401 = unauthenticated
         if (error.response.status == 401) {
+            await logOut();
             store.dispatch('logout');
             router.push({ name: 'login' });
         }
