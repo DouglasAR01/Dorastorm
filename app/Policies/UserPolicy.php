@@ -64,7 +64,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        return $user->role->delete_users || $user->id === $model->id;
+        return ($user->role->delete_users && $user->role->hierarchy <= $model->role->hierarchy) || $user->id === $model->id;
     }
 
     /**
