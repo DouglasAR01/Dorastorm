@@ -25,3 +25,4 @@ Homestead.json
 # CUSTOM
 public/js/*.*
 public/css/*.*
+public/fonts/vendor/*.*
