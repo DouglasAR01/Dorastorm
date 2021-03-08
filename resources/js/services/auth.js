@@ -3,10 +3,7 @@ export const logIn = async function (userPayload) {
         await axios.post("/api/login", userPayload);
         try {
             // User successfully logged in
-            const user = (await axios.get("/api/user")).data.data;
-            saveUser(user);
-            localStorage.setItem('happy', 'true');
-            return user;
+            return (await loadUser());
         } catch (error) {
             // For some reason, the user could log in but his data cannot be
             // retreived.
@@ -33,9 +30,15 @@ export const isLoggedIn = function () {
 export const isUserHere = function () {
     return !!localStorage.getItem('user');
 }
+export const loadUser = async function() {
+    const user = (await axios.get("/api/user")).data.data;
+    saveUser(user);
+    localStorage.setItem('happy', 'true');
+    return user;
+}
 export const saveUser = function (user) {
     localStorage.setItem('user', JSON.stringify(user));
 }
-export const loadUser = function() {
+export const loadSavedUser = function() {
     return JSON.parse(localStorage.getItem('user'));
 }

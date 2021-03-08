@@ -117,8 +117,8 @@ router.beforeEach((to, from, next) => {
             Store.state.isLoggedIn = false;
             Store.state.user = null;
             next({
-                name: 'login',
-                query: { redirect: to.fullPath }
+                name: 'home',
+                //query: { redirect: to.fullPath }
             });
         }
     } else if (to.matched.some(record => record.meta.guest)) {

@@ -29,7 +29,7 @@ export default {
             if (isLoggedIn) {
                 if (auth.isUserHere()){
                     context.commit('setLoggedIn', isLoggedIn);
-                    context.commit('setUser', auth.loadUser());
+                    context.commit('setUser', auth.loadSavedUser());
                 } else {
                     context.dispatch('logout');
                 }
