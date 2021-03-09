@@ -26,7 +26,7 @@
               v-model="updated_user.email"
             />
           </div>
-          <div class="form-group" v-if="available_roles.length > 1">
+          <div class="form-group" v-if="checkUserPermission(updated_user, corePms.UPDATE_USERS) && available_roles.length > 0">
             <label for="role_id">Select the user role</label>
             <select
               name="role_id"
@@ -123,8 +123,10 @@ import * as Responses from "../../shared/utils/responses";
 import clone from "../../shared/utils/object-clone";
 import FormTraits from "../../shared/mixins/form-traits";
 import ErrorTraits from "../../shared/mixins/error-traits";
+import PermissionsHandling from "../../shared/mixins/permissions-handling";
+import {loadUser} from "../../services/auth";
 export default {
-  mixins: [FormTraits],
+  mixins: [FormTraits, ErrorTraits, PermissionsHandling],
   data() {
     return {
       loading: false,
@@ -175,14 +177,20 @@ export default {
       try {
         await axios.patch("/api/users/" + this.user_id, this.updated_user);
         this.$toasts.success("The changes were made successfully.");
+        if (this.user_id === this.$store.getters.getUserID) {
+          let user = await loadUser();
+          this.$store.commit("setUser", user);
+        }
       } catch (error) {
         if (Responses.is404(error)) {
           this.$toasts.error("We couldn't find the specified user.");
         }
-        if (Responses.is406(error)){
-          this.$toasts.error("You are the last admin left. You can not change your role.");
+        if (Responses.is406(error)) {
+          this.$toasts.error(
+            "You are the last admin left. You can not change your role."
+          );
         }
-        if (Responses.is422(error)){
+        if (Responses.is422(error)) {
           this.errors = error.response.data.errors;
         }
       }
@@ -198,7 +206,7 @@ export default {
         if (Responses.is404(error)) {
           this.$toasts.error("We couldn't find the specified user.");
         }
-        if (Responses.is422(error)){
+        if (Responses.is422(error)) {
           this.errors = error.response.data.errors;
         }
       }
