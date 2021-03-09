@@ -120,7 +120,7 @@
 </template>
 <script>
 import * as Responses from "../../shared/utils/responses";
-import clone from "../../shared/utils/object-clone";
+import Obj from "../../shared/utils/object-utils";
 import FormTraits from "../../shared/mixins/form-traits";
 import ErrorTraits from "../../shared/mixins/error-traits";
 import PermissionsHandling from "../../shared/mixins/permissions-handling";
@@ -146,9 +146,8 @@ export default {
   async created() {
     this.loading = true;
     this.user_id = this.$store.getters.getUserID;
-    this.updated_user = clone(this.$store.state.user);
-
-    if (this.$route.query && this.$route.query.user_id) {
+    this.updated_user = Obj.clone(this.$store.state.user);
+    if (!Obj.isEmpty(this.$route.query) && this.$route.query.user_id) {
       this.user_id = this.$route.query.user_id;
     }
     if (this.user_id != this.updated_user.id) {

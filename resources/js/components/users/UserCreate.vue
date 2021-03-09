@@ -84,7 +84,7 @@ import { is422 } from "../../shared/utils/responses";
 import ErrorTraits from "../../shared/mixins/error-traits";
 import FormTraits from "../../shared/mixins/form-traits";
 import ValidationError from "../../shared/components/ValidationError";
-import clone from "../../shared/utils/object-clone";
+import Obj from "../../shared/utils/object-utils";
 export default {
   mixins: [ErrorTraits, FormTraits],
   components: {
@@ -104,7 +104,7 @@ export default {
     };
   },
   async created() {
-    this.form_initial_state = clone(this.new_user);
+    this.form_initial_state = Obj.clone(this.new_user);
     try {
       this.loading = true;
       this.available_roles = (await axios.get("/api/roles/below")).data.data;
@@ -121,7 +121,7 @@ export default {
         this.submiting = false;
         this.$toasts.success("User created!");
         this.confirmation_field = null;
-        this.new_user = deepPrimitiveOnly(this.form_initial_state);
+        this.new_user = Obj.clone(this.form_initial_state);
         // Send to UserView
       } catch (error) {
         if (is422(error)) {
