@@ -63,7 +63,7 @@ return [
     // build-in Reset Password system work with the SPA.
 
     'home' => env('SPA_URL') . '/me',
-    'reset-password' => env('SPA_URL') . '/api/reset-password?token=',
+    'reset-password' => env('SPA_URL') . '/reset-password?token=',
 
     /*
     |--------------------------------------------------------------------------
