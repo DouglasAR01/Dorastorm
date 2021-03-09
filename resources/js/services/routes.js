@@ -1,5 +1,5 @@
 import VueRouter from "vue-router";
-import * as Auth from "./auth";
+import Auth, * as AuthExtra from "./auth";
 import Store from "./store";
 import Permissions from "./role-permissions";
 // Components
@@ -103,7 +103,7 @@ router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.auth)) {
         // this route requires auth, check if logged in
         // if not, redirect to login page.
-        if (Auth.isLoggedIn() && Auth.isUserHere()) {
+        if (AuthExtra.isLoggedIn() && AuthExtra.isUserHere()) {
             // Check if the route have any permission tag, if not, continue.
             if (to.meta.permission) {
                 if (Permissions.checkUserPermission(Store.state.user, to.meta.permission)) {
@@ -119,7 +119,7 @@ router.beforeEach((to, from, next) => {
         } else {
             // Ensure the user is going to be unauthenticated in order to prevent 
             // constant redirections in worst case scenario.
-            Auth.logOut();
+            Auth.logout();
             // Dirty dispatch('logout'). This should be changed 
             // if the context object is known.
             // Anyway, this could only happen if the user is hacking...
@@ -133,7 +133,7 @@ router.beforeEach((to, from, next) => {
     } else if (to.matched.some(record => record.meta.guest)) {
         // this route requires to be a guest, check if user is logged in
         // if not, continue.
-        if (Auth.isLoggedIn()) {
+        if (AuthExtra.isLoggedIn()) {
             next({
                 name: 'me',
                 query: { redirect: to.fullPath }

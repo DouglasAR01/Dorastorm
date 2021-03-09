@@ -124,7 +124,7 @@ import clone from "../../shared/utils/object-clone";
 import FormTraits from "../../shared/mixins/form-traits";
 import ErrorTraits from "../../shared/mixins/error-traits";
 import PermissionsHandling from "../../shared/mixins/permissions-handling";
-import {loadUser} from "../../services/auth";
+import Auth from "../../services/auth";
 export default {
   mixins: [FormTraits, ErrorTraits, PermissionsHandling],
   data() {
@@ -178,7 +178,7 @@ export default {
         await axios.patch("/api/users/" + this.user_id, this.updated_user);
         this.$toasts.success("The changes were made successfully.");
         if (this.user_id === this.$store.getters.getUserID) {
-          let user = await loadUser();
+          let user = await Auth.loadUser();
           this.$store.commit("setUser", user);
         }
       } catch (error) {

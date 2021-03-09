@@ -18,7 +18,7 @@ dayjs.extend(relativeTime);
 
 // Datastore creation
 import DataStore from "./services/store";
-import {logOut} from "./services/auth";
+import Auth from "./services/auth";
 
 
 // Toast notifications
@@ -52,7 +52,7 @@ window.axios.interceptors.response.use(
     async error => {
         // 401 = unauthenticated
         if (error.response.status == 401) {
-            await logOut();
+            await Auth.logout();
             store.dispatch('logout');
             router.push({ name: 'login' });
         }

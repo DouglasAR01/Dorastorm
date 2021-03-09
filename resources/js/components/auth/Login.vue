@@ -48,7 +48,7 @@
 import { is422 } from "../../shared/utils/responses";
 import ErrorTraits from "../../shared/mixins/error-traits";
 import ValidationError from "../../shared/components/ValidationError";
-import { logIn as authLogIn } from "../../services/auth";
+import Auth from "../../services/auth";
 export default {
   mixins: [ErrorTraits],
   components: {
@@ -68,11 +68,11 @@ export default {
     async login() {
       this.loading = true;
       try {
-        await axios.get("/sanctum/csrf-cookie");
+        await Auth.getCsrfCookie();
         try {
           // Laravel uses $request->filled('remember'), thats why if it is false you must set it to null
           this.user.remember = (!!this.user.remember == false)  ? null : true;
-          const user = await authLogIn(this.user);
+          const user = await Auth.login(this.user);
           this.$store.dispatch("login", user);
           this.$router.push({ name: "me" });
         } catch (error) {
@@ -81,7 +81,7 @@ export default {
           }
         }
       } catch (error) {
-        console.log("Fatal");
+        this.$toasts.error('Something very wrong happened. Try again later.');
       }
       this.loading = false;
     },

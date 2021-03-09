@@ -102,7 +102,7 @@
 </template>
 <script>
 import PermissionsHandling from "../shared/mixins/permissions-handling";
-import { logOut as authLogOut } from "../services/auth";
+import Auth from "../services/auth";
 // Log-in and Log-out buttons logic idea taken from https://www.youtube.com/watch?v=8Uwn5M6WTe0
 export default {
   mixins: [PermissionsHandling],
@@ -114,7 +114,7 @@ export default {
   methods: {
     async logout() {
       this.isLoggingOut = true;
-      await authLogOut();
+      await Auth.logout();
       this.$store.dispatch("logout");
       this.isLoggingOut = false;
       this.$router.push({ name: "login" });
