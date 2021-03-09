@@ -5,6 +5,11 @@
       <div class="row mr-auto mb-4">
         <user-data-card v-bind="user" class="col-md-12" />
       </div>
+      <div class="row">
+        <div class="col-6">
+          <router-link :to="{name:'users-update'}" class="btn btn-info btn-block">Update profile</router-link>
+        </div>
+      </div>
     </div>
   </div>
 </template>

@@ -7,6 +7,7 @@ import Home from "../components/Home";
 import Login from "../components/auth/Login";
 import UserHome from "../components/users/UserHome";
 import UserCreate from "../components/users/UserCreate";
+import UserUpdate from "../components/users/UserUpdate";
 import UserRead from "../components/users/UserRead";
 import UserIndex from "../components/users/UserIndex";
 import Error404 from "../components/errors/Error404";
@@ -67,6 +68,14 @@ const routes = [
         meta: {
             auth: true,
             permission: Permissions.core.CREATE_USERS
+        }
+    },
+    {
+        path: '/users/update',
+        component: UserUpdate,
+        name: 'users-update',
+        meta: {
+            auth: true
         }
     },
     {

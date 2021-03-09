@@ -41,7 +41,7 @@ class UserController extends Controller
         $validation_rules = [
             'name' => 'required|string|max:191',
             'email' => 'required|unique:users|email|max:191',
-            'password' => 'required|string|max:191',
+            'password' => 'required|string|max:191|min:6',
             'role_id' => [
                 'bail',
                 'required',
@@ -68,7 +68,18 @@ class UserController extends Controller
         $validation_rules = [
             'name' => 'required|string|max:191',
             'email' => 'required|email|max:191|unique:users,email,' . $user->id,
-            'password' => 'required|string|max:191',
+            'password' => 'required|string|max:191|min:6',
+            'cpassword' => [
+                'required',
+                'string',
+                'max:191',
+                'min:6',
+                function ($attribute, $value, $fail) use ($user){
+                    if (!Hash::check($value, $user->password)){
+                        $fail('Wrong password.');
+                    }
+                }
+            ],
             'role_id' => [
                 'bail',
                 'required',
@@ -89,7 +100,15 @@ class UserController extends Controller
             }
         }
         $data = $request->validate($differential_validation);
-        
+
+        // Check if the user is the last admin left and he is trying to change his role
+        if (
+            $user->role->hierarchy === 0 && !empty($request->role_id) &&
+            $user->role->id != $request->role_id && $this->isLastAdminLeft($user)
+        ) {
+            abort(406, trans('validation.custom.user_destroy.sole_admin'));
+        }
+
         // Start of the differential updating
         $att_to_update = array_keys($differential_validation);
         foreach ($att_to_update as $att) {
@@ -104,11 +123,20 @@ class UserController extends Controller
         if ($request->user()->cannot('delete', $user)) {
             abort(403);
         }
-        // Check if the user is the only admin left. In the database must be at least one ADMIN user.
-        $admin_role_id = Role::where('hierarchy', '=', 0)->firstOrFail()->id;
-        if ($user->role->hierarchy === 0 && User::where('role_id', '=', $admin_role_id)->count() < 2) {
+        if ($this->isLastAdminLeft($user)) {
             abort(406, trans('validation.custom.user_destroy.sole_admin'));
         }
         $user->delete();
+    }
+
+    // Check if the user is the only admin left. In the database must be at least one ADMIN user.
+    // If so, returns true.
+    private function isLastAdminLeft(User $user): bool
+    {
+        $admin_role_id = Role::where('hierarchy', '=', 0)->firstOrFail()->id;
+        if ($user->role->hierarchy === 0 && User::where('role_id', '=', $admin_role_id)->count() < 2) {
+            return true;
+        }
+        return false;
     }
 }

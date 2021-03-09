@@ -27,7 +27,7 @@ export default {
             // LoggedIn logic should be the last in the execution list
             let isLoggedIn = auth.isLoggedIn();
             if (isLoggedIn) {
-                if (auth.isUserHere()){
+                if (auth.isUserHere()) {
                     context.commit('setLoggedIn', isLoggedIn);
                     context.commit('setUser', auth.loadSavedUser());
                 } else {
@@ -37,6 +37,11 @@ export default {
         },
     },
     getters: {
-
+        getUserID: state => {
+            if (auth.isUserHere()) {
+                return state.user.id;
+            }
+            return null;
+        }
     }
 }

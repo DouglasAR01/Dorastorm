@@ -36,7 +36,7 @@
               </router-link>
               <router-link
                 :to="{
-                  name: 'users-read',
+                  name: 'users-update',
                   query: { user_id: user.id },
                 }"
                 data-toggle="tooltip"
