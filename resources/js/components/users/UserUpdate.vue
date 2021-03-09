@@ -26,7 +26,7 @@
               v-model="updated_user.email"
             />
           </div>
-          <div class="form-group" v-if="checkUserPermission(updated_user, corePms.UPDATE_USERS) && available_roles.length > 0">
+          <div class="form-group" v-if="checkUserPermission(loggedUser, corePms.UPDATE_USERS) && available_roles.length > 0">
             <label for="role_id">Select the user role</label>
             <select
               name="role_id"
