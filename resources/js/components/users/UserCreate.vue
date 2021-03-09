@@ -84,7 +84,7 @@ import { is422 } from "../../shared/utils/responses";
 import ErrorTraits from "../../shared/mixins/error-traits";
 import FormTraits from "../../shared/mixins/form-traits";
 import ValidationError from "../../shared/components/ValidationError";
-import { deepPrimitiveOnly } from "../../shared/utils/object-clone";
+import clone from "../../shared/utils/object-clone";
 export default {
   mixins: [ErrorTraits, FormTraits],
   components: {
@@ -104,7 +104,7 @@ export default {
     };
   },
   async created() {
-    this.form_initial_state = deepPrimitiveOnly(this.new_user);
+    this.form_initial_state = clone(this.new_user);
     try {
       this.loading = true;
       this.available_roles = (await axios.get("/api/roles/below")).data.data;
