@@ -5,6 +5,7 @@ import Permissions from "./role-permissions";
 // Components
 import Home from "../components/Home";
 import Login from "../components/auth/Login";
+import ForgotPassword from "../components/auth/ForgotPassword";
 import UserHome from "../components/users/UserHome";
 import UserCreate from "../components/users/UserCreate";
 import UserUpdate from "../components/users/UserUpdate";
@@ -17,6 +18,14 @@ const routes = [
         path: "/",
         component: Home,
         name: "home",
+    },
+    {
+        path: '/forgot-password',
+        component: ForgotPassword,
+        name: 'forgot-password',
+        meta: {
+            guest: true
+        }
     },
     {
         path: '/login',

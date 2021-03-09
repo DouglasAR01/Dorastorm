@@ -49,5 +49,13 @@ export default {
         saveUser(user);
         localStorage.setItem('happy', 'true');
         return user;
+    },
+
+    async forgotPassword (payload) {
+        return axios.post('/api/forgot-password', payload);
+    },
+
+    async resetPassword (payload) {
+        return axios.post('/api/reset-password', payload);
     }
 }

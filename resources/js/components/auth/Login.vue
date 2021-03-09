@@ -24,14 +24,25 @@
           />
           <validation-error :errors="errorFor('password')"></validation-error>
         </div>
-        <div class="form-check pb-2">
-          <input
-            type="checkbox"
-            class="form-check-input"
-            v-model="user.remember"
-            name="remember"
-          />
-          <label for="remember" class="form-check-label">Remember me?</label>
+        <div class="row">
+          <div class="col-6">
+            <div class="form-check pb-2">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                v-model="user.remember"
+                name="remember"
+              />
+              <label for="remember" class="form-check-label"
+                >Remember me?</label
+              >
+            </div>
+          </div>
+          <div class="col-6">
+            <router-link :to="{ name: 'forgot-password' }"
+              >Forgot password</router-link
+            >
+          </div>
         </div>
         <button
           class="btn btn-block btn-primary"
@@ -69,19 +80,19 @@ export default {
       this.loading = true;
       try {
         await Auth.getCsrfCookie();
-        try {
-          // Laravel uses $request->filled('remember'), thats why if it is false you must set it to null
-          this.user.remember = (!!this.user.remember == false)  ? null : true;
-          const user = await Auth.login(this.user);
-          this.$store.dispatch("login", user);
-          this.$router.push({ name: "me" });
-        } catch (error) {
-          if (is422(error)) {
-            this.errors = error.response.data.errors;
-          }
-        }
       } catch (error) {
-        this.$toasts.error('Something very wrong happened. Try again later.');
+        this.$toasts.error("Something very wrong happened. Try again later.");
+      }
+      try {
+        // Laravel uses $request->filled('remember'), thats why if it is false you must set it to null
+        this.user.remember = !!this.user.remember == false ? null : true;
+        const user = await Auth.login(this.user);
+        this.$store.dispatch("login", user);
+        this.$router.push({ name: "me" });
+      } catch (error) {
+        if (is422(error)) {
+          this.errors = error.response.data.errors;
+        }
       }
       this.loading = false;
     },
