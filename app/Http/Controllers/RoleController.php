@@ -48,6 +48,7 @@ class RoleController extends Controller
 
         $new_role = $this->assignPermissions($user, $data, $new_role);
         $new_role->save();
+        return $new_role;
     }
 
     /**
