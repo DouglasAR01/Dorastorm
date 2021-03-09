@@ -114,7 +114,11 @@ export default {
   methods: {
     async logout() {
       this.isLoggingOut = true;
-      await Auth.logout();
+      if (!(await Auth.logout())) {
+        this.$toasts.error("Unable to connect with the server.");
+        this.isLoggingOut = false;
+        return;
+      }
       this.$store.dispatch("logout");
       this.isLoggingOut = false;
       this.$router.push({ name: "login" });

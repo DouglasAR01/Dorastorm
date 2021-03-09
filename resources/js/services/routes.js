@@ -128,12 +128,13 @@ router.beforeEach((to, from, next) => {
         } else {
             // Ensure the user is going to be unauthenticated in order to prevent 
             // constant redirections in worst case scenario.
-            Auth.logout();
-            // Dirty dispatch('logout'). This should be changed 
-            // if the context object is known.
-            // Anyway, this could only happen if the user is hacking...
-            Store.state.isLoggedIn = false;
-            Store.state.user = null;
+            if (Auth.logout()) {
+                // Dirty dispatch('logout'). This should be changed 
+                // if the context object is known.
+                // Anyway, this could only happen if the user is hacking...
+                Store.state.isLoggedIn = false;
+                Store.state.user = null;
+            }
             next({
                 name: 'home',
                 //query: { redirect: to.fullPath }

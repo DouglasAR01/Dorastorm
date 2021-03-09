@@ -39,9 +39,11 @@ export default {
             await axios.post("/api/logout");
             localStorage.removeItem('happy');
             localStorage.removeItem('user');
+            return true;
         } catch (error) {
             // No internet connection
         }
+        return false;
     },
 
     async loadUser () {
