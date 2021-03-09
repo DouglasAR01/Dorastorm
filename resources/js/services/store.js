@@ -42,6 +42,9 @@ export default {
                 return state.user.id;
             }
             return null;
+        },
+        getUserHierarchy: state => {
+            return state.user.role.hierarchy;
         }
     }
 }

@@ -43,7 +43,7 @@
                 data-placement="top"
                 title="Update user data"
                 class="btn btn-link btn-sm"
-                v-if="userCanUpdate"
+                v-if="userCanUpdate && userCanTouchThis(user)"
               >
                 <i class="fas fa-pen"></i>
               </router-link>
@@ -51,7 +51,7 @@
                 class="btn btn-link btn-sm"
                 @click.prevent="deleteUser(user.id)"
                 :disabled="deleting"
-                v-if="userCanDelete"
+                v-if="userCanDelete && userCanTouchThis(user)"
               >
                 <i class="fas fa-trash-alt"></i>
               </button>
@@ -114,6 +114,9 @@ export default {
         this.deleting = false;
       }
     },
+    userCanTouchThis(another_user){
+      return this.$store.getters.getUserHierarchy < another_user.role.hierarchy || this.$store.getters.getUserHierarchy===0;
+    }
   },
   computed: {
     userCanUpdate() {
