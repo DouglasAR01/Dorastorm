@@ -1,90 +1,103 @@
 <template>
   <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom">
-    <router-link :to="{ name: 'home' }" class="navbar-brand mr-auto">
+    <router-link :to="{ name: 'home' }" class="navbar-brand">
       Dorastorm
     </router-link>
-    <ul class="navbar-nav">
-      <li class="nav-item" v-if="!isLoggedIn">
-        <router-link :to="{ name: 'login' }" class="nav-link">
-          Log in
-        </router-link>
-      </li>
-      <li
-        class="nav-item dropdown"
-        v-if="
-          isLoggedIn &&
-          checkUserAnyPermission(loggedUser, [
-            corePms.CREATE_USERS,
-            corePms.READ_USERS,
-            corePms.UPDATE_USERS,
-          ])
-        "
-      >
-        <a
-          href="#"
-          class="nav-link dropdown-toggle"
-          role="button"
-          data-toggle="dropdown"
-          id="users"
-          aria-haspopup="true"
-          aria-expanded="false"
-          >Users</a
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#responsive"
+      aria-controls="responsive"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="responsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item" v-if="!isLoggedIn">
+          <router-link :to="{ name: 'login' }" class="nav-link">
+            Log in
+          </router-link>
+        </li>
+        <li
+          class="nav-item dropdown"
+          v-if="
+            isLoggedIn &&
+            checkUserAnyPermission(loggedUser, [
+              corePms.CREATE_USERS,
+              corePms.READ_USERS,
+              corePms.UPDATE_USERS,
+            ])
+          "
         >
-        <div class="dropdown-menu" id="users">
-          <router-link
-            :to="{ name: 'users-index' }"
-            v-if="checkUserPermission(loggedUser, corePms.READ_USERS)"
-            class="nav-link"
+          <a
+            href="#"
+            class="nav-link dropdown-toggle"
+            role="button"
+            data-toggle="dropdown"
+            id="users"
+            aria-haspopup="true"
+            aria-expanded="false"
+            >Users</a
           >
-            View all users
-          </router-link>
-          <router-link
-            :to="{ name: 'users-create' }"
-            v-if="checkUserPermission(loggedUser, corePms.CREATE_USERS)"
-            class="nav-link"
+          <div class="dropdown-menu" id="users">
+            <router-link
+              :to="{ name: 'users-index' }"
+              v-if="checkUserPermission(loggedUser, corePms.READ_USERS)"
+              class="nav-link"
+            >
+              View all users
+            </router-link>
+            <router-link
+              :to="{ name: 'users-create' }"
+              v-if="checkUserPermission(loggedUser, corePms.CREATE_USERS)"
+              class="nav-link"
+            >
+              Create users
+            </router-link>
+          </div>
+        </li>
+        <li class="nav-item dropdown" v-if="isLoggedIn">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="permissions"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
           >
-            Create users
-          </router-link>
-        </div>
-      </li>
-      <li class="nav-item dropdown" v-if="isLoggedIn">
-        <a
-          class="nav-link dropdown-toggle"
-          href="#"
-          id="permissions"
-          role="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          Permissions test
-        </a>
-        <div class="dropdown-menu" id="permissions">
-          <router-link
-            :to="{ name: 'me2' }"
+            Permissions test
+          </a>
+          <div class="dropdown-menu" id="permissions">
+            <router-link
+              :to="{ name: 'me2' }"
+              class="nav-link"
+              v-if="checkUserPermission(loggedUser, corePms.READ_USERS)"
+            >
+              Showed only if you have permission
+            </router-link>
+            <router-link :to="{ name: 'me2' }" class="nav-link">
+              Showed even if you don't have permission
+            </router-link>
+            <router-link :to="{ name: 'me' }" class="nav-link">
+              You don't need permission here
+            </router-link>
+          </div>
+        </li>
+        <li class="nav-item" v-if="isLoggedIn">
+          <a
+            href="#"
             class="nav-link"
-            v-if="checkUserPermission(loggedUser, corePms.READ_USERS)"
+            @click.prevent="logout"
+            :class="[{ disabled: isLoggingOut }]"
+            >Log out</a
           >
-            Showed only if you have permission
-          </router-link>
-          <router-link :to="{ name: 'me2' }" class="nav-link">
-            Showed even if you don't have permission
-          </router-link>
-          <router-link :to="{ name: 'me' }" class="nav-link">
-            You don't need permission here
-          </router-link>
-        </div>
-      </li>
-      <li class="nav-item" v-if="isLoggedIn">
-        <a
-          href="#"
-          class="nav-link"
-          @click.prevent="logout"
-          :class="[{ disabled: isLoggingOut }]"
-          >Log out</a
-        >
-      </li>
-    </ul>
+        </li>
+      </ul>
+    </div>
   </nav>
 </template>
 <script>
