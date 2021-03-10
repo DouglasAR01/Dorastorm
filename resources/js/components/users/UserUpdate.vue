@@ -60,66 +60,8 @@
           Change password
         </button>
         <div v-if="changing_password">
-          <form>
-            <div class="form-group">
-              <label for="cpassword">Current password</label>
-              <input
-                type="password"
-                name="cpassword"
-                class="form-control"
-                v-model="upd_user_password.current_password"
-                :class="[{'is-invalid': errorFor('current_password')}]"
-              />
-              <validation-error :errors="errorFor('current_password')"></validation-error>
-            </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input
-                type="password"
-                name="password"
-                class="form-control"
-                v-model="upd_user_password.password"
-                :class="[{'is-invalid': errorFor('password')}]"
-              />
-              <validation-error :errors="errorFor('password')"></validation-error>
-            </div>
-            <div class="form-group">
-              <label for="confirm_password">Confirm password</label>
-              <input
-                type="password"
-                name="confirm_password"
-                class="form-control"
-                v-model="upd_user_password.password_confirmation"
-                :class="[{'is-invalid': errorFor('password_confirmation')}]"
-              />
-              <validation-error :errors="errorFor('password_confirmation')"></validation-error>
-              <small
-                v-if="
-                  !fieldConfirmed(
-                    upd_user_password.password,
-                    upd_user_password.password_confirmation
-                  )
-                "
-                class="text-danger"
-                >The passwords doesn't match</small
-              >
-            </div>
-          </form>
-          <button
-            class="btn btn-primary mr-1"
-            @click.prevent="submitPassword"
-            :disabled="
-              loading ||
-              submiting ||
-              !fieldConfirmed(upd_user_password.password, upd_user_password.password_confirmation)
-            "
-          >
-            Update password
-          </button>
-          <button class="btn btn-danger" @click.prevent="changePassword">
-            Cancel
-          </button>
-        </div>
+          <user-password-update :user_id="user_id" @cancel="changePassword"></user-password-update>
+        </div>        
       </div>
     </div>
   </div>
@@ -132,10 +74,12 @@ import ErrorTraits from "../../shared/mixins/error-traits";
 import ValidationError from "../../shared/components/ValidationError";
 import PermissionsHandling from "../../shared/mixins/permissions-handling";
 import Auth from "../../services/auth";
+import UserPasswordUpdate from "./UserPasswordUpdate";
 export default {
   mixins: [FormTraits, ErrorTraits, PermissionsHandling],
   components: {
-    ValidationError
+    ValidationError,
+    UserPasswordUpdate
   },
   data() {
     return {
@@ -146,11 +90,6 @@ export default {
       available_roles: null,
       updated_user: null,
       user_id: null,
-      upd_user_password: {
-        password: null,
-        password_confirmation: null,
-        current_password: null,
-      },
     };
   },
   async created() {
@@ -205,22 +144,7 @@ export default {
         }
       }
       this.submiting = false;
-    },
-    async submitPassword() {
-      this.submiting = true;
-      try {
-        await axios.patch("/api/users/" + this.user_id + "/password", this.upd_user_password);
-        this.$toasts.success("The changes were made successfully.");
-      } catch (error) {
-        if (Responses.is404(error)) {
-          this.$toasts.error("We couldn't find the specified user.");
-        }
-        if (Responses.is422(error)) {
-          this.errors = error.response.data.errors;
-        }
-      }
-      this.submiting = false;
-    },
-  },
+    }
+  }
 };
 </script>
