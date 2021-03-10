@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex w-50 m-auto align-items-center">
     <div class="card card-body">
-      <form>
+      <form @submit.prevent="login">
         <div class="form-group">
           <label for="email">Email</label>
           <input
@@ -10,6 +10,7 @@
             name="email"
             v-model="user.email"
             :class="[{ 'is-invalid': errorFor('email') }]"
+            required
           />
           <validation-error :errors="errorFor('email')"></validation-error>
         </div>
@@ -21,6 +22,7 @@
             name="password"
             v-model="user.password"
             :class="[{ 'is-invalid': errorFor('password') }]"
+            required
           />
           <validation-error :errors="errorFor('password')"></validation-error>
         </div>
@@ -44,13 +46,7 @@
             >
           </div>
         </div>
-        <button
-          class="btn btn-block btn-primary"
-          @click.prevent="login"
-          :disabled="loading"
-        >
-          Submit
-        </button>
+        <input type="submit" value="Submit" class="btn btn-primary btn-block" :disabled="loading">
       </form>
     </div>
   </div>

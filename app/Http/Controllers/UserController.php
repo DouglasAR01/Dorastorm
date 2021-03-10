@@ -41,7 +41,8 @@ class UserController extends Controller
         $validation_rules = [
             'name' => 'required|string|max:191',
             'email' => 'required|unique:users|email|max:191',
-            'password' => 'required|string|max:191|min:6',
+            'password' => 'required|string|max:191|min:6|confirmed',
+            'password_confirmation' => 'required|string|max:191|min:6',
             'role_id' => [
                 'bail',
                 'required',

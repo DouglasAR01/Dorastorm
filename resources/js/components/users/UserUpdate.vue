@@ -5,7 +5,7 @@
       <div v-if="!success">Fatal error</div>
       <div v-else>
         <h3>Personal information</h3>
-        <form>
+        <form @submit.prevent="submit">
           <div class="form-group">
             <label for="name">User name:</label>
             <input
@@ -14,6 +14,7 @@
               class="form-control"
               :placeholder="updated_user.name"
               v-model="updated_user.name"
+              required
             />
           </div>
           <div class="form-group">
@@ -24,9 +25,16 @@
               class="form-control"
               :placeholder="updated_user.email"
               v-model="updated_user.email"
+              required
             />
           </div>
-          <div class="form-group" v-if="checkUserPermission(loggedUser, corePms.UPDATE_USERS) && available_roles.length > 0">
+          <div
+            class="form-group"
+            v-if="
+              checkUserPermission(loggedUser, corePms.UPDATE_USERS) &&
+              available_roles.length > 0
+            "
+          >
             <label for="role_id">Select the user role</label>
             <select
               name="role_id"
@@ -43,13 +51,12 @@
               </option>
             </select>
           </div>
-          <button
+          <input
+            type="submit"
+            value="Update"
             class="btn btn-primary btn-block"
-            @click.prevent="submit"
             :disabled="submiting"
-          >
-            Update
-          </button>
+          />
         </form>
         <hr />
         <button
@@ -60,8 +67,11 @@
           Change password
         </button>
         <div v-if="changing_password">
-          <user-password-update :user_id="user_id" @cancel="changePassword"></user-password-update>
-        </div>        
+          <user-password-update
+            :user_id="user_id"
+            @cancel="changePassword"
+          ></user-password-update>
+        </div>
       </div>
     </div>
   </div>
@@ -79,7 +89,7 @@ export default {
   mixins: [FormTraits, ErrorTraits, PermissionsHandling],
   components: {
     ValidationError,
-    UserPasswordUpdate
+    UserPasswordUpdate,
   },
   data() {
     return {
@@ -144,7 +154,7 @@ export default {
         }
       }
       this.submiting = false;
-    }
-  }
+    },
+  },
 };
 </script>

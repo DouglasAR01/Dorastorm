@@ -1,6 +1,6 @@
 <template>
   <div class="container rounded bg-white p-3">
-    <form>
+    <form @submit.prevent="submit">
       <div class="form-group">
         <label for="name">User name:</label>
         <input
@@ -9,6 +9,7 @@
           class="form-control"
           v-model="new_user.name"
           :class="[{ 'is-invalid': errorFor('name') }]"
+          required
         />
         <validation-error :errors="errorFor('name')"></validation-error>
       </div>
@@ -20,6 +21,7 @@
           class="form-control"
           v-model="new_user.email"
           :class="[{ 'is-invalid': errorFor('email') }]"
+          required
         />
         <validation-error :errors="errorFor('email')"></validation-error>
       </div>
@@ -31,6 +33,7 @@
           class="form-control"
           v-model="new_user.password"
           :class="[{ 'is-invalid': errorFor('password') }]"
+          required
         />
         <validation-error :errors="errorFor('password')"></validation-error>
       </div>
@@ -40,9 +43,13 @@
           type="password"
           name="confirm_password"
           class="form-control"
-          v-model="confirmation_field"
+          v-model="new_user.password_confirmation"
+          :class="[{ 'is-invalid': errorFor('password_confirmation') }]"
+          required
         />
-        <small v-if="!fieldConfirmed(new_user.password, confirmation_field)" class="text-danger">The passwords doesn't match</small>
+        <validation-error :errors="errorFor('password_confirmation')"></validation-error>
+        <small v-if="!fieldConfirmed(new_user.password, new_user.password_confirmation)" class="text-danger">The passwords doesn't match</small>
+        
       </div>
       <div class="form-group">
         <div v-if="!loading">
@@ -52,6 +59,7 @@
             class="custom-select form-control"
             v-model="new_user.role_id"
             :class="[{ 'is-invalid': errorFor('role_id') }]"
+            required
           >
             <option disabled value="">Select a role</option>
             <option
@@ -65,17 +73,11 @@
           <validation-error :errors="errorFor('role_id')"></validation-error>
         </div>
       </div>
-      <button
-        class="btn btn-primary btn-block"
-        @click.prevent="submit"
-        :disabled="
+      <input type="submit" value="Create user" class="btn btn-primary btn-block" :disabled="
           loading ||
-          submiting ||
-          !fieldConfirmed(new_user.password, confirmation_field)
-        "
-      >
-        Submit
-      </button>
+          submitting ||
+          !fieldConfirmed(new_user.password, new_user.password_confirmation)
+        ">
     </form>
   </div>
 </template>
@@ -93,12 +95,13 @@ export default {
   data() {
     return {
       loading: false,
-      submiting: false,
+      submitting: false,
       available_roles: null,
       new_user: {
         name: null,
         email: null,
         password: null,
+        password_confirmation: null,
         role_id: "",
       },
     };
@@ -115,12 +118,11 @@ export default {
   },
   methods: {
     async submit() {
-      this.submiting = true;
+      this.submitting = true;
       try {
         let user = (await axios.post("/api/users", this.new_user)).data;
-        this.submiting = false;
+        this.submitting = false;
         this.$toasts.success("User created!");
-        this.confirmation_field = null;
         this.new_user = Obj.clone(this.form_initial_state);
         // Send to UserView
       } catch (error) {
@@ -128,7 +130,7 @@ export default {
           this.errors = error.response.data.errors;
         }
       }
-      this.submiting = false;
+      this.submitting = false;
     },
   },
 };

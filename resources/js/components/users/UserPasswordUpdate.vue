@@ -8,6 +8,7 @@
         class="form-control"
         v-model="payload.current_password"
         :class="[{ 'is-invalid': errorFor('current_password') }]"
+        required
       />
       <validation-error
         :errors="errorFor('current_password')"
@@ -21,6 +22,7 @@
         class="form-control"
         v-model="payload.password"
         :class="[{ 'is-invalid': errorFor('password') }]"
+        required
       />
       <validation-error :errors="errorFor('password')"></validation-error>
     </div>
@@ -32,6 +34,7 @@
         class="form-control"
         v-model="payload.password_confirmation"
         :class="[{ 'is-invalid': errorFor('password_confirmation') }]"
+        required
       />
       <validation-error
         :errors="errorFor('password_confirmation')"

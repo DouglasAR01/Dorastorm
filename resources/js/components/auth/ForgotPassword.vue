@@ -1,7 +1,7 @@
 <template>
   <div class="container rounded bg-white p-2">
     <h2>Forgot Password</h2>
-    <form>
+    <form @submit.prevent="submit">
       <div class="form-group">
         <label for="email">User E-mail:</label>
         <input
@@ -10,16 +10,11 @@
           class="form-control"
           v-model="email"
           :class="[{ 'is-invalid': errorFor('email') }]"
+          required
         />
         <validation-error :errors="errorFor('email')"></validation-error>
       </div>
-      <button
-        class="btn btn-primary btn-block"
-        @click.prevent="submit"
-        :disabled="loading"
-      >
-        Submit
-      </button>
+      <input type="submit" value="Submit" class="btn btn-primary btn-block" :disabled="loading">
     </form>
   </div>
 </template>
