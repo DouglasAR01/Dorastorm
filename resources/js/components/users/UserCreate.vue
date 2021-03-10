@@ -87,6 +87,7 @@ import ErrorTraits from "../../shared/mixins/error-traits";
 import FormTraits from "../../shared/mixins/form-traits";
 import ValidationError from "../../shared/components/ValidationError";
 import Obj from "../../shared/utils/object-utils";
+import Auth from "../../services/auth";
 export default {
   mixins: [ErrorTraits, FormTraits],
   components: {
@@ -110,7 +111,7 @@ export default {
     this.form_initial_state = Obj.clone(this.new_user);
     try {
       this.loading = true;
-      this.available_roles = (await axios.get("/api/roles/below")).data.data;
+      this.available_roles = (await Auth.userRolesBelow()).data.data;
       this.loading = false;
     } catch (error) {
       this.$toasts.error("Something went wrong. Try again later.");

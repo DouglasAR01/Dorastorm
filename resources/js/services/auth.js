@@ -59,5 +59,9 @@ export default {
 
     async resetPassword (payload) {
         return axios.post('/api/reset-password', payload);
+    },
+
+    async userRolesBelow () {
+        return axios.get('/api/user/roles-below');
     }
 }

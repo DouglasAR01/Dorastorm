@@ -106,7 +106,6 @@ export default {
     this.loading = true;
     this.user_id = this.$store.getters.getUserID;
     this.updated_user = Obj.clone(this.$store.state.user);
-    console.log(!Obj.isEmpty(this.$route.query) && this.$route.query.user_id);
     if (!Obj.isEmpty(this.$route.query) && this.$route.query.user_id) {
       this.user_id = this.$route.query.user_id;
     }
@@ -123,7 +122,7 @@ export default {
       }
     }
     // Improve
-    this.available_roles = (await axios.get("/api/roles/below")).data.data;
+    this.available_roles = (await Auth.userRolesBelow()).data.data;
     this.loading = false;
   },
   methods: {

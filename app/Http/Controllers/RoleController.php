@@ -66,14 +66,6 @@ class RoleController extends Controller
         return $role;
     }
 
-    public function showRolesBelow(Request $request)
-    {
-        $user_hierarchy = $request->user()->role->hierarchy;
-        // If the user is an ADMIN (hierarchy = 0), search for all roles        
-        $roles_below = Role::where('hierarchy','>', ($user_hierarchy===0) ? -1 : $user_hierarchy )->get();
-        return RoleResource::collection($roles_below);
-    }
-
     /**
      * Update the specified resource in storage.
      *

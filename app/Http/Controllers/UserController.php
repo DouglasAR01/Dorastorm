@@ -2,18 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\RoleResource;
 use App\Http\Resources\UserResource;
 use App\Models\Role;
 use App\Models\User;
 use App\Rules\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
     public function showMe(Request $request)
     {
         return new UserResource($request->user());
+    }
+
+    public function rolesBelow(Request $request)
+    {
+        return RoleResource::collection($request->user()->rolesBelow());
     }
 
     public function index(Request $request)
@@ -38,21 +45,15 @@ class UserController extends Controller
         if ($request->user()->cannot('create', User::class)) {
             abort(403);
         }
-        $validation_rules = [
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:191',
             'email' => 'required|unique:users|email|max:191',
             'password' => 'required|string|max:191|min:6|confirmed',
             'password_confirmation' => 'required|string|max:191|min:6',
-            'role_id' => [
-                'bail',
-                'required',
-                'numeric',
-                'min:1',
-                'exists:roles,id',
-                new UserRole($request->user()->role)
-            ]
-        ];
-        $data = $request->validate($validation_rules);
+            'role_id' => 'nullable',
+        ]);
+        $this->addRoleValidationRules($request->user()->role, $validator);
+        $data = $validator->validate();
         $new_user = User::make($data);
         $new_user->role_id = $data['role_id'];
         $new_user->password = Hash::make($data['password']);
@@ -66,30 +67,13 @@ class UserController extends Controller
         if ($request->user()->cannot('update', $user)) {
             abort(403);
         }
-        $validation_rules = [
-            'name' => 'required|string|max:191',
-            'email' => 'required|email|max:191|unique:users,email,' . $user->id,
-            'role_id' => [
-                'bail',
-                'required',
-                'numeric',
-                'min:1',
-                'exists:roles,id',
-                new UserRole($request->user()->role)
-            ]
-        ];
-        $att_to_update = $request->request->keys();
-
-        // Start of the differential validating
-        $differential_validation = [];
-        foreach ($att_to_update as $att) {
-            // Prevent validating null values and adding non existent validation rules
-            if (!empty($request->$att) && array_key_exists($att, $validation_rules)) {
-                $differential_validation[$att] = $validation_rules[$att];
-            }
-        }
-        $data = $request->validate($differential_validation);
-
+        $validator = Validator::make($request->all(), [
+            'name' => 'sometimes|required|string|max:191',
+            'email' => 'sometimes|required|email|max:191|unique:users,email,' . $user->id,
+            'role_id' => 'nullable'
+        ]);
+        $this->addRoleValidationRules($request->user()->role, $validator);
+        $data = $validator->validate();
         // Check if the user is the last admin left and he is trying to change his role
         if (
             $user->role->hierarchy === 0 && !empty($data['role_id']) &&
@@ -99,9 +83,8 @@ class UserController extends Controller
         }
 
         // Start of the differential updating
-        $att_to_update = array_keys($differential_validation);
-        foreach ($att_to_update as $att) {
-            $user->$att = $data[$att];
+        foreach ($data as $att => $value) {
+            $user->$att = $value;
         }
         $user->save();
     }
@@ -152,5 +135,19 @@ class UserController extends Controller
             return true;
         }
         return false;
+    }
+
+    private function addRoleValidationRules($user_role, $validator)
+    {
+        $validator->sometimes('role_id', [
+            'bail',
+            'required',
+            'numeric',
+            'min:1',
+            'exists:roles,id',
+            new UserRole($user_role)
+        ], function ($input){
+            return !($input->role_id===null);
+        });
     }
 }

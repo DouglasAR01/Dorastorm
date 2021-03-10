@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+    
 
     /**
      * The attributes that should be hidden for arrays.
@@ -44,14 +45,24 @@ class User extends Authenticatable
 
     public function role()
     {
-        return $this->belongsTo(Role::class)->withDefault([
-            'name' => 'STANDARD',
-            'hierarchy' => 16777215
-        ]);
+        return $this->belongsTo(Role::class)->withDefault(config('roles.default_role'));
     }
 
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function rolesBelow()
+    {
+        $user_hierarchy = $this->role->hierarchy;
+        
+        if ($user_hierarchy===config(('roles.default_role.hierarchy'))){
+            return collect([]);
+        }
+        
+        $roles_below = Role::where('hierarchy','>', ($user_hierarchy===0) ? -1 : $user_hierarchy )->get();
+        $roles_below->push(Role::makeDefault());
+        return $roles_below;
     }
 }
