@@ -6,6 +6,7 @@ import Permissions from "./role-permissions";
 import Home from "../components/Home";
 import Login from "../components/auth/Login";
 import ForgotPassword from "../components/auth/ForgotPassword";
+import ResetPassword from "../components/auth/ResetPassword";
 import UserHome from "../components/users/UserHome";
 import UserCreate from "../components/users/UserCreate";
 import UserUpdate from "../components/users/UserUpdate";
@@ -23,6 +24,14 @@ const routes = [
         path: '/forgot-password',
         component: ForgotPassword,
         name: 'forgot-password',
+        meta: {
+            guest: true
+        }
+    },
+    {
+        path: '/reset-password',
+        component: ResetPassword,
+        name: 'reset-password',
         meta: {
             guest: true
         }

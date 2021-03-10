@@ -51,7 +51,11 @@ export default {
         return;
       }
       try {
-        await Auth.forgotPassword({ email: this.email });
+        let msg = (await Auth.forgotPassword({ email: this.email })).data.message;
+        this.$toasts.success(msg);
+        this.$router.push({
+          name: 'home'
+        });
       } catch (error) {
         if (is422(error)) {
           this.errors = error.response.data.errors;

@@ -147,6 +147,7 @@ export default {
     this.loading = true;
     this.user_id = this.$store.getters.getUserID;
     this.updated_user = Obj.clone(this.$store.state.user);
+    console.log(!Obj.isEmpty(this.$route.query) && this.$route.query.user_id);
     if (!Obj.isEmpty(this.$route.query) && this.$route.query.user_id) {
       this.user_id = this.$route.query.user_id;
     }
