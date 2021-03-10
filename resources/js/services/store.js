@@ -38,13 +38,10 @@ export default {
     },
     getters: {
         getUserID: state => {
-            if (auth.isUserHere()) {
-                return state.user.id;
-            }
-            return null;
+            return (state.user)? state.user.id : null;
         },
         getUserHierarchy: state => {
-            return state.user.role.hierarchy;
+            return (state.user)? state.user.role.hierarchy : null;
         }
     }
 }
