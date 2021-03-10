@@ -68,7 +68,9 @@
                 name="cpassword"
                 class="form-control"
                 v-model="upd_user_password.current_password"
+                :class="[{'is-invalid': errorFor('current_password')}]"
               />
+              <validation-error :errors="errorFor('current_password')"></validation-error>
             </div>
             <div class="form-group">
               <label for="password">Password</label>
@@ -77,7 +79,9 @@
                 name="password"
                 class="form-control"
                 v-model="upd_user_password.password"
+                :class="[{'is-invalid': errorFor('password')}]"
               />
+              <validation-error :errors="errorFor('password')"></validation-error>
             </div>
             <div class="form-group">
               <label for="confirm_password">Confirm password</label>
@@ -85,13 +89,15 @@
                 type="password"
                 name="confirm_password"
                 class="form-control"
-                v-model="confirmation_field"
+                v-model="upd_user_password.password_confirmation"
+                :class="[{'is-invalid': errorFor('password_confirmation')}]"
               />
+              <validation-error :errors="errorFor('password_confirmation')"></validation-error>
               <small
                 v-if="
                   !fieldConfirmed(
                     upd_user_password.password,
-                    confirmation_field
+                    upd_user_password.password_confirmation
                   )
                 "
                 class="text-danger"
@@ -105,7 +111,7 @@
             :disabled="
               loading ||
               submiting ||
-              !fieldConfirmed(upd_user_password.password, confirmation_field)
+              !fieldConfirmed(upd_user_password.password, upd_user_password.password_confirmation)
             "
           >
             Update password
@@ -123,10 +129,14 @@ import * as Responses from "../../shared/utils/responses";
 import Obj from "../../shared/utils/object-utils";
 import FormTraits from "../../shared/mixins/form-traits";
 import ErrorTraits from "../../shared/mixins/error-traits";
+import ValidationError from "../../shared/components/ValidationError";
 import PermissionsHandling from "../../shared/mixins/permissions-handling";
 import Auth from "../../services/auth";
 export default {
   mixins: [FormTraits, ErrorTraits, PermissionsHandling],
+  components: {
+    ValidationError
+  },
   data() {
     return {
       loading: false,
@@ -137,8 +147,8 @@ export default {
       updated_user: null,
       user_id: null,
       upd_user_password: {
-        id: null,
         password: null,
+        password_confirmation: null,
         current_password: null,
       },
     };
@@ -198,9 +208,8 @@ export default {
     },
     async submitPassword() {
       this.submiting = true;
-      this.upd_user_password.id = this.updated_user.id;
       try {
-        await axios.patch("/api/users/" + this.user_id, this.upd_user_password);
+        await axios.patch("/api/users/" + this.user_id + "/password", this.upd_user_password);
         this.$toasts.success("The changes were made successfully.");
       } catch (error) {
         if (Responses.is404(error)) {

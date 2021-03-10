@@ -19,8 +19,9 @@ Route::get('/posts/{post}','PostController@show')->name('posts.show');
 
 Route::middleware('auth:sanctum')->group(function () {
     // Your protected routes goes here
-    Route::get('/user', 'UserController@showMe');
-    Route::resource('/users', 'UserController')->except(['create']);
+    Route::get('/user', 'UserController@showMe')->name('users.data');
+    Route::patch('/users/{user}/password', 'UserController@updatePassword')->name('users.password');
+    Route::resource('/users', 'UserController')->except(['create', 'edit']);
     Route::get('/roles/below', 'RoleController@showRolesBelow')->name('roles.below');
     Route::resource('/roles','RoleController')->except(['create', 'edit']);
     Route::resource('/posts','PostController')->only(['store','update','destroy']);

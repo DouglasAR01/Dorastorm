@@ -12,7 +12,7 @@
           :class="[{ 'is-invalid': errorFor('email') }]"
           required
         />
-        <validation-error :error="errorFor('email')"></validation-error>
+        <validation-error :errors="errorFor('email')"></validation-error>
       </div>
       <div class="form-group">
         <label for="password">New password:</label>
@@ -24,7 +24,7 @@
           :class="[{ 'is-invalid': errorFor('password') }]"
           required
         />
-        <validation-error :error="errorFor('password')"></validation-error>
+        <validation-error :errors="errorFor('password')"></validation-error>
       </div>
       <div class="form-group">
         <label for="cpassword">Confirm password:</label>
@@ -37,7 +37,7 @@
           required
         />
         <validation-error
-          :error="errorFor('password_confirmation')"
+          :errors="errorFor('password_confirmation')"
         ></validation-error>
       </div>
       <input

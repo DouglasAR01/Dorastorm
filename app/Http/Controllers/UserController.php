@@ -68,18 +68,6 @@ class UserController extends Controller
         $validation_rules = [
             'name' => 'required|string|max:191',
             'email' => 'required|email|max:191|unique:users,email,' . $user->id,
-            'password' => 'required|string|max:191|min:6',
-            'cpassword' => [
-                'required',
-                'string',
-                'max:191',
-                'min:6',
-                function ($attribute, $value, $fail) use ($user){
-                    if (!Hash::check($value, $user->password)){
-                        $fail('Wrong password.');
-                    }
-                }
-            ],
             'role_id' => [
                 'bail',
                 'required',
@@ -103,8 +91,8 @@ class UserController extends Controller
 
         // Check if the user is the last admin left and he is trying to change his role
         if (
-            $user->role->hierarchy === 0 && !empty($request->role_id) &&
-            $user->role->id != $request->role_id && $this->isLastAdminLeft($user)
+            $user->role->hierarchy === 0 && !empty($data['role_id']) &&
+            $user->role->id != $data['role_id'] && $this->isLastAdminLeft($user)
         ) {
             abort(406, trans('validation.custom.user_destroy.sole_admin'));
         }
@@ -112,8 +100,33 @@ class UserController extends Controller
         // Start of the differential updating
         $att_to_update = array_keys($differential_validation);
         foreach ($att_to_update as $att) {
-            $user->$att = ($att == 'password') ? Hash::make($data[$att]) : $data[$att];
+            $user->$att = $data[$att];
         }
+        $user->save();
+    }
+
+    public function updatePassword(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        if ($request->user()->cannot('update', $user)) {
+            abort(403);
+        }
+        $data = $request->validate([
+            'password' => 'required|string|max:191|min:6|confirmed',
+            'password_confirmation' => 'required|string|min:6',
+            'current_password' => [
+                'required',
+                'string',
+                'max:191',
+                'min:6',
+                function ($attribute, $value, $fail) use ($user) {
+                    if (!Hash::check($value, $user->password)) {
+                        $fail(trans('auth.password'));
+                    }
+                }
+            ],
+        ]);
+        $user->password = Hash::make($data['password']);
         $user->save();
     }
 
