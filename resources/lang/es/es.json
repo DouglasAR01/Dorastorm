@@ -1,0 +1,82 @@
+{
+    "error": {
+        "fatal": "Algo salió muy mal. Intenta más tarde.",
+        "403": {
+            "default_title": "403: No deberías estar aquí",
+            "default_message": "¿Qué estás intentando hacer?"
+        },
+        "404": {
+            "default_title": "404: Ups!",
+            "default_message": "¿A dónde vas?",
+            "specific": {
+                "user": "No pudimos encontrar el usuario especificado."
+            } 
+        },
+        "406": {
+            "default_title": "406: Not acceptable",
+            "defalt_message": "",
+            "specific": {
+                "last_admin": "¡Eres el último administrador restante!"
+            }
+        },
+        "validation": {
+            "confirm_password": "Las contraseñas no coinciden."
+        }
+
+    },
+    "modules": {
+        "users": {
+            "create": "Crear un usuario",
+            "created": "¡Usuario creado!",
+            "read": "Ver datos del usuario",
+            "update": "Modificar datos del usuario",
+            "delete": "Eliminar usuario",
+            "delete_warning": "¿Estás seguro de querer eliminar este usuario? Esta acción no se puede deshacer.",
+            "deleted": "El usuario ha sido eliminado.",
+            "role": "Rol",
+            "role_select": "Selecciona el rol del usuario:",
+            "role_default": "Selecciona un rol",
+            "name": "Nombre del usuario:",
+            "name2": "Nombre",
+            "list": "Lista de usuarios",
+            "user_info": "Información del usuario",
+            "change_password": "Cambia la contraseña",
+            "password_changed": "La contraseña ha sido modificada con éxito."
+        }
+    },
+    "navbar": {
+        "users": {
+            "users": "Usuarios",
+            "create": "Crear usuarios",
+            "read": "Lista de usuarios"
+        },
+        "permissions": {
+            "title": "Tests de permisos",
+            "only": "Solo se muestra con permiso",
+            "even": "Se muestra incluso sin permiso",
+            "any": "Aquí no se necesita ningún permiso"
+        },
+        "login": "Iniciar sesión",
+        "logout": "Cerrar sesión"
+    },
+
+    "message": {
+        "powered": "Impulsado por Nuwebs usando Dorastorm™",
+        "email": "Correo electrónico:",
+        "password": "Contraseña:",
+        "remember_me": "Recuerdame",
+        "forgot_password": "Olvidé la contraseña",
+        "confirm_password": "Confirmación de contraseña:",
+        "reset_password": "Restablecimiento de contraseña",
+        "new_password": "Nueva contraseña:",
+        "current_password": "Contraseña actual",
+        "submit": "Enviar",
+        "delete": "Eliminar",
+        "cancel": "Cancelar",
+        "member_since": "Miembro desde:",
+        "id": "ID",
+        "action": "Acción",
+        "loading": "Cargando...",
+        "data_changed": "Los cambios se realizaron con éxito."
+    }
+}
