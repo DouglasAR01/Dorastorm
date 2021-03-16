@@ -18,7 +18,7 @@
       <ul class="navbar-nav ml-auto">
         <li class="nav-item" v-if="!isLoggedIn">
           <router-link :to="{ name: 'login' }" class="nav-link">
-            Log in
+            {{$t("navbar.login")}}
           </router-link>
         </li>
         <li
@@ -40,7 +40,7 @@
             id="users"
             aria-haspopup="true"
             aria-expanded="false"
-            >Users</a
+            >{{ $t("navbar.users.users") }}</a
           >
           <div class="dropdown-menu" id="users">
             <router-link
@@ -48,14 +48,14 @@
               v-if="checkUserPermission(loggedUser, corePms.READ_USERS)"
               class="nav-link"
             >
-              View all users
+              {{ $t("navbar.users.read") }}
             </router-link>
             <router-link
               :to="{ name: 'users-create' }"
               v-if="checkUserPermission(loggedUser, corePms.CREATE_USERS)"
               class="nav-link"
             >
-              Create users
+              {{ $t("navbar.users.create") }}
             </router-link>
           </div>
         </li>
@@ -69,7 +69,7 @@
             aria-haspopup="true"
             aria-expanded="false"
           >
-            Permissions test
+            {{$t("navbar.permissions.title")}}
           </a>
           <div class="dropdown-menu" id="permissions">
             <router-link
@@ -77,13 +77,13 @@
               class="nav-link"
               v-if="checkUserPermission(loggedUser, corePms.READ_USERS)"
             >
-              Showed only if you have permission
+              {{$t("navbar.permissions.only")}}
             </router-link>
             <router-link :to="{ name: 'me2' }" class="nav-link">
-              Showed even if you don't have permission
+              {{$t("navbar.permissions.even")}}
             </router-link>
             <router-link :to="{ name: 'me' }" class="nav-link">
-              You don't need permission here
+              {{$t("navbar.permissions.any")}}
             </router-link>
           </div>
         </li>
@@ -93,7 +93,7 @@
             class="nav-link"
             @click.prevent="logout"
             :class="[{ disabled: isLoggingOut }]"
-            >Log out</a
+            >{{$t("navbar.logout")}}</a
           >
         </li>
       </ul>

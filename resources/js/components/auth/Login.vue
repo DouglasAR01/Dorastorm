@@ -3,7 +3,7 @@
     <div class="card card-body">
       <form @submit.prevent="login">
         <div class="form-group">
-          <label for="email">Email</label>
+          <label for="email">{{ $t("message.email") }}</label>
           <input
             type="email"
             class="form-control"
@@ -15,7 +15,7 @@
           <validation-error :errors="errorFor('email')"></validation-error>
         </div>
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="password">{{ $t("message.password") }}</label>
           <input
             type="password"
             class="form-control"
@@ -36,17 +36,17 @@
                 name="remember"
               />
               <label for="remember" class="form-check-label"
-                >Remember me?</label
+                >{{ $t("message.remember_me") }}</label
               >
             </div>
           </div>
           <div class="col-6">
             <router-link :to="{ name: 'forgot-password' }"
-              >Forgot password</router-link
+              >{{ $t("message.forgot_password") }}</router-link
             >
           </div>
         </div>
-        <input type="submit" value="Submit" class="btn btn-primary btn-block" :disabled="loading">
+        <input type="submit" :value="$t('message.submit')" class="btn btn-primary btn-block" :disabled="loading">
       </form>
     </div>
   </div>
@@ -77,7 +77,7 @@ export default {
       try {
         await Auth.getCsrfCookie();
       } catch (error) {
-        this.$toasts.error("Something very wrong happened. Try again later.");
+        this.$toasts.error($t("error.fatal"));
       }
       try {
         // Laravel uses $request->filled('remember'), thats why if it is false you must set it to null

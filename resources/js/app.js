@@ -6,7 +6,7 @@
 
 require('./bootstrap');
 
-import router from "./services/routes";
+import Vue from "vue";
 import VueRouter from "vue-router";
 import Vuex from "vuex";
 import Index from "./Index";
@@ -16,9 +16,11 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
-// Datastore creation
+// Services
 import DataStore from "./services/store";
 import Auth from "./services/auth";
+import router from "./services/routes";
+import i18n from "./services/multilang";
 
 
 // Toast notifications
@@ -26,7 +28,7 @@ import VueMyToast from 'vue-my-toasts';
 import 'vue-my-toasts/dist/vue-my-toasts.css'
 import BootstrapComponent from "vue-my-toasts/src/components/toasts/BootstrapComponent";
 
-window.Vue = require('vue');
+//window.Vue = require('vue');
 Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.use(VueMyToast, {
@@ -66,8 +68,9 @@ window.axios.interceptors.response.use(
 store.dispatch('loadSavedData');
 const app = new Vue({
     el: '#app',
-    router: router,
-    store: store,
+    router,
+    store,
+    i18n,
     components: {
         "index": Index
     }

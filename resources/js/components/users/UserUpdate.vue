@@ -1,13 +1,13 @@
 <template>
   <div class="container rounded bg-white p-2">
-    <div v-if="loading">Loading...</div>
+    <div v-if="loading">{{ $t("message.loading") }}</div>
     <div v-else>
-      <div v-if="!success">Fatal error</div>
+      <div v-if="!success">{{ $t("error.fatal") }}</div>
       <div v-else>
-        <h3>Personal information</h3>
+        <h3>{{ $t("modules.users.user_info") }}</h3>
         <form @submit.prevent="submit">
           <div class="form-group">
-            <label for="name">User name:</label>
+            <label for="name">{{ $t("modules.users.name") }}</label>
             <input
               type="text"
               name="name"
@@ -18,7 +18,7 @@
             />
           </div>
           <div class="form-group">
-            <label for="email">User E-mail:</label>
+            <label for="email">{{ $t("message.email") }}</label>
             <input
               type="email"
               name="email"
@@ -35,13 +35,13 @@
               available_roles.length > 0
             "
           >
-            <label for="role_id">Select the user role</label>
+            <label for="role_id">{{ $t("modules.users.role_select") }}</label>
             <select
               name="role_id"
               class="custom-select form-control"
               v-model="updated_user.role.id"
             >
-              <option disabled value="">Select a role</option>
+              <option disabled value="">{{ $t("modules.users.role_default") }}</option>
               <option
                 :value="role.id"
                 v-for="role in available_roles"
@@ -64,7 +64,7 @@
           @click.prevent="changePassword"
           :class="[{ 'd-none': changing_password }]"
         >
-          Change password
+          {{ $t("modules.users.change_password") }}
         </button>
         <div v-if="changing_password">
           <user-password-update
@@ -117,7 +117,7 @@ export default {
       } catch (error) {
         this.success = false;
         if (Responses.is404(error)) {
-          this.$toasts.error("We couldn't find the specified user.");
+          this.$toasts.error($t("error.404.specific.user"));
         }
       }
     }
@@ -134,18 +134,18 @@ export default {
       this.updated_user.role_id = this.updated_user.role.id;
       try {
         await axios.patch("/api/users/" + this.user_id, this.updated_user);
-        this.$toasts.success("The changes were made successfully.");
+        this.$toasts.success($t("message.data_changed"));
         if (this.user_id === this.$store.getters.getUserID) {
           let user = await Auth.loadUser();
           this.$store.commit("setUser", user);
         }
       } catch (error) {
         if (Responses.is404(error)) {
-          this.$toasts.error("We couldn't find the specified user.");
+          this.$toasts.error($t("error.404.specific.user"));
         }
         if (Responses.is406(error)) {
           this.$toasts.error(
-            "You are the last admin left. You can not change your role."
+            $t("error.406.specific.last_admin")
           );
         }
         if (Responses.is422(error)) {

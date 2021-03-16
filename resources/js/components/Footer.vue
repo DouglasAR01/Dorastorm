@@ -1,5 +1,5 @@
 <template>
-  <div class="jumbotron jumbotron-fluid mt-auto">
+  <div class="jumbotron jumbotron-fluid mt-auto mb-0">
     <div class="row justify-content-between">
       <div class="col-auto"></div>
       <div class="col-auto">
@@ -19,7 +19,7 @@
       </div>
       <div class="col-auto"></div>
     </div>
-    <div class="row justify-content-center">Lang</div>
+    <div class="row justify-content-center">{{$t("message.powered")}}</div>
     <div class="row justify-content-center">
       <p>©Copyright {{ year }}</p>
     </div>
@@ -35,3 +35,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+.row {
+  margin-right: auto;
+  margin-left: auto;
+}
+</style>

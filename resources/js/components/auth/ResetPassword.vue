@@ -1,9 +1,9 @@
 <template>
   <div class="container rounded bg-white p-2">
-    <h2>Reset password</h2>
+    <h2>{{ $t("message.reset_password") }}</h2>
     <form @submit.prevent="submit">
       <div class="form-group">
-        <label for="email">E-mail:</label>
+        <label for="email">{{ $t("message.email") }}</label>
         <input
           type="email"
           name="email"
@@ -15,7 +15,7 @@
         <validation-error :errors="errorFor('email')"></validation-error>
       </div>
       <div class="form-group">
-        <label for="password">New password:</label>
+        <label for="password">{{ $t("message.new_password") }}</label>
         <input
           type="password"
           name="password"
@@ -27,7 +27,7 @@
         <validation-error :errors="errorFor('password')"></validation-error>
       </div>
       <div class="form-group">
-        <label for="cpassword">Confirm password:</label>
+        <label for="cpassword">{{ $t("message.confirm_password") }}</label>
         <input
           type="password"
           name="cpassword"
@@ -42,6 +42,7 @@
       </div>
       <input
         type="submit"
+        :value="$t('message.submit')"
         class="btn btn-primary btn-block"
         :disabled="submitting"
       />
@@ -76,11 +77,11 @@ export default {
       try {
         Auth.getCsrfCookie();
       } catch (error) {
-        this.$toasts.error("Something very wrong happened. Try again later.");
+        this.$toasts.error($t("error.fatal"));
       }
       try {
         Auth.resetPassword(this.payload);
-        this.$toasts.success("Your password was successfully changed.");
+        this.$toasts.success($t("modules.users.password_changed"));
         this.$router.push({
           name: "login",
         });

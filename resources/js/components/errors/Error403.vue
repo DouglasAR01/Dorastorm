@@ -1,7 +1,7 @@
 <template>
   <div class="container rounded py-2 bg-white">
-    <h1 class="display-2">403: You shouldn't be here</h1>
+    <h1 class="display-2">{{ $t("error.403.default_title") }}</h1>
     <hr>
-    <p class="lead">What are you trying to do?</p>
+    <p class="lead">{{ $t("error.403.default_message") }}</p>
   </div>
 </template>

@@ -1,12 +1,12 @@
 <template>
   <div class="card text-center card-body">
-    <h3 class="card-title"><strong>User:</strong> {{ name }}</h3>
+    <h3 class="card-title"><strong>{{ $t("modules.users.name") }}</strong> {{ name }}</h3>
     <hr />
-    <p class="card-text"><strong>Email:</strong> {{ email }}</p>
+    <p class="card-text"><strong>{{ $t("message.email") }}</strong> {{ email }}</p>
     <hr />
     <div class="" v-if="role">
       <p class="card-text">
-        <strong>Role:</strong>
+        <strong>{{ $t("modules.users.role") }}</strong>
         <span>
           {{ role.name }}
         </span>
@@ -14,7 +14,7 @@
       <hr />
     </div>
 
-    <p class="card-text text-muted">Member since: {{ created_at | fromNow }}</p>
+    <p class="card-text text-muted">{{ $t("messages.member_since") }}{{ created_at | fromNow }}</p>
   </div>
 </template>
 <script>

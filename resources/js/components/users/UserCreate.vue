@@ -2,7 +2,7 @@
   <div class="container rounded bg-white p-3">
     <form @submit.prevent="submit">
       <div class="form-group">
-        <label for="name">User name:</label>
+        <label for="name">{{ $t("modules.users.name") }}</label>
         <input
           type="text"
           name="name"
@@ -14,7 +14,7 @@
         <validation-error :errors="errorFor('name')"></validation-error>
       </div>
       <div class="form-group">
-        <label for="email">E-mail:</label>
+        <label for="email">{{ $t("message.email") }}</label>
         <input
           type="email"
           name="email"
@@ -26,7 +26,7 @@
         <validation-error :errors="errorFor('email')"></validation-error>
       </div>
       <div class="form-group">
-        <label for="password">Password:</label>
+        <label for="password">{{ $t("message.password") }}</label>
         <input
           type="password"
           name="password"
@@ -38,7 +38,7 @@
         <validation-error :errors="errorFor('password')"></validation-error>
       </div>
       <div class="form-group">
-        <label for="confirm_password">Confirm password:</label>
+        <label for="confirm_password">{{ $t("message.confirm_password") }}</label>
         <input
           type="password"
           name="confirm_password"
@@ -53,7 +53,7 @@
       </div>
       <div class="form-group">
         <div v-if="!loading">
-          <label for="role_id">Select the user role</label>
+          <label for="role_id">{{ $t("modules.users.role_select") }}</label>
           <select
             name="role_id"
             class="custom-select form-control"
@@ -61,7 +61,7 @@
             :class="[{ 'is-invalid': errorFor('role_id') }]"
             required
           >
-            <option disabled value="">Select a role</option>
+            <option disabled value="">{{ $t("modules.users.role_default") }}</option>
             <option
               :value="role.id"
               v-for="role in available_roles"
@@ -114,7 +114,7 @@ export default {
       this.available_roles = (await Auth.userRolesBelow()).data.data;
       this.loading = false;
     } catch (error) {
-      this.$toasts.error("Something went wrong. Try again later.");
+      this.$toasts.error($t("error.fatal"));
     }
   },
   methods: {
@@ -123,7 +123,7 @@ export default {
       try {
         let user = (await axios.post("/api/users", this.new_user)).data;
         this.submitting = false;
-        this.$toasts.success("User created!");
+        this.$toasts.success($t("modules.users.created"));
         this.new_user = Obj.clone(this.form_initial_state);
         // Send to UserView
       } catch (error) {

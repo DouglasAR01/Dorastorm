@@ -1,9 +1,9 @@
 <template>
   <div class="container rounded bg-white p-2">
-    <h2>Forgot Password</h2>
+    <h2>{{ $t("message.forgot_password") }}</h2>
     <form @submit.prevent="submit">
       <div class="form-group">
-        <label for="email">User E-mail:</label>
+        <label for="email">{{ $t("message.email") }}</label>
         <input
           type="email"
           name="email"
@@ -14,7 +14,7 @@
         />
         <validation-error :errors="errorFor('email')"></validation-error>
       </div>
-      <input type="submit" value="Submit" class="btn btn-primary btn-block" :disabled="loading">
+      <input type="submit" :value="$t('message.submit')" class="btn btn-primary btn-block" :disabled="loading">
     </form>
   </div>
 </template>
@@ -42,7 +42,7 @@ export default {
       try {
         await Auth.getCsrfCookie();
       } catch (error) {
-        this.$toasts.error("Something very wrong happened. Try again later.");
+        this.$toasts.error($t("error.fatal"));
         return;
       }
       try {

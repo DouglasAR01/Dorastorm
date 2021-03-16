@@ -4,7 +4,7 @@
 			<user-data-card v-bind="user"></user-data-card>
 		</div>
 		<div v-else>
-			<p class="lead">Loading...</p>
+			<p class="lead">{{ $t("message.loading") }}</p>
 		</div>
 	</div>
 </template>
@@ -32,7 +32,7 @@ export default {
 				return;
       } catch (error) {
         if (is404(error)) {
-          this.$toasts.error("User not found.");
+          this.$toasts.error($t("error.404.specific.user"));
           this.$router.push({
             name: "404",
 						params: { '0': '/'}
@@ -41,7 +41,7 @@ export default {
         }
       }
     }
-    this.$toasts.error("Something went wrong. Try again later.");
+    this.$toasts.error($t("error.fatal"));
   },
 };
 </script>

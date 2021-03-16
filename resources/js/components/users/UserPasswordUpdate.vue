@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="submit">
     <div class="form-group">
-      <label for="cpassword">Current password</label>
+      <label for="cpassword">{{ $t("message.current_password") }}</label>
       <input
         type="password"
         name="cpassword"
@@ -15,7 +15,7 @@
       ></validation-error>
     </div>
     <div class="form-group">
-      <label for="password">Password</label>
+      <label for="password">{{ $t("message.new_password") }}</label>
       <input
         type="password"
         name="password"
@@ -27,7 +27,7 @@
       <validation-error :errors="errorFor('password')"></validation-error>
     </div>
     <div class="form-group">
-      <label for="confirm_password">Confirm password</label>
+      <label for="confirm_password">{{ $t("message.confirm_password") }}</label>
       <input
         type="password"
         name="confirm_password"
@@ -42,7 +42,7 @@
       <small
         v-if="!fieldConfirmed(payload.password, payload.password_confirmation)"
         class="text-danger"
-        >The passwords doesn't match</small
+        >{{ $t("error.validation.confirm_password") }}</small
       >
     </div>
     <input
@@ -90,11 +90,11 @@ export default {
           "/api/users/" + this.user_id + "/password",
           this.payload
         );
-        this.$toasts.success("The changes were made successfully.");
+        this.$toasts.success($t("modules.users.change_password"));
         this.$emit("cancel");
       } catch (error) {
         if (Responses.is404(error)) {
-          this.$toasts.error("We couldn't find the specified user.");
+          this.$toasts.error($t("error.404.specific.user"));
         }
         if (Responses.is422(error)) {
           this.errors = error.response.data.errors;

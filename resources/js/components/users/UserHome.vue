@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="loading">Loading...</div>
+    <div v-if="loading">{{ $t("message.loading") }}</div>
     <div v-else>
       <div class="row mr-auto mb-4">
         <user-data-card v-bind="user" class="col-md-12" />
