@@ -1,0 +1,82 @@
+{
+    "error": {
+        "fatal": "Something very wrong happened. Try again later.",
+        "403": {
+            "default_title": "403: You shouldn't be here",
+            "default_message": "What are you trying to do?"
+        },
+        "404": {
+            "default_title": "404: Whoops!",
+            "default_message": "Where are you going?!",
+            "specific": {
+                "user": "We couldn't find the specified user."
+            } 
+        },
+        "406": {
+            "default_title": "406: Not acceptable",
+            "defalt_message": "",
+            "specific": {
+                "last_admin": "You are the last admin left!"
+            }
+        },
+        "validation": {
+            "confirm_password": "The passwords doesn't match"
+        }
+
+    },
+    "modules": {
+        "users": {
+            "create": "Create user",
+            "created": "User created!",
+            "read": "View user data",
+            "update": "Update user data",
+            "delete": "Delete user",
+            "delete_warning": "Are you sure you want to delete this user? It cannot be undone.",
+            "deleted": "The user has been deleted.",
+            "role": "Role",
+            "role_select": "Select the user role:",
+            "role_default": "Select a role",
+            "name": "User name:",
+            "name2": "Name",
+            "list": "Users list",
+            "user_info": "User information",
+            "change_password": "Change password",
+            "password_changed": "Your password was successfully changed."
+        }
+    },
+    "navbar": {
+        "users": {
+            "users": "Users",
+            "create": "Create users",
+            "read": "View all users"
+        },
+        "permissions": {
+            "title": "Permissions test",
+            "only": "Showed only if you have permission",
+            "even": "Showed even if you don't have permission",
+            "any": "You don't need permission here"
+        },
+        "login": "Log in",
+        "logout": "Log out"
+    },
+
+    "message": {
+        "powered": "Powered by Nuwebs using Dorastorm™",
+        "email": "E-mail:",
+        "password": "Password:",
+        "remember_me": "Remember me?",
+        "forgot_password": "Forgot password",
+        "confirm_password": "Confirm password:",
+        "reset_password": "Reset password",
+        "new_password": "New password:",
+        "current_password": "Current password",
+        "submit": "Submit",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "member_since": "Member since:",
+        "id": "ID",
+        "action": "Action",
+        "loading": "Loading...",
+        "data_changed": "The changes were made successfully."
+    }
+}
