@@ -72,4 +72,19 @@ class Role extends Model
             $this->reverseInsertHierarchy($hierarchy);
         }
     }
+
+    public function delete()
+    {
+        if(parent::delete()){
+            $below = Role::where('hierarchy', '>', $this->hierarchy)->orderBy('hierarchy','asc')->get();
+            if($below->isNotEmpty()){
+                foreach($below as $role_below){
+                    $role_below->hierarchy -= 1;
+                    $role_below->save();
+                }
+            }
+            return true;
+        }
+        return false;
+    }
 }
