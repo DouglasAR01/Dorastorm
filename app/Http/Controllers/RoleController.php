@@ -45,7 +45,7 @@ class RoleController extends Controller
         $new_role = new Role();
         $new_role->name = $data['name'];
         $new_role->description = $data['description'];
-        $new_role->assignHierarchy($data['hierarchy']);
+        $new_role->insertHierarchy($data['hierarchy']);
 
         $new_role = $this->assignPermissions($user, $data, $new_role);
         $new_role->save();

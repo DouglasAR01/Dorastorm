@@ -31,6 +31,9 @@ class Role extends Model
         $below = Role::where('hierarchy', '>=', $hierarchy)->orderBy('hierarchy', 'desc')->get();
         if ($below->isNotEmpty()) {
             foreach ($below as $role_below){
+                if ($role_below->id === $this->id) {
+                    break;
+                }
                 $role_below->hierarchy += 1;
                 $role_below->save();
             }
