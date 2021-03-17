@@ -14,7 +14,7 @@
       <hr />
     </div>
 
-    <p class="card-text text-muted">{{ $t("messages.member_since") }}{{ created_at | fromNow }}</p>
+    <p class="card-text text-muted">{{ $t("message.member_since") }} {{ created_at | fromNow }}</p>
   </div>
 </template>
 <script>

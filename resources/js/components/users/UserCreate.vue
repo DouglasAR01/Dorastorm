@@ -73,7 +73,7 @@
           <validation-error :errors="errorFor('role_id')"></validation-error>
         </div>
       </div>
-      <input type="submit" value="Create user" class="btn btn-primary btn-block" :disabled="
+      <input type="submit" :value="$t('message.submit')" class="btn btn-primary btn-block" :disabled="
           loading ||
           submitting ||
           !fieldConfirmed(new_user.password, new_user.password_confirmation)

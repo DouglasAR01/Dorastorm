@@ -7,7 +7,7 @@
       </div>
       <div class="row">
         <div class="col-6">
-          <router-link :to="{name:'users-update'}" class="btn btn-info btn-block">Update profile</router-link>
+          <router-link :to="{name:'users-update'}" class="btn btn-info btn-block">{{ $t("modules.users.update") }}</router-link>
         </div>
       </div>
     </div>

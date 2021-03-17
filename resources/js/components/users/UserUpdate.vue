@@ -53,7 +53,7 @@
           </div>
           <input
             type="submit"
-            value="Update"
+            :value="$t('modules.users.update')"
             class="btn btn-primary btn-block"
             :disabled="submiting"
           />

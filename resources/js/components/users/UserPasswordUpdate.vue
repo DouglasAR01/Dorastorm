@@ -47,7 +47,7 @@
     </div>
     <input
       type="submit"
-      value="Update password"
+      :value="$t('modules.users.change_password')"
       class="btn btn-primary mr-1"
       :disabled="
         submitting ||
@@ -55,7 +55,7 @@
       "
     />
     <button class="btn btn-danger" @click.prevent="$emit('cancel')">
-      Cancel
+      {{$t("message.cancel")}}
     </button>
   </form>
 </template>
