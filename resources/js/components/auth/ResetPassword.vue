@@ -46,6 +46,7 @@
         class="btn btn-primary btn-block"
         :disabled="submitting"
       />
+      <validation-error :errors="errorFor('token')"></validation-error>
     </form>
   </div>
 </template>
@@ -75,21 +76,22 @@ export default {
     async submit() {
       this.submitting = true;
       try {
-        Auth.getCsrfCookie();
+        await Auth.getCsrfCookie();
+        try {
+          await Auth.resetPassword(this.payload);
+          this.$toasts.success($t("modules.users.password_changed"));
+          this.$router.push({
+            name: "login",
+          });
+        } catch (error) {
+          if (is422(error)) {
+            this.errors = error.response.data.errors;
+          }
+        }
       } catch (error) {
         this.$toasts.error($t("error.fatal"));
       }
-      try {
-        Auth.resetPassword(this.payload);
-        this.$toasts.success($t("modules.users.password_changed"));
-        this.$router.push({
-          name: "login",
-        });
-      } catch (error) {
-        if (is422(error)) {
-          this.errors = error.response.data.errors;
-        }
-      }
+      this.submitting = false;
     },
   },
 };

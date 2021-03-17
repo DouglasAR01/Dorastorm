@@ -14,7 +14,12 @@
         />
         <validation-error :errors="errorFor('email')"></validation-error>
       </div>
-      <input type="submit" :value="$t('message.submit')" class="btn btn-primary btn-block" :disabled="loading">
+      <input
+        type="submit"
+        :value="$t('message.submit')"
+        class="btn btn-primary btn-block"
+        :disabled="loading"
+      />
     </form>
   </div>
 </template>
@@ -41,20 +46,21 @@ export default {
       this.loading = true;
       try {
         await Auth.getCsrfCookie();
+        try {
+          let msg = (await Auth.forgotPassword({ email: this.email })).data
+            .message;
+          this.$toasts.success(msg);
+          this.$router.push({
+            name: "home",
+          });
+        } catch (error) {
+          if (is422(error)) {
+            this.errors = error.response.data.errors;
+          }
+        }
       } catch (error) {
         this.$toasts.error($t("error.fatal"));
         return;
-      }
-      try {
-        let msg = (await Auth.forgotPassword({ email: this.email })).data.message;
-        this.$toasts.success(msg);
-        this.$router.push({
-          name: 'home'
-        });
-      } catch (error) {
-        if (is422(error)) {
-          this.errors = error.response.data.errors;
-        }
       }
       this.loading = false;
     },

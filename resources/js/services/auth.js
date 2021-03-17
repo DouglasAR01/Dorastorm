@@ -23,8 +23,8 @@ export default {
                 // User successfully logged in
                 return (await this.loadUser());
             } catch (error) {
-                // For some reason, the user could log in but his data cannot be
-                // retreived.
+                // The system will try to log out and will throw an error 
+                // even if the logout was successful
                 await this.logout();
                 throw error;
             }
@@ -46,22 +46,28 @@ export default {
         return false;
     },
 
-    async loadUser () {
-        const user = (await axios.get("/api/user")).data.data;
-        saveUser(user);
-        localStorage.setItem('happy', 'true');
-        return user;
+    async loadUser() {
+        try {
+            // Everything went fine and the user is logged in.
+            const user = (await axios.get("/api/user")).data.data;
+            saveUser(user);
+            localStorage.setItem('happy', 'true');
+            return user;
+        } catch (error) {
+            // The user could log in, however, his data couldn't be retrieved
+            throw error;
+        }
     },
 
-    async forgotPassword (payload) {
+    async forgotPassword(payload) {
         return axios.post('/api/forgot-password', payload);
     },
 
-    async resetPassword (payload) {
+    async resetPassword(payload) {
         return axios.post('/api/reset-password', payload);
     },
 
-    async userRolesBelow () {
+    async userRolesBelow() {
         return axios.get('/api/user/roles-below');
     }
 }

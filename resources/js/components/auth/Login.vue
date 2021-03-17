@@ -35,18 +35,23 @@
                 v-model="user.remember"
                 name="remember"
               />
-              <label for="remember" class="form-check-label"
-                >{{ $t("message.remember_me") }}</label
-              >
+              <label for="remember" class="form-check-label">{{
+                $t("message.remember_me")
+              }}</label>
             </div>
           </div>
           <div class="col-6">
-            <router-link :to="{ name: 'forgot-password' }"
-              >{{ $t("message.forgot_password") }}</router-link
-            >
+            <router-link :to="{ name: 'forgot-password' }">{{
+              $t("message.forgot_password")
+            }}</router-link>
           </div>
         </div>
-        <input type="submit" :value="$t('message.submit')" class="btn btn-primary btn-block" :disabled="loading">
+        <input
+          type="submit"
+          :value="$t('message.submit')"
+          class="btn btn-primary btn-block"
+          :disabled="loading"
+        />
       </form>
     </div>
   </div>
@@ -76,19 +81,19 @@ export default {
       this.loading = true;
       try {
         await Auth.getCsrfCookie();
+        try {
+          // Laravel uses $request->filled('remember'), thats why if it is false you must set it to null
+          this.user.remember = !!this.user.remember == false ? null : true;
+          const user = await Auth.login(this.user);
+          this.$store.dispatch("login", user);
+          this.$router.push({ name: "me" });
+        } catch (error) {
+          if (is422(error)) {
+            this.errors = error.response.data.errors;
+          }
+        }
       } catch (error) {
         this.$toasts.error($t("error.fatal"));
-      }
-      try {
-        // Laravel uses $request->filled('remember'), thats why if it is false you must set it to null
-        this.user.remember = !!this.user.remember == false ? null : true;
-        const user = await Auth.login(this.user);
-        this.$store.dispatch("login", user);
-        this.$router.push({ name: "me" });
-      } catch (error) {
-        if (is422(error)) {
-          this.errors = error.response.data.errors;
-        }
       }
       this.loading = false;
     },
