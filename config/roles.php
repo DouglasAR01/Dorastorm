@@ -11,11 +11,11 @@ return [
     | in the role validation rules to differentiate between a DB role and this one.
     | You could change the hierarchy number if you change the uint type of the
     | hierarchy column in the migration 'create_roles_table'.
-    | By default 16777216 is the max possible value +1.
+    | By default 16777216 is the max possible value -1.
     */
     'default_role' => [
         'name' => 'STANDARD',
-        'hierarchy' => 16777216,
+        'hierarchy' => 16777214,
         'id' => null
     ],
 
