@@ -45,7 +45,7 @@ class RoleController extends Controller
         $new_role = new Role();
         $new_role->name = $data['name'];
         $new_role->description = $data['description'];
-        $new_role->insertHierarchy($data['hierarchy']);
+        $new_role->assignHierarchy($data['hierarchy'], true);
 
         $new_role = $this->assignPermissions($user, $data, $new_role);
         $new_role->save();
@@ -91,7 +91,7 @@ class RoleController extends Controller
         $data = $request->validate($this->fullValidationRules($validation_rules));
 
         $role->name = $data['name'];
-        $role->insertHierarchy($data['hierarchy']);
+        $role->assignHierarchy($data['hierarchy']);
         $role->description = $data['description'];
 
         $role = $this->assignPermissions($user,$data,$role);

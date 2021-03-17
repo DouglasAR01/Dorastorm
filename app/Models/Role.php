@@ -26,21 +26,50 @@ class Role extends Model
         return $this->hasMany(User::class);
     }
 
-    public function insertHierarchy($hierarchy)
+    protected function tempHierarchyRemove()
     {
-        $below = Role::where('hierarchy', '>=', $hierarchy)->orderBy('hierarchy', 'desc')->get();
+        $this->hierarchy = config('roles.default_role.hierarchy') + 1;
+        $this->save();
+    }
+
+    protected function insertHierarchy($hierarchy)
+    {
+        $below = Role::where('hierarchy', '>=', $hierarchy)->where('hierarchy', '<', $this->hierarchy ?? (config('roles.default_role.hierarchy') + 1))->orderBy('hierarchy', 'desc')->get();
+        // The hierarchy will be temporary changed if and only if the actual role hierarchy is not null
+        if(!($this->hierarchy===null)){
+            $this->tempHierarchyRemove();
+        }
         if ($below->isNotEmpty()) {
-            foreach ($below as $role_below){
-                if ($role_below->id === $this->id) {
-                    break;
-                }
+            foreach ($below as $role_below) {
                 $role_below->hierarchy += 1;
                 $role_below->save();
             }
         } else {
-            $strictly_below = Role::where('hierarchy', '<',$hierarchy)->orderBy('hierarchy', 'desc')->first();
+            $strictly_below = Role::where('hierarchy', '<', $hierarchy)->orderBy('hierarchy', 'desc')->first();
             $hierarchy = $strictly_below->hierarchy + 1;
         }
         $this->hierarchy = $hierarchy;
+    }
+
+    protected function reverseInsertHierarchy($hierarchy)
+    {
+        $above = Role::where('hierarchy', '>', $this->hierarchy)->where('hierarchy', '<=', $hierarchy)->orderBy('hierarchy', 'asc')->get();
+        if ($above->isNotEmpty()) {
+            $this->tempHierarchyRemove();
+            foreach ($above as $role_above) {
+                $role_above->hierarchy -= 1;
+                $role_above->save();
+            }
+            $this->hierarchy = $role_above->hierarchy + 1;
+        }
+    }
+
+    public function assignHierarchy($hierarchy, $creating = false)
+    {
+        if ($creating || ($hierarchy < $this->hierarchy)) {
+            $this->insertHierarchy($hierarchy);
+        } elseif ($hierarchy > $this->hierarchy) {
+            $this->reverseInsertHierarchy($hierarchy);
+        }
     }
 }
