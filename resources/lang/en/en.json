@@ -16,8 +16,8 @@
                 "user": "We couldn't find the specified user."
             }
         },
-        "406": {
-            "default_title": "406: Not acceptable",
+        "409": {
+            "default_title": "409: Conflict",
             "defalt_message": "",
             "specific": {
                 "last_admin": "You are the last admin left!"

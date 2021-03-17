@@ -79,7 +79,7 @@ class UserController extends Controller
             $user->role->hierarchy === 0 && !empty($data['role_id']) &&
             $user->role->id != $data['role_id'] && $this->isLastAdminLeft($user)
         ) {
-            abort(406, trans('validation.custom.user_destroy.sole_admin'));
+            abort(409, trans('validation.custom.user_destroy.sole_admin'));
         }
 
         // Start of the differential updating
@@ -121,7 +121,7 @@ class UserController extends Controller
             abort(403);
         }
         if ($this->isLastAdminLeft($user)) {
-            abort(406, trans('validation.custom.user_destroy.sole_admin'));
+            abort(409, trans('validation.custom.user_destroy.sole_admin'));
         }
         $user->delete();
     }

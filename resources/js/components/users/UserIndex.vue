@@ -68,7 +68,7 @@
 </template>
 <script>
 import ConfirmDialogue from "../../shared/components/ConfirmDialogue";
-import { is404, is406 } from "../../shared/utils/responses";
+import { is404, is409 } from "../../shared/utils/responses";
 import Permissions from "../../services/role-permissions";
 export default {
   components: {
@@ -110,8 +110,8 @@ export default {
           if (is404(error)) {
             this.$toasts.error($t("error.404.specific.user"));
           }
-          if (is406(error)) {
-            this.$toasts.error($("error.406.specific.last_admin"));
+          if (is409(error)) {
+            this.$toasts.error($("error.409.specific.last_admin"));
           }
         }
         this.deleting = false;

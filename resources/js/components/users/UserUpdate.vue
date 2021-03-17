@@ -143,9 +143,9 @@ export default {
         if (Responses.is404(error)) {
           this.$toasts.error($t("error.404.specific.user"));
         }
-        if (Responses.is406(error)) {
+        if (Responses.is409(error)) {
           this.$toasts.error(
-            $t("error.406.specific.last_admin")
+            $t("error.409.specific.last_admin")
           );
         }
         if (Responses.is422(error)) {
