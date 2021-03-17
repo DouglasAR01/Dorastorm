@@ -1,4 +1,8 @@
 {
+    "lang_info": {
+        "code": "en",
+        "title": "English"
+    },
     "error": {
         "fatal": "Something very wrong happened. Try again later.",
         "403": {
@@ -10,7 +14,7 @@
             "default_message": "Where are you going?!",
             "specific": {
                 "user": "We couldn't find the specified user."
-            } 
+            }
         },
         "406": {
             "default_title": "406: Not acceptable",
@@ -22,7 +26,6 @@
         "validation": {
             "confirm_password": "The passwords doesn't match"
         }
-
     },
     "modules": {
         "users": {
@@ -59,7 +62,6 @@
         "login": "Log in",
         "logout": "Log out"
     },
-
     "message": {
         "powered": "Powered by Nuwebs using Dorastorm™",
         "email": "E-mail:",

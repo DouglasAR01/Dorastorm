@@ -19,6 +19,10 @@
       </div>
       <div class="col-auto"></div>
     </div>
+    <div class="row justify-content-center">
+      <lang-switcher></lang-switcher>
+    </div>
+    <hr class="w-75">
     <div class="row justify-content-center">{{$t("message.powered")}}</div>
     <div class="row justify-content-center">
       <p>©Copyright {{ year }}</p>
@@ -27,7 +31,11 @@
 </template>
 <script>
 import dayjs from "dayjs";
+import LangSwitcher from "./LangSwitcher";
 export default {
+  components: {
+    LangSwitcher
+  },
   computed: {
     year() {
       return dayjs().year();
