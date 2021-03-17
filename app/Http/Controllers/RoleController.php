@@ -34,9 +34,10 @@ class RoleController extends Controller
         if ($user->cannot('create', Role::class)) {
             abort(403);
         }
+        // The new role hierarchy must be higher (>) than the actual users role's hierarchy
         $validation_rules = [
             'name' => 'required|unique:roles|min:2|max:50',
-            'hierarchy' => 'required|unique:roles|gt:' . $user->role->hierarchy,
+            'hierarchy' => 'required|min:1|gt:' . $user->role->hierarchy,
             'description' => 'string'
         ];
         $data = $request->validate($this->fullValidationRules($validation_rules));
@@ -44,7 +45,7 @@ class RoleController extends Controller
         $new_role = new Role();
         $new_role->name = $data['name'];
         $new_role->description = $data['description'];
-        $new_role->hierarchy = $data['hierarchy'];
+        $new_role->assignHierarchy($data['hierarchy']);
 
         $new_role = $this->assignPermissions($user, $data, $new_role);
         $new_role->save();
@@ -84,13 +85,13 @@ class RoleController extends Controller
         }
         $validation_rules = [
             'name' => 'required|unique:roles,name,' . $role->id . '|min:2|max:50',
-            'hierarchy' => 'required|unique:roles,hierarchy,' . $role->id . '|gt:' . $user->role->hierarchy,
+            'hierarchy' => 'required|gt:' . $user->role->hierarchy,
             'description' => 'string'
         ];
         $data = $request->validate($this->fullValidationRules($validation_rules));
 
         $role->name = $data['name'];
-        $role->hierarchy = $data['hierarchy'];
+        $role->insertHierarchy($data['hierarchy']);
         $role->description = $data['description'];
 
         $role = $this->assignPermissions($user,$data,$role);

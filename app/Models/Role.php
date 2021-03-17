@@ -15,7 +15,7 @@ class Role extends Model
     public static function makeDefault()
     {
         $default = new Role();
-        foreach (config('roles.default_role') as $att => $value){
+        foreach (config('roles.default_role') as $att => $value) {
             $default->$att = $value;
         }
         return $default;
@@ -24,5 +24,20 @@ class Role extends Model
     public function users()
     {
         return $this->hasMany(User::class);
+    }
+
+    public function insertHierarchy($hierarchy)
+    {
+        $below = Role::where('hierarchy', '>=', $hierarchy)->orderBy('hierarchy', 'desc')->get();
+        if ($below->isNotEmpty()) {
+            foreach ($below as $role_below){
+                $role_below->hierarchy += 1;
+                $role_below->save();
+            }
+        } else {
+            $strictly_below = Role::where('hierarchy', '<',$hierarchy)->orderBy('hierarchy', 'desc')->first();
+            $hierarchy = $strictly_below->hierarchy + 1;
+        }
+        $this->hierarchy = $hierarchy;
     }
 }
