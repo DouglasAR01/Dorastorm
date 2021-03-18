@@ -33,6 +33,24 @@ const permissions = {
     checkUserAnyPermission: function (user, permissions_array) {
         return permissions_array.some(permission =>
             this.checkUserPermission(user, permission));
+    },
+    categorizePermissions: function (permissions_array) {
+        const regex = /(?<=([a-z]+_)+)([a-z]+)$/g;
+        var result = {
+            OTHERS: []
+        };
+        permissions_array.forEach(element => {
+            if (regex.test(element)){
+                var match = element.match(regex)[0].toUpperCase();
+                if (!(match in result)){
+                    result[match] = [];
+                }
+                result[match].push(element);
+            } else {
+                result.OTHERS.push(element);
+            }
+        });
+        return result;
     }
 }
 export default permissions;

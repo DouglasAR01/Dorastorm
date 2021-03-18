@@ -42,6 +42,9 @@ export default {
         },
         getUserHierarchy: state => {
             return (state.user)? state.user.role.hierarchy : null;
+        },
+        getUserPermissions: state => {
+            return (state.user)? state.user.role.permissions: null;
         }
     }
 }
