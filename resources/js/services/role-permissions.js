@@ -50,6 +50,9 @@ const permissions = {
                 result.OTHERS.push(element);
             }
         });
+        if (result.OTHERS.length<1){
+            delete result.OTHERS;
+        }
         return result;
     }
 }
