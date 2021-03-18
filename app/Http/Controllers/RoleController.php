@@ -38,13 +38,13 @@ class RoleController extends Controller
         $validation_rules = [
             'name' => 'required|unique:roles|min:2|max:50',
             'hierarchy' => 'required|min:1|gt:' . $user->role->hierarchy,
-            'description' => 'string'
+            'description' => 'string|nullable'
         ];
         $data = $request->validate($this->fullValidationRules($validation_rules));
 
         $new_role = new Role();
         $new_role->name = $data['name'];
-        $new_role->description = $data['description'];
+        $new_role->description = $data['description'] ?? null;
         $new_role->assignHierarchy($data['hierarchy'], true);
 
         $new_role = $this->assignPermissions($user, $data, $new_role);
@@ -86,13 +86,12 @@ class RoleController extends Controller
         $validation_rules = [
             'name' => 'required|unique:roles,name,' . $role->id . '|min:2|max:50',
             'hierarchy' => 'required|gt:' . $user->role->hierarchy,
-            'description' => 'string'
+            'description' => 'string|nullable'
         ];
         $data = $request->validate($this->fullValidationRules($validation_rules));
-
         $role->name = $data['name'];
         $role->assignHierarchy($data['hierarchy']);
-        $role->description = $data['description'];
+        $role->description = $data['description'] ?? null;
 
         $role = $this->assignPermissions($user,$data,$role);
         $role->save();
@@ -122,7 +121,7 @@ class RoleController extends Controller
     {
         $permissions = $this->getAllPermissions();
         foreach ($permissions as $permission) {
-            $validation_rules[$permission] = 'boolean';
+            $validation_rules['permissions.'.$permission] = 'boolean';
         }
         return $validation_rules;
     }
@@ -150,7 +149,7 @@ class RoleController extends Controller
     private function fillRolePermissions(array $data, array $allowed_permissions, Role $role)
     {
         foreach ($allowed_permissions as $permission) {
-            $role->$permission = $data[$permission] ?? $role->$permission ?? false;
+            $role->$permission = $data['permissions'][$permission] ?? $role->$permission ?? false;
         }
         return $role;
     }
