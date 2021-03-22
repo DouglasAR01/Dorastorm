@@ -12,6 +12,7 @@ import UserCreate from "../components/users/UserCreate";
 import UserUpdate from "../components/users/UserUpdate";
 import UserRead from "../components/users/UserRead";
 import UserIndex from "../components/users/UserIndex";
+import RoleCreate from "../components/roles/RoleCreate";
 import Error404 from "../components/errors/Error404";
 import Error403 from "../components/errors/Error403";
 const routes = [
@@ -94,6 +95,15 @@ const routes = [
         name: 'users-update',
         meta: {
             auth: true
+        }
+    },
+    {
+        path: '/roles/create',
+        component: RoleCreate,
+        name: 'roles-create',
+        meta: {
+            auth: true,
+            permission: Permissions.core.CREATE_ROLES
         }
     },
     {

@@ -18,7 +18,7 @@
       <ul class="navbar-nav ml-auto">
         <li class="nav-item" v-if="!isLoggedIn">
           <router-link :to="{ name: 'login' }" class="nav-link">
-            {{$t("navbar.login")}}
+            {{ $t("navbar.login") }}
           </router-link>
         </li>
         <li
@@ -59,6 +59,30 @@
             </router-link>
           </div>
         </li>
+        <li class="nav-item dropdown"
+          v-if="
+            isLoggedIn &&
+            checkUserAnyPermission(loggedUser, [
+              corePms.CREATE_ROLES,
+              corePms.READ_ROLES,
+              corePms.UPDATE_ROLES,
+            ])
+          ">
+          <a
+            href="#"
+            id="roles"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            class="nav-link dropdown-toggle"
+          >
+            {{$t("navbar.roles.title")}}
+          </a>
+          <div class="dropdown-menu" id="roles" v-if="checkUserPermission(loggedUser, corePms.CREATE_ROLES)">
+            <router-link class="nav-link" :to="{name:'roles-create'}">{{$t("navbar.roles.create")}}</router-link>
+          </div>
+        </li>
         <li class="nav-item dropdown" v-if="isLoggedIn">
           <a
             class="nav-link dropdown-toggle"
@@ -69,7 +93,7 @@
             aria-haspopup="true"
             aria-expanded="false"
           >
-            {{$t("navbar.permissions.title")}}
+            {{ $t("navbar.permissions.title") }}
           </a>
           <div class="dropdown-menu" id="permissions">
             <router-link
@@ -77,13 +101,13 @@
               class="nav-link"
               v-if="checkUserPermission(loggedUser, corePms.READ_USERS)"
             >
-              {{$t("navbar.permissions.only")}}
+              {{ $t("navbar.permissions.only") }}
             </router-link>
             <router-link :to="{ name: 'me2' }" class="nav-link">
-              {{$t("navbar.permissions.even")}}
+              {{ $t("navbar.permissions.even") }}
             </router-link>
             <router-link :to="{ name: 'me' }" class="nav-link">
-              {{$t("navbar.permissions.any")}}
+              {{ $t("navbar.permissions.any") }}
             </router-link>
           </div>
         </li>
@@ -93,7 +117,7 @@
             class="nav-link"
             @click.prevent="logout"
             :class="[{ disabled: isLoggingOut }]"
-            >{{$t("navbar.logout")}}</a
+            >{{ $t("navbar.logout") }}</a
           >
         </li>
       </ul>
