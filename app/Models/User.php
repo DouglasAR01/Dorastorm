@@ -61,7 +61,7 @@ class User extends Authenticatable
             return collect([]);
         }
         
-        $roles_below = Role::where('hierarchy','>', ($user_hierarchy===0) ? -1 : $user_hierarchy )->get();
+        $roles_below = Role::where('hierarchy','>', ($user_hierarchy===0) ? -1 : $user_hierarchy )->orderBy('hierarchy', 'asc')->get();
         $roles_below->push(Role::makeDefault());
         return $roles_below;
     }
