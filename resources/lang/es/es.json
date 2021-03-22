@@ -46,6 +46,15 @@
             "user_info": "Información del usuario",
             "change_password": "Cambia la contraseña",
             "password_changed": "La contraseña ha sido modificada con éxito."
+        },
+        "roles": {
+            "created": "¡Rol creado!",
+            "others": "Otros",
+            "name": "Nombre del rol:",
+            "description": "Descripción del rol:",
+            "select_permissions": "Selecciona los permisos del rol",
+            "select_hierarchy": "Arrastra la jerarquía del rol",
+            "new_role": "NUEVO ROL"
         }
     },
     "navbar": {
@@ -53,6 +62,10 @@
             "users": "Usuarios",
             "create": "Crear usuarios",
             "read": "Lista de usuarios"
+        },
+        "roles": {
+            "title": "Gestionar roles",
+            "create": "Crear roles"
         },
         "permissions": {
             "title": "Tests de permisos",

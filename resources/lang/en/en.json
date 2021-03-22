@@ -45,6 +45,15 @@
             "user_info": "User information",
             "change_password": "Change password",
             "password_changed": "Your password was successfully changed."
+        },
+        "roles": {
+            "created": "Role created!",
+            "others": "Others",
+            "name": "Role name:",
+            "description": "Role description:",
+            "select_permissions": "Select the role permissions",
+            "select_hierarchy": "Drag the role hierarchy",
+            "new_role": "NEW ROLE"
         }
     },
     "navbar": {
@@ -52,6 +61,10 @@
             "users": "Users",
             "create": "Create users",
             "read": "View all users"
+        },
+        "roles": {
+            "title": "Manage roles",
+            "create": "Create roles"
         },
         "permissions": {
             "title": "Permissions test",

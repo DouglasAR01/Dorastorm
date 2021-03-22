@@ -105,13 +105,13 @@ export default {
           await axios.delete("/api/users/" + user_id);
           this.loading = false;
           this.users = this.users.filter((user) => user.id != user_id);
-          this.$toasts.success($t("modules.users.deleted"));
+          this.$toasts.success(this.$t("modules.users.deleted"));
         } catch (error) {
           if (is404(error)) {
-            this.$toasts.error($t("error.404.specific.user"));
+            this.$toasts.error(this.$t("error.404.specific.user"));
           }
           if (is409(error)) {
-            this.$toasts.error($("error.409.specific.last_admin"));
+            this.$toasts.error(this.$("error.409.specific.last_admin"));
           }
         }
         this.deleting = false;

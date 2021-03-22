@@ -32,7 +32,7 @@ export default {
 				return;
       } catch (error) {
         if (is404(error)) {
-          this.$toasts.error($t("error.404.specific.user"));
+          this.$toasts.error(this.$t("error.404.specific.user"));
           this.$router.push({
             name: "404",
 						params: { '0': '/'}
@@ -41,7 +41,7 @@ export default {
         }
       }
     }
-    this.$toasts.error($t("error.fatal"));
+    this.$toasts.error(this.$t("error.fatal"));
   },
 };
 </script>

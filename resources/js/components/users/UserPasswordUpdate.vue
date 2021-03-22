@@ -90,11 +90,11 @@ export default {
           "/api/users/" + this.user_id + "/password",
           this.payload
         );
-        this.$toasts.success($t("modules.users.change_password"));
+        this.$toasts.success(this.$t("modules.users.change_password"));
         this.$emit("cancel");
       } catch (error) {
         if (Responses.is404(error)) {
-          this.$toasts.error($t("error.404.specific.user"));
+          this.$toasts.error(this.$t("error.404.specific.user"));
         }
         if (Responses.is422(error)) {
           this.errors = error.response.data.errors;

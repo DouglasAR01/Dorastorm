@@ -24,7 +24,7 @@ export default {
       title: undefined,
       message: undefined, // Main text content
       okButton: undefined, // Text for confirm button; leave it empty because we don't know what we're using it for
-      cancelButton: "Go Back", // text for cancel button
+      cancelButton: this.$t("message.cancel"), // text for cancel button
 
       // Private variables
       resolvePromise: undefined,

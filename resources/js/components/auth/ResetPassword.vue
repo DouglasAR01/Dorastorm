@@ -79,7 +79,7 @@ export default {
         await Auth.getCsrfCookie();
         try {
           await Auth.resetPassword(this.payload);
-          this.$toasts.success($t("modules.users.password_changed"));
+          this.$toasts.success(this.$t("modules.users.password_changed"));
           this.$router.push({
             name: "login",
           });
@@ -89,7 +89,7 @@ export default {
           }
         }
       } catch (error) {
-        this.$toasts.error($t("error.fatal"));
+        this.$toasts.error(this.$t("error.fatal"));
       }
       this.submitting = false;
     },

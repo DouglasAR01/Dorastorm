@@ -114,7 +114,7 @@ export default {
       this.available_roles = (await Auth.userRolesBelow()).data.data;
       this.loading = false;
     } catch (error) {
-      this.$toasts.error($t("error.fatal"));
+      this.$toasts.error(this.$t("error.fatal"));
     }
   },
   methods: {
@@ -123,7 +123,7 @@ export default {
       try {
         let user = (await axios.post("/api/users", this.new_user)).data;
         this.submitting = false;
-        this.$toasts.success($t("modules.users.created"));
+        this.$toasts.success(this.$t("modules.users.created"));
         this.new_user = Obj.clone(this.form_initial_state);
         // Send to UserView
       } catch (error) {

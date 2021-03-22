@@ -134,18 +134,18 @@ export default {
       this.updated_user.role_id = this.updated_user.role.id;
       try {
         await axios.patch("/api/users/" + this.user_id, this.updated_user);
-        this.$toasts.success($t("message.data_changed"));
+        this.$toasts.success(this.$t("message.data_changed"));
         if (this.user_id === this.$store.getters.getUserID) {
           let user = await Auth.loadUser();
           this.$store.commit("setUser", user);
         }
       } catch (error) {
         if (Responses.is404(error)) {
-          this.$toasts.error($t("error.404.specific.user"));
+          this.$toasts.error(this.$t("error.404.specific.user"));
         }
         if (Responses.is409(error)) {
           this.$toasts.error(
-            $t("error.409.specific.last_admin")
+            this.$t("error.409.specific.last_admin")
           );
         }
         if (Responses.is422(error)) {

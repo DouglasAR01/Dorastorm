@@ -59,7 +59,7 @@ export default {
           }
         }
       } catch (error) {
-        this.$toasts.error($t("error.fatal"));
+        this.$toasts.error(this.$t("error.fatal"));
         return;
       }
       this.loading = false;
