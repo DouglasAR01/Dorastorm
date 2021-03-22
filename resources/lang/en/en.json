@@ -52,7 +52,7 @@
             "name": "Role name:",
             "description": "Role description:",
             "select_permissions": "Select the role permissions",
-            "select_hierarchy": "Drag the role hierarchy",
+            "select_hierarchy": "Drag the role hierarchy (*)",
             "new_role": "NEW ROLE"
         }
     },

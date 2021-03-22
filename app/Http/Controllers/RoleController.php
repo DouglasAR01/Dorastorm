@@ -43,7 +43,7 @@ class RoleController extends Controller
         $data = $request->validate($this->fullValidationRules($validation_rules));
 
         $new_role = new Role();
-        $new_role->name = $data['name'];
+        $new_role->name = strtoupper($data['name']);
         $new_role->description = $data['description'] ?? null;
         $new_role->assignHierarchy($data['hierarchy'], true);
 
@@ -89,7 +89,7 @@ class RoleController extends Controller
             'description' => 'string|nullable'
         ];
         $data = $request->validate($this->fullValidationRules($validation_rules));
-        $role->name = $data['name'];
+        $role->name = strtoupper($data['name']);
         $role->assignHierarchy($data['hierarchy']);
         $role->description = $data['description'] ?? null;
 

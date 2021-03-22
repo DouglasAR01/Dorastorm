@@ -53,7 +53,7 @@
             "name": "Nombre del rol:",
             "description": "Descripción del rol:",
             "select_permissions": "Selecciona los permisos del rol",
-            "select_hierarchy": "Arrastra la jerarquía del rol",
+            "select_hierarchy": "Arrastra la jerarquía del rol (*)",
             "new_role": "NUEVO ROL"
         }
     },
