@@ -95,8 +95,8 @@ export default {
       const ok = await this.$refs.confirmDialogue.show({
         title: "Delete User",
         message:
-          $t("modules.users.delete_warning"),
-        okButton: $t("message.delete"),
+          this.$t("modules.users.delete_warning"),
+        okButton: this.$t("message.delete"),
       });
       // If you throw an error, the method will terminate here unless you surround it wil try/catch
       if (ok) {
