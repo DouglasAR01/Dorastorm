@@ -9,7 +9,7 @@
         <thead>
           <tr>
             <th scope="col">{{ $t("message.id") }}</th>
-            <th scope="col">{{ $t("modules.users.name2") }}</th>
+            <th scope="col">{{ $t("message.name") }}</th>
             <th scope="col">{{ $t("message.email") }}</th>
             <th scope="col">{{ $t("modules.users.role") }}</th>
             <th scope="col">{{ $t("message.action") }}</th>

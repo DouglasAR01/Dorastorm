@@ -40,7 +40,6 @@
             "role_select": "Select the user role:",
             "role_default": "Select a role",
             "name": "User name:",
-            "name2": "Name",
             "list": "Users list",
             "user_info": "User information",
             "change_password": "Change password",
@@ -92,6 +91,7 @@
         "id": "ID",
         "action": "Action",
         "loading": "Loading...",
-        "data_changed": "The changes were made successfully."
+        "data_changed": "The changes were made successfully.",
+        "name": "Name"
     }
 }
