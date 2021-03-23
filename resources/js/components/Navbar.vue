@@ -86,9 +86,6 @@
             id="roles"
             v-if="checkUserPermission(loggedUser, corePms.CREATE_ROLES)"
           >
-            <router-link class="nav-link" :to="{ name: 'roles-create' }">{{
-              $t("navbar.roles.create")
-            }}</router-link>
             <router-link
               :to="{ name: 'roles-index' }"
               v-if="checkUserPermission(loggedUser, corePms.READ_ROLES)"
@@ -96,6 +93,9 @@
             >
             {{$t("navbar.roles.read")}}
             </router-link>
+            <router-link class="nav-link" :to="{ name: 'roles-create' }">{{
+              $t("navbar.roles.create")
+            }}</router-link>
           </div>
         </li>
         <li class="nav-item dropdown" v-if="isLoggedIn">

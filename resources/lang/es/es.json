@@ -65,7 +65,7 @@
         "users": {
             "users": "Usuarios",
             "create": "Crear usuarios",
-            "read": "Lista de usuarios"
+            "read": "Ver todos los usuarios"
         },
         "roles": {
             "title": "Gestionar roles",
