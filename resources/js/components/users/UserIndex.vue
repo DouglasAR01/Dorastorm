@@ -87,13 +87,13 @@ export default {
       this.users = (await axios.get("/api/users")).data.data;
       this.loading = false;
     } catch (error) {
-      this.$toast.error($t("error.fatal"));
+      this.$toast.error(this.$t("error.fatal"));
     }
   },
   methods: {
     async deleteUser(user_id) {
       const ok = await this.$refs.confirmDialogue.show({
-        title: "Delete User",
+        title: this.$t("modules.users.delete"),
         message:
           this.$t("modules.users.delete_warning"),
         okButton: this.$t("message.delete"),
@@ -103,7 +103,6 @@ export default {
         this.deleting = true;
         try {
           await axios.delete("/api/users/" + user_id);
-          this.loading = false;
           this.users = this.users.filter((user) => user.id != user_id);
           this.$toasts.success(this.$t("modules.users.deleted"));
         } catch (error) {
