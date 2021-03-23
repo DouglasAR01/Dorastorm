@@ -18,7 +18,7 @@ class RoleController extends Controller
         if ($request->user()->cannot('viewAny', Role::class)) {
             abort(403);
         }
-        return Role::all();
+        return RoleResource::collection(Role::orderBy('hierarchy', 'asc')->get());
     }
 
     /**

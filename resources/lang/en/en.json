@@ -13,7 +13,8 @@
             "default_title": "404: Whoops!",
             "default_message": "Where are you going?!",
             "specific": {
-                "user": "We couldn't find the specified user."
+                "user": "We couldn't find the specified user.",
+                "role": "We couldn't find the specified role."
             }
         },
         "409": {
@@ -52,7 +53,11 @@
             "description": "Role description:",
             "select_permissions": "Select the role permissions",
             "select_hierarchy": "Drag the role hierarchy (*)",
-            "new_role": "NEW ROLE"
+            "new_role": "NEW ROLE",
+            "delete": "Delete role",
+            "delete_warning": "Are you sure you want to delete this role? It cannot be undone.",
+            "deleted": "The role has been deleted.",
+            "list": "Roles list"
         }
     },
     "navbar": {
@@ -63,7 +68,8 @@
         },
         "roles": {
             "title": "Manage roles",
-            "create": "Create roles"
+            "create": "Create roles",
+            "read": "View all roles"
         },
         "permissions": {
             "title": "Permissions test",

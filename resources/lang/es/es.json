@@ -13,7 +13,8 @@
             "default_title": "404: Ups!",
             "default_message": "¿A dónde vas?",
             "specific": {
-                "user": "No pudimos encontrar el usuario especificado."
+                "user": "No pudimos encontrar el usuario especificado.",
+                "role": "No pudimos encontrar el rol especificado."
             } 
         },
         "409": {
@@ -53,7 +54,11 @@
             "description": "Descripción del rol:",
             "select_permissions": "Selecciona los permisos del rol",
             "select_hierarchy": "Arrastra la jerarquía del rol (*)",
-            "new_role": "NUEVO ROL"
+            "new_role": "NUEVO ROL",
+            "delete": "Eliminar rol",
+            "delete_warning": "¿Estás seguro de querer eliminar este rol? Esta acción no se puede deshacer.",
+            "deleted": "El rol ha sido eliminado.",
+            "list": "Lista de roles"
         }
     },
     "navbar": {
@@ -64,7 +69,8 @@
         },
         "roles": {
             "title": "Gestionar roles",
-            "create": "Crear roles"
+            "create": "Crear roles",
+            "read": "Ver todos los roles"
         },
         "permissions": {
             "title": "Tests de permisos",

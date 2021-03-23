@@ -59,7 +59,8 @@
             </router-link>
           </div>
         </li>
-        <li class="nav-item dropdown"
+        <li
+          class="nav-item dropdown"
           v-if="
             isLoggedIn &&
             checkUserAnyPermission(loggedUser, [
@@ -67,7 +68,8 @@
               corePms.READ_ROLES,
               corePms.UPDATE_ROLES,
             ])
-          ">
+          "
+        >
           <a
             href="#"
             id="roles"
@@ -77,10 +79,23 @@
             aria-expanded="false"
             class="nav-link dropdown-toggle"
           >
-            {{$t("navbar.roles.title")}}
+            {{ $t("navbar.roles.title") }}
           </a>
-          <div class="dropdown-menu" id="roles" v-if="checkUserPermission(loggedUser, corePms.CREATE_ROLES)">
-            <router-link class="nav-link" :to="{name:'roles-create'}">{{$t("navbar.roles.create")}}</router-link>
+          <div
+            class="dropdown-menu"
+            id="roles"
+            v-if="checkUserPermission(loggedUser, corePms.CREATE_ROLES)"
+          >
+            <router-link class="nav-link" :to="{ name: 'roles-create' }">{{
+              $t("navbar.roles.create")
+            }}</router-link>
+            <router-link
+              :to="{ name: 'roles-index' }"
+              v-if="checkUserPermission(loggedUser, corePms.READ_ROLES)"
+              class="nav-link"
+            >
+            {{$t("navbar.roles.read")}}
+            </router-link>
           </div>
         </li>
         <li class="nav-item dropdown" v-if="isLoggedIn">

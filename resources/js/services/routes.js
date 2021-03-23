@@ -13,6 +13,7 @@ import UserUpdate from "../components/users/UserUpdate";
 import UserRead from "../components/users/UserRead";
 import UserIndex from "../components/users/UserIndex";
 import RoleCreate from "../components/roles/RoleCreate";
+import RoleIndex from "../components/roles/RoleIndex";
 import Error404 from "../components/errors/Error404";
 import Error403 from "../components/errors/Error403";
 const routes = [
@@ -95,6 +96,15 @@ const routes = [
         name: 'users-update',
         meta: {
             auth: true
+        }
+    },
+    {
+        path: '/roles',
+        component: RoleIndex,
+        name: 'roles-index',
+        meta: {
+            auth: true,
+            permission: Permissions.core.READ_ROLES
         }
     },
     {

@@ -68,7 +68,7 @@ export default {
     async submit() {
       this.submitting = true;
       try {
-        axios.post("/api/roles", this.new_role);
+        await axios.post("/api/roles", this.new_role);
         this.$toasts.success(this.$t("modules.roles.created"));
       } catch (error) {
         if (is422(error)) {
