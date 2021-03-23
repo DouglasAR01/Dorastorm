@@ -48,16 +48,19 @@ export default {
           selected: true
         })
       }
+      this.$emit("input", this.calcDistance(this.roles_available));
     } catch (error) {
       this.$toasts.error($t("error.fatal"));
     }
     this.loading = false;
   },
   methods: {
+    calcDistance(payload) {
+      return this.$store.getters.getUserHierarchy + 1 + payload.findIndex(role => role.selected == true);
+    },
     input(payload) {
       this.roles_available = payload;
-      const distance = this.$store.getters.getUserHierarchy + 1 + payload.findIndex(role => role.selected == true);
-      this.$emit("input", distance);
+      this.$emit("input", this.calcDistance(payload));
     }
   }
 };
