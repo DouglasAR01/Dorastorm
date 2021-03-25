@@ -98,6 +98,9 @@
         "action": "Action",
         "loading": "Loading...",
         "data_changed": "The changes were made successfully.",
-        "name": "Name"
+        "name": "Name",
+        "default_description": "No description available.",
+        "created_at": "Created at:",
+        "updated_at": "Updated at:"
     }
 }

@@ -7,30 +7,31 @@
       {{ $t("message.loading") }}
     </div>
     <div class="table-responsive" v-else>
-      <table class="table table-striped table-hover">
+      <table class="table table-hover">
         <thead>
           <th scope="col">{{ $t("message.id") }}</th>
           <th scope="col">{{ $t("message.name") }}</th>
           <th scope="col">{{ $t("message.action") }}</th>
         </thead>
         <tbody>
-          <tr v-for="role in roles" :key="role.id">
-            <td>{{ role.id }}</td>
-            <td>{{ role.name }}</td>
-            <td>
-              <!-- <router-link
-                :to="{
-                  name: 'roles-read',
-                  query: { role_id: role.id },
-                }"
-                data-toggle="tooltip"
-                data-placement="top"
-                :title="$t('modules.roles.read')"
-                class="btn btn-link btn-sm"
-              >
-                <i class="far fa-eye"></i>
-              </router-link> -->
-              <!-- <router-link
+          <template v-for="role in roles">
+            <tr :key="role.id">
+              <td>{{ role.id }}</td>
+              <td>{{ role.name }}</td>
+              <td>
+                <button
+                  class="btn btn-link"
+                  type="button"
+                  data-toggle="collapse"
+                  :data-target="'#co' + role.id"
+                  role="button"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  :aria-controls="'co' + role.id"
+                >
+                  <i class="far fa-eye"></i>
+                </button>
+                <!-- <router-link
                 :to="{
                   name: 'roles-update',
                   query: { role_id: role.id },
@@ -43,19 +44,27 @@
               >
                 <i class="fas fa-pen"></i>
               </router-link> -->
-              <button
-                class="btn btn-link btn-sm"
-                @click.prevent="deleteRole(role.id)"
-                :disabled="deleting"
-                data-toggle="tooltip"
-                data-placement="top"
-                :title="$t('modules.roles.delete')"
-                v-if="userCanDelete && userCanTouchThis(role)"
-              >
-                <i class="fas fa-trash-alt"></i>
-              </button>
-            </td>
-          </tr>
+                <button
+                  class="btn btn-link btn-sm"
+                  @click.prevent="deleteRole(role.id)"
+                  :disabled="deleting"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  :title="$t('modules.roles.delete')"
+                  v-if="userCanDelete && userCanTouchThis(role)"
+                >
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </td>
+            </tr>
+            <tr :key="'co' + role.id">
+              <td colspan="3" class="hidden-column">
+                <div class="collapse" :id="'co' + role.id">
+                  <role-data-card :payload="role"></role-data-card>
+                </div>
+              </td>
+            </tr>
+          </template>
         </tbody>
       </table>
       <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
@@ -66,9 +75,11 @@
 import ConfirmDialogue from "../../shared/components/ConfirmDialogue";
 import { is404 } from "../../shared/utils/responses";
 import Permissions from "../../services/role-permissions";
+import RoleDataCard from "./RoleDataCard";
 export default {
   components: {
-    ConfirmDialogue
+    ConfirmDialogue,
+    RoleDataCard,
   },
   data() {
     return {
@@ -127,3 +138,10 @@ export default {
   },
 };
 </script>
+<style scoped>
+.hidden-column {
+  border-top: 0px;
+  padding: 0 !important;
+  margin-top: 0 !important;
+}
+</style>

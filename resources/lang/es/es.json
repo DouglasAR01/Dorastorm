@@ -100,6 +100,9 @@
         "action": "Acción",
         "loading": "Cargando...",
         "data_changed": "Los cambios se realizaron con éxito.",        
-        "name": "Nombre"
+        "name": "Nombre",
+        "default_description": "No hay una descripción disponible.",
+        "created_at": "Creado el:",
+        "updated_at": "Modificado el:"
     }
 }

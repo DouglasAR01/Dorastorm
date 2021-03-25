@@ -25,7 +25,10 @@ class RoleResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'hierarchy' => $this->hierarchy,
-            'permissions' => $role_permissions
+            'permissions' => $role_permissions,
+            'description' => $this->description,
+            'created' => $this->created_at,
+            'modified' => $this->updated_at,
         ];
     }
 }
