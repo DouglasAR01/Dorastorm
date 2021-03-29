@@ -30,7 +30,7 @@ class RolePolicy
      */
     public function view(User $user, Role $role)
     {
-        return $this->viewAny($user) && $this->checkHierarchy($user, $role);
+        return $this->viewAny($user) && ($this->checkHierarchy($user, $role) || $user->role->hierarchy === 0);
     }
 
     /**
