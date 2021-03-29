@@ -70,6 +70,9 @@ export default {
       try {
         await axios.post("/api/roles", this.new_role);
         this.$toasts.success(this.$t("modules.roles.created"));
+        this.$router.push({
+          name: 'roles-index'
+        });
       } catch (error) {
         if (is422(error)) {
           this.errors = error.response.data.errors;

@@ -58,7 +58,8 @@
             "delete": "Eliminar rol",
             "delete_warning": "¿Estás seguro de querer eliminar este rol? Esta acción no se puede deshacer.",
             "deleted": "El rol ha sido eliminado.",
-            "list": "Lista de roles"
+            "list": "Lista de roles",
+            "role_permissions": "Permisos del rol:"
         }
     },
     "navbar": {
