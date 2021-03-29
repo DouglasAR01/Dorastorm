@@ -31,7 +31,7 @@
                 >
                   <i class="far fa-eye"></i>
                 </button>
-                <!-- <router-link
+                <router-link
                 :to="{
                   name: 'roles-update',
                   query: { role_id: role.id },
@@ -43,7 +43,7 @@
                 v-if="userCanUpdate && userCanTouchThis(role)"
               >
                 <i class="fas fa-pen"></i>
-              </router-link> -->
+              </router-link>
                 <button
                   class="btn btn-link btn-sm"
                   @click.prevent="deleteRole(role.id)"

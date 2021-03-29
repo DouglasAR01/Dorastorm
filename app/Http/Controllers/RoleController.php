@@ -64,7 +64,7 @@ class RoleController extends Controller
         if ($request->user()->cannot('view', $role)) {
             abort(403);
         }
-        return $role;
+        return new RoleResource($role);
     }
 
     /**

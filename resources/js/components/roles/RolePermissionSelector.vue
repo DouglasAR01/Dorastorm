@@ -17,10 +17,18 @@
 <script>
 import Permissions from "../../services/role-permissions";
 export default {
+  props: {
+    preselectedPermissions: {
+      type: Array,
+      default: function () {
+        return [];
+      }
+    }
+  },
   data() {
     return {
       loading: false,
-      selected_permissions: [],
+      selected_permissions: this.preselectedPermissions.concat([]),
     };
   },
   computed: {
