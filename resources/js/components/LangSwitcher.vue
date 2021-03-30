@@ -22,6 +22,9 @@ export default {
   methods: {
     changeLang(langKey) {
       setLocale(this.$i18n, langKey);
+      axios.post("/locale", {
+        locale: langKey
+      });
     }
   }
 }

@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'es',
 
     /*
     |--------------------------------------------------------------------------
@@ -94,6 +94,21 @@ return [
     */
 
     'fallback_locale' => 'en',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Supported Locales
+    |--------------------------------------------------------------------------
+    |
+    | The application supported locales array determines the current application
+    | locales available in the langs directory.
+    |
+    */
+
+    'supported_locales' => [
+        'es',
+        'en'
+    ],
 
     /*
     |--------------------------------------------------------------------------
