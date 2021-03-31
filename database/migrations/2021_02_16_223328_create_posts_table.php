@@ -18,7 +18,8 @@ class CreatePostsTable extends Migration
             $table->foreignId('user_id')->constrained()->onUpdate('cascade');
             $table->string('title');
             $table->text('content');
-            $table->boolean('visible')->default(true);
+            $table->string('slug')->unique();
+            $table->boolean('visible')->default(false);
             $table->boolean('private')->default(false);
             $table->timestamps();
         });

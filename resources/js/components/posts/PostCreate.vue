@@ -1,0 +1,95 @@
+<template>
+  <div class="container rounded bg-white p-2">
+    <form @submit.prevent="submit">
+      <div class="row">
+        <div class="col-8">
+          <div class="form-group">
+            <label for="title">{{ $t("modules.posts.title") }}</label>
+            <input
+              type="text"
+              name="title"
+              class="form-control"
+              v-model="new_post.title"
+              required
+            />
+          </div>
+        </div>
+        <div class="col-4">
+          <label>{{$t("modules.posts.options")}}</label>
+          <div class="custom-control custom-checkbox">
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              id="visible"
+              v-model="new_post.visible"
+            />
+            <label class="custom-control-label" for="visible"
+              >{{$t("modules.posts.visible")}}</label
+            >
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              id="private"
+              v-model="new_post.private"
+            />
+            <label class="custom-control-label" for="private"
+              >{{$t("modules.posts.private")}}</label
+            >
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="content">{{ $t("modules.posts.content") }}</label>
+        <text-editor v-model="new_post.content"></text-editor>
+      </div>
+      <input
+        type="submit"
+        :value="$t('message.submit')"
+        class="btn btn-primary btn-block"
+        :disabled="submitting"
+      />
+    </form>
+  </div>
+</template>
+<script>
+import TextEditor from "../../shared/components/RichTextEditor";
+import ErrorTraits from "../../shared/mixins/error-traits";
+import ValidationError from "../../shared/components/ValidationError";
+import { is422 } from "../../shared/utils/responses";
+export default {
+  components: {
+    TextEditor,
+    ValidationError,
+  },
+  mixins: [ErrorTraits],
+  data() {
+    return {
+      submitting: false,
+      new_post: {
+        title: null,
+        content: null,
+        visible: false,
+        private: false
+      },
+    };
+  },
+  methods: {
+    async submit() {
+      this.submitting = true;
+      try {
+        const post = (await axios.post("/api/posts", this.new_post)).data.data;
+        this.$toasts.success(this.$t("modules.posts.created"));
+      } catch (error) {
+        if(is422(error)){
+          this.errors = this.error.data.errors;
+        } else {
+          this.$toasts.error(this.$t("error.fatal"));
+        }
+      }
+      this.submitting = false;
+    }
+  }
+};
+</script>

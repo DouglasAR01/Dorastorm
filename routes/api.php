@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/posts','PostController@index')->name('posts.index');
-Route::get('/posts/{post}','PostController@show')->name('posts.show');
+Route::get('/posts/{post_slug}','PostController@show')->name('posts.show');
 
 Route::middleware('auth:sanctum')->group(function () {
     // Your protected routes goes here

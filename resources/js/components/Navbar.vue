@@ -21,6 +21,11 @@
             {{ $t("navbar.login") }}
           </router-link>
         </li>
+        <li class="nav-item" v-if="isLoggedIn">
+          <router-link :to="{ name: 'posts-create' }" class="nav-link">
+            T__CREAR POST
+          </router-link>
+        </li>
         <li
           class="nav-item dropdown"
           v-if="

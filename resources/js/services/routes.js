@@ -15,6 +15,7 @@ import UserIndex from "../components/users/UserIndex";
 import RoleCreate from "../components/roles/RoleCreate";
 import RoleUpdate from "../components/roles/RoleUpdate";
 import RoleIndex from "../components/roles/RoleIndex";
+import PostCreate from "../components/posts/PostCreate";
 import Error404 from "../components/errors/Error404";
 import Error403 from "../components/errors/Error403";
 const routes = [
@@ -124,6 +125,16 @@ const routes = [
         meta: {
             auth: true,
             permission: Permissions.core.UPDATE_ROLES
+        }
+    },
+    ,
+    {
+        path: '/posts/create',
+        component: PostCreate,
+        name: 'posts-create',
+        meta: {
+            auth: true,
+            permission: Permissions.core.CREATE_POSTS
         }
     },
     {

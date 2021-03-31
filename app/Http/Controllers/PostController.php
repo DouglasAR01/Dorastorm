@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -50,18 +51,22 @@ class PostController extends Controller
         $newPost->private = $data['private'] ?? false;
         $newPost->user_id = $request->user()->id;
         $newPost->save();
-
+        return new PostResource($newPost) ;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        return Post::findOrFail($id);
+        $post = Post::where('slug', '=', $slug)->first();
+        if (empty($post)) {
+            abort(404);
+        }
+        return new PostResource($post);
     }
 
     /**
