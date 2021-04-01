@@ -1,6 +1,6 @@
 <template>
   <div class="container rounded bg-white p-2">
-    <h3>{{ $t("modules.roles.create") }}</h3>
+    <h3>{{ $t("modules.posts.create") }}</h3>
     <form>
       <div class="row">
         <div class="col-8">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -51,7 +52,7 @@ class PostController extends Controller
         $newPost->private = $data['private'] ?? false;
         $newPost->user_id = $request->user()->id;
         $newPost->save();
-        return new PostResource($newPost) ;
+        return new PostResource($newPost);
     }
 
     /**
@@ -60,13 +61,24 @@ class PostController extends Controller
      * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show(Request $request, $slug)
     {
         $post = Post::where('slug', '=', $slug)->first();
         if (empty($post)) {
             abort(404);
         }
-        return new PostResource($post);
+        if($post->visible && !$post->private){
+            return new PostResource($post);
+        }
+        // If the post is visible and its private the user must be authenticated 
+        if($post->visible && $post->private && Auth::check()){
+            return new PostResource($post);
+        }
+        // If the post is not visible the user should not see it unless it's the owner of the post or have permissions of updating
+        if(!$post->visible && Auth::check() && $request->user()->can('update', $post)){
+            return new PostResource($post);
+        } 
+        abort(403);
     }
 
     /**
@@ -75,9 +87,13 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        if ($request->user()->cannot('update', $post)) {
+            abort(403);
+        }
+        return new PostResource($post);
     }
 
     /**
@@ -100,6 +116,7 @@ class PostController extends Controller
         $post->visible = $data['visible'] ?? $post->visible;
         $post->private = $data['private'] ?? $post->private;
         $post->save();
+        return new PostResource($post);
     }
 
     /**
