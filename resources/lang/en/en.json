@@ -14,7 +14,8 @@
             "default_message": "Where are you going?!",
             "specific": {
                 "user": "We couldn't find the specified user.",
-                "role": "We couldn't find the specified role."
+                "role": "We couldn't find the specified role.",
+                "post": "We couldn't find the specified post."
             }
         },
         "409": {
@@ -60,6 +61,21 @@
             "list": "Roles list",
             "role_permissions": "Role permissions:",
             "update": "Update role data"
+        },
+        "posts": {
+            "create": "Create posts",
+            "created": "Post created!",
+            "tools": "Creator options:",
+            "update": "Modify post",
+            "delete": "Delete post",
+            "deleted": "The post has been deleted.",
+            "delete_warning": "Are you sure you want to delete this post? It cannot be undone.",
+            "title": "Post title:",
+            "content": "Post content:",
+            "options": "Visibility options",
+            "visible": "This post is a draft",
+            "private": "Visible for staff only",
+            "author": "Author:"
         }
     },
     "navbar": {

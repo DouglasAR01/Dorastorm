@@ -14,7 +14,8 @@
             "default_message": "¿A dónde vas?",
             "specific": {
                 "user": "No pudimos encontrar el usuario especificado.",
-                "role": "No pudimos encontrar el rol especificado."
+                "role": "No pudimos encontrar el rol especificado.",
+                "post": "No pudimos encontrar la publicación especificada."
             } 
         },
         "409": {
@@ -61,6 +62,21 @@
             "list": "Lista de roles",
             "role_permissions": "Permisos del rol:",
             "update": "Modificar datos del rol"
+        },
+        "posts": {
+            "create": "Crear publicación",
+            "created": "¡Publicación creada!",
+            "tools": "Opciones del editor:",
+            "update": "Modificar la publicación",
+            "delete": "Eliminar la publicación",
+            "deleted": "La publicación ha sido eliminada.",
+            "delete_warning": "¿Estás seguro de querer eliminar esta publicación? esta acción no se puede deshacer.",
+            "title": "Título de la publicación:",
+            "content": "Contenido:",
+            "options": "Opciones de visibilidad:",
+            "visible": "Esta publicación es un borrador",
+            "private": "Publicación solo visible por el personal",
+            "author": "Autor:"
         }
     },
     "navbar": {
