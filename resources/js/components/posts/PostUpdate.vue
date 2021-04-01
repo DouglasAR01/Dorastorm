@@ -1,0 +1,134 @@
+<template>
+  <div class="container bg-white rounded p-2">
+    <div v-if="loading">
+      {{ $t("message.loading") }}
+    </div>
+    <div v-else>
+      <h3>{{ $t("modules.posts.update") }}</h3>
+      <form>
+        <div class="row">
+          <div class="col-8">
+            <div class="form-group">
+              <label for="title">{{ $t("modules.posts.title") }}</label>
+              <input
+                type="text"
+                name="title"
+                class="form-control"
+                v-model="post.title"
+                :class="[{ 'is-invalid': errorFor('title') }]"
+              />
+              <validation-error :errors="errorFor('title')"></validation-error>
+            </div>
+          </div>
+          <div class="col-4">
+            <label>{{ $t("modules.posts.options") }}</label>
+            <div class="custom-control custom-checkbox">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="visible"
+                v-model="post.visible"
+              />
+              <label class="custom-control-label" for="visible">{{
+                $t("modules.posts.visible")
+              }}</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="private"
+                v-model="post.private"
+              />
+              <label class="custom-control-label" for="private">{{
+                $t("modules.posts.private")
+              }}</label>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="form-group">
+        <label for="content">{{ $t("modules.posts.content") }}</label>
+        <text-editor
+          v-model="post.content"
+          :class="[{ 'is-invalid': errorFor('content') }]"
+        ></text-editor>
+        <validation-error :errors="errorFor('content')"></validation-error>
+      </div>
+      <button
+        class="btn btn-primary btn-block"
+        :disabled="submitting"
+        @click.prevent="submit"
+      >
+        {{ $t("message.submit") }}
+      </button>
+    </div>
+  </div>
+</template>
+<script>
+import { is404, is422 } from "../../shared/utils/responses";
+import TextEditor from "../../shared/components/RichTextEditor";
+import ErrorTraits from "../../shared/mixins/error-traits";
+import ValidationError from "../../shared/components/ValidationError";
+export default {
+  components: {
+    ValidationError,
+    TextEditor
+  },
+  mixins: [
+    ErrorTraits
+  ],
+  data() {
+    return {
+      loading: false,
+      submitting: false,
+      post: null,
+    };
+  },
+  async created() {
+    this.loading = true;
+    if (!("postId" in this.$route.params)) {
+      this.$toasts.error(this.$t("error.fatal"));
+      return;
+    }
+    try {
+      this.post = (await axios.get(
+        "/api/posts/" + this.$route.params.postId + "/edit"
+      )).data.data;
+    } catch (error) {
+      if (is404(error)) {
+        this.$toasts.error(this.$t("error.404.specific.post"));
+        this.$router.push({
+          name: "404",
+          params: { 0: "/" },
+        });
+      } else {
+        this.$toasts.error(this.$t("error.fatal"));
+      }
+    }
+    this.loading = false;
+  },
+  methods: {
+    async submit() {
+      this.submitting = true;
+      try {
+        const post = (await axios.patch("/api/posts/" + this.post.id, this.post)).data.data;
+        this.$toasts.success(this.$t("message.data_changed"));
+        this.$router.push({
+          name: "posts-read",
+          params: {
+            slug: post.slug,
+          },
+        });
+      } catch (error) {
+        if (is422(error)) {
+          this.errors = error.response.data.errors;
+        } else {
+          this.$toasts.error(this.$t("error.fatal"));
+        }
+      }
+      this.submitting = false;
+    },
+  },
+};
+</script>

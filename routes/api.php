@@ -24,6 +24,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/users/{user}/password', 'UserController@updatePassword')->name('users.password');
     Route::resource('/users', 'UserController')->except(['create', 'edit']);
     Route::resource('/roles','RoleController')->except(['create', 'edit']);
-    Route::resource('/posts','PostController')->only(['store','update','destroy']);
+    Route::resource('/posts','PostController')->except(['index', 'show', 'create']);
 });
 

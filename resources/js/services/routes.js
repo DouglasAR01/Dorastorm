@@ -17,6 +17,7 @@ import RoleUpdate from "../components/roles/RoleUpdate";
 import RoleIndex from "../components/roles/RoleIndex";
 import PostCreate from "../components/posts/PostCreate";
 import PostRead from "../components/posts/PostRead";
+import PostUpdate from "../components/posts/PostUpdate";
 import Error404 from "../components/errors/Error404";
 import Error403 from "../components/errors/Error403";
 const routes = [
@@ -142,6 +143,15 @@ const routes = [
         path: '/posts/:slug',
         component: PostRead,
         name: 'posts-read'
+    },
+    {
+        path: '/posts/update/:postId',
+        component: PostUpdate,
+        name: 'posts-update',
+        meta: {
+            auth: true,
+            permission: Permissions.core.UPDATE_ELSES_POSTS
+        }
     },
     {
         path: '/403',
