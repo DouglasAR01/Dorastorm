@@ -18,6 +18,7 @@ import RoleIndex from "../components/roles/RoleIndex";
 import PostCreate from "../components/posts/PostCreate";
 import PostRead from "../components/posts/PostRead";
 import PostUpdate from "../components/posts/PostUpdate";
+import PostIndex from "../components/posts/PostIndex";
 import Error404 from "../components/errors/Error404";
 import Error403 from "../components/errors/Error403";
 const routes = [
@@ -138,6 +139,11 @@ const routes = [
             auth: true,
             permission: Permissions.core.CREATE_POSTS
         }
+    },
+    {
+        path: '/posts',
+        component: PostIndex,
+        name: 'posts-index'
     },
     {
         path: '/posts/:slug',

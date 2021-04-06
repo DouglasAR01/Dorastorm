@@ -23,17 +23,11 @@ class PostController extends Controller
     public function index()
     {
         // Pagination is required
-        return Post::all();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $condition = [['visible', '=', 1]];
+        if (!Auth::check()){
+            array_push($condition, ['private', '=', 0]);
+        }
+        return PostResource::collection(Post::where($condition)->orderBy('created_at', 'desc')->paginate(15));
     }
 
     /**

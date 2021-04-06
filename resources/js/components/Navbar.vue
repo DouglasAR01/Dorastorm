@@ -16,6 +16,11 @@
     </button>
     <div class="collapse navbar-collapse" id="responsive">
       <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <router-link class="nav-link" :to="{ name: 'posts-index' }">
+            {{$t("modules.posts.index")}}
+          </router-link>
+        </li>
         <li class="nav-item" v-if="!isLoggedIn">
           <router-link :to="{ name: 'login' }" class="nav-link">
             {{ $t("navbar.login") }}
@@ -23,7 +28,7 @@
         </li>
         <li class="nav-item" v-if="isLoggedIn">
           <router-link :to="{ name: 'posts-create' }" class="nav-link">
-            T__CREAR POST
+            {{$t("modules.posts.create")}}
           </router-link>
         </li>
         <li

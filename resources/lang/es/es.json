@@ -74,9 +74,14 @@
             "title": "Título de la publicación:",
             "content": "Contenido:",
             "options": "Opciones de visibilidad:",
-            "visible": "Esta publicación es un borrador",
-            "private": "Publicación solo visible por el personal",
-            "author": "Autor:"
+            "visible": "Esta publicación es visible",
+            "private": "Publicación solo para el personal (publicación privada)",
+            "author": "Autor:",
+            "read_more": "LEER MÁS...",
+            "index": "Ver publicaciones",
+            "previous": "Más recientes",
+            "next": "Más antiguas",
+            "first": "Portada"
         }
     },
     "navbar": {

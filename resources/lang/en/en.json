@@ -73,9 +73,14 @@
             "title": "Post title:",
             "content": "Post content:",
             "options": "Visibility options",
-            "visible": "This post is a draft",
-            "private": "Visible for staff only",
-            "author": "Author:"
+            "visible": "This post is visible",
+            "private": "Post for staff only (private post)",
+            "author": "Author:",
+            "read_more": "READ MODE...",
+            "index": "View posts",
+            "previous": "Newer",
+            "next": "Older",
+            "first": "Newest"
         }
     },
     "navbar": {
