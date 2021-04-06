@@ -4,73 +4,76 @@
       <h3>{{ $t("modules.users.list") }}</h3>
     </div>
     <div v-if="loading">{{ $t("message.loading") }}</div>
-    <div class="table-responsive" v-else>
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th scope="col">{{ $t("message.id") }}</th>
-            <th scope="col">{{ $t("message.name") }}</th>
-            <th scope="col">{{ $t("message.email") }}</th>
-            <th scope="col">{{ $t("modules.users.role") }}</th>
-            <th scope="col">{{ $t("message.action") }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <template v-for="user in users">
-            <tr :key="user.id">
-              <td>{{ user.id }}</td>
-              <td>{{ user.name }}</td>
-              <td>{{ user.email }}</td>
-              <td>{{ user.role.name }}</td>
-              <td>
-                <button
-                  class="btn btn-link"
-                  type="button"
-                  data-toggle="collapse"
-                  :data-target="'#co' + user.id"
-                  role="button"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                  :aria-controls="'co' + user.id"
-                >
-                  <i class="far fa-eye"></i>
-                </button>
-                <router-link
-                  :to="{
-                    name: 'users-update',
-                    query: { user_id: user.id },
-                  }"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  :title="$t('modules.users.update')"
-                  class="btn btn-link btn-sm"
-                  v-if="userCanUpdate && userCanTouchThis(user)"
-                >
-                  <i class="fas fa-pen"></i>
-                </router-link>
-                <button
-                  class="btn btn-link btn-sm"
-                  @click.prevent="deleteUser(user.id)"
-                  :disabled="deleting"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  :title="$t('modules.users.delete')"
-                  v-if="userCanDelete && userCanTouchThis(user)"
-                >
-                  <i class="fas fa-trash-alt"></i>
-                </button>
-              </td>
+    <div v-else>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">{{ $t("message.id") }}</th>
+              <th scope="col">{{ $t("message.name") }}</th>
+              <th scope="col">{{ $t("message.email") }}</th>
+              <th scope="col">{{ $t("modules.users.role") }}</th>
+              <th scope="col">{{ $t("message.action") }}</th>
             </tr>
-            <tr :key="'co' + user.id">
-              <td colspan="5" class="hidden-column">
-                <div class="collapse" :id="'co' + user.id">
-                  <user-data-card :payload="user"></user-data-card>
-                </div>
-              </td>
-            </tr>
-          </template>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <template v-for="user in data">
+              <tr :key="user.id">
+                <td>{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.role.name }}</td>
+                <td>
+                  <button
+                    class="btn btn-link"
+                    type="button"
+                    data-toggle="collapse"
+                    :data-target="'#co' + user.id"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    :aria-controls="'co' + user.id"
+                  >
+                    <i class="far fa-eye"></i>
+                  </button>
+                  <router-link
+                    :to="{
+                      name: 'users-update',
+                      query: { user_id: user.id },
+                    }"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    :title="$t('modules.users.update')"
+                    class="btn btn-link btn-sm"
+                    v-if="userCanUpdate && userCanTouchThis(user)"
+                  >
+                    <i class="fas fa-pen"></i>
+                  </router-link>
+                  <button
+                    class="btn btn-link btn-sm"
+                    @click.prevent="deleteUser(user.id)"
+                    :disabled="deleting"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    :title="$t('modules.users.delete')"
+                    v-if="userCanDelete && userCanTouchThis(user)"
+                  >
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr :key="'co' + user.id">
+                <td colspan="5" class="hidden-column">
+                  <div class="collapse" :id="'co' + user.id">
+                    <user-data-card :payload="user"></user-data-card>
+                  </div>
+                </td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
+      <simple-pagination :meta="meta" :links="links" @navigating="navigate"></simple-pagination>
       <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
     </div>
   </div>
@@ -80,26 +83,22 @@ import ConfirmDialogue from "../../shared/components/ConfirmDialogue";
 import { is404, is409 } from "../../shared/utils/responses";
 import Permissions from "../../services/role-permissions";
 import UserDataCard from "./UserDataCard";
+import SimplePagination from "../../shared/components/SimplePagination";
+import IndexPaginationTraits from "../../shared/mixins/index-pagination-traits";
 export default {
   components: {
     ConfirmDialogue,
-    UserDataCard
+    UserDataCard,
+    SimplePagination,
   },
+  mixins: [IndexPaginationTraits],
   data() {
     return {
-      loading: false,
       deleting: false,
-      users: null,
     };
   },
-  async created() {
-    try {
-      this.loading = true;
-      this.users = (await axios.get("/api/users")).data.data;
-      this.loading = false;
-    } catch (error) {
-      this.$toast.error(this.$t("error.fatal"));
-    }
+  created() {
+    this.ep = "/api/users?page=";
   },
   methods: {
     async deleteUser(user_id) {

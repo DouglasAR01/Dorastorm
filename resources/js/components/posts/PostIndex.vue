@@ -4,7 +4,7 @@
       {{ $t("message.loading") }}
     </div>
     <div v-else>
-      <post-list :posts="posts" class="mb-2"></post-list>
+      <post-list :posts="data" class="mb-2"></post-list>
       <simple-pagination
         :meta="meta"
         :links="links"
@@ -21,38 +21,15 @@
 <script>
 import PostList from "./PostList";
 import SimplePagination from "../../shared/components/SimplePagination";
+import IndexPaginationTraits from "../../shared/mixins/index-pagination-traits";
 export default {
   components: {
     PostList,
     SimplePagination,
   },
-  data() {
-    return {
-      loading: false,
-      posts: null,
-      meta: null,
-      links: null,
-    };
-  },
+  mixins: [IndexPaginationTraits],
   created() {
-    this.navigate(1);
-  },
-  methods: {
-    setData(resp) {
-      this.posts = resp.data.data;
-      this.meta = resp.data.meta;
-      this.links = resp.data.links;
-    },
-    async navigate(page) {
-      this.loading = true;
-      try {
-        const resp = await axios.get("/api/posts?page=" + page);
-        this.setData(resp);
-        this.loading = false;
-      } catch (error) {
-        this.$toasts.error(this.$t("error.fatal"));
-      }
-    },
-  },
+    this.ep = "/api/posts?page=";
+  }
 };
 </script>

@@ -28,7 +28,7 @@ class UserController extends Controller
         if ($request->user()->cannot('viewAny', User::class)) {
             abort(403);
         }
-        return UserResource::collection(User::all());
+        return UserResource::collection(User::paginate(15));
     }
 
     public function show(Request $request, $id)
