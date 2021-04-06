@@ -17,7 +17,10 @@ class Post extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withDefault([
+            'id' => 'nan',
+            'name' => 'ANON',
+        ]);
     }
 
     public function save(array $options  = [])

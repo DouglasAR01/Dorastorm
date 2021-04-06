@@ -127,6 +127,9 @@
         "name": "Nombre",
         "default_description": "No hay una descripción disponible.",
         "created_at": "Creado el:",
-        "updated_at": "Modificado el:"
+        "updated_at": "Modificado el:",
+        "paginate_first": "Primera página",
+        "paginate_next": "Página siguiente",
+        "paginate_prev": "Página anterior"
     }
 }

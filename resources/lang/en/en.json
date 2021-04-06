@@ -125,6 +125,9 @@
         "name": "Name",
         "default_description": "No description available.",
         "created_at": "Created at:",
-        "updated_at": "Updated at:"
+        "updated_at": "Updated at:",
+        "paginate_first": "First page",
+        "paginate_next": "Next page",
+        "paginate_prev": "Previous page"
     }
 }
