@@ -5,7 +5,7 @@
     </div>
     <div v-if="loading">{{ $t("message.loading") }}</div>
     <div class="table-responsive" v-else>
-      <table class="table table-striped table-hover">
+      <table class="table table-hover">
         <thead>
           <tr>
             <th scope="col">{{ $t("message.id") }}</th>
@@ -16,50 +16,59 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="user in users" :key="user.id">
-            <td>{{ user.id }}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.role.name }}</td>
-            <td>
-              <router-link
-                :to="{
-                  name: 'users-read',
-                  query: { user_id: user.id },
-                }"
-                data-toggle="tooltip"
-                data-placement="top"
-                :title="$t('modules.users.read')"
-                class="btn btn-link btn-sm"
-              >
-                <i class="far fa-eye"></i>
-              </router-link>
-              <router-link
-                :to="{
-                  name: 'users-update',
-                  query: { user_id: user.id },
-                }"
-                data-toggle="tooltip"
-                data-placement="top"
-                :title="$t('modules.users.update')"
-                class="btn btn-link btn-sm"
-                v-if="userCanUpdate && userCanTouchThis(user)"
-              >
-                <i class="fas fa-pen"></i>
-              </router-link>
-              <button
-                class="btn btn-link btn-sm"
-                @click.prevent="deleteUser(user.id)"
-                :disabled="deleting"
-                data-toggle="tooltip"
-                data-placement="top"
-                :title="$t('modules.users.delete')"
-                v-if="userCanDelete && userCanTouchThis(user)"
-              >
-                <i class="fas fa-trash-alt"></i>
-              </button>
-            </td>
-          </tr>
+          <template v-for="user in users">
+            <tr :key="user.id">
+              <td>{{ user.id }}</td>
+              <td>{{ user.name }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.role.name }}</td>
+              <td>
+                <button
+                  class="btn btn-link"
+                  type="button"
+                  data-toggle="collapse"
+                  :data-target="'#co' + user.id"
+                  role="button"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  :aria-controls="'co' + user.id"
+                >
+                  <i class="far fa-eye"></i>
+                </button>
+                <router-link
+                  :to="{
+                    name: 'users-update',
+                    query: { user_id: user.id },
+                  }"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  :title="$t('modules.users.update')"
+                  class="btn btn-link btn-sm"
+                  v-if="userCanUpdate && userCanTouchThis(user)"
+                >
+                  <i class="fas fa-pen"></i>
+                </router-link>
+                <button
+                  class="btn btn-link btn-sm"
+                  @click.prevent="deleteUser(user.id)"
+                  :disabled="deleting"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  :title="$t('modules.users.delete')"
+                  v-if="userCanDelete && userCanTouchThis(user)"
+                >
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </td>
+            </tr>
+            <tr :key="'co' + user.id">
+              <td colspan="5" class="hidden-column">
+                <div class="collapse" :id="'co' + user.id">
+                  <user-data-card :payload="user"></user-data-card>
+                </div>
+              </td>
+            </tr>
+          </template>
         </tbody>
       </table>
       <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
@@ -70,9 +79,11 @@
 import ConfirmDialogue from "../../shared/components/ConfirmDialogue";
 import { is404, is409 } from "../../shared/utils/responses";
 import Permissions from "../../services/role-permissions";
+import UserDataCard from "./UserDataCard";
 export default {
   components: {
     ConfirmDialogue,
+    UserDataCard
   },
   data() {
     return {
@@ -94,8 +105,7 @@ export default {
     async deleteUser(user_id) {
       const ok = await this.$refs.confirmDialogue.show({
         title: this.$t("modules.users.delete"),
-        message:
-          this.$t("modules.users.delete_warning"),
+        message: this.$t("modules.users.delete_warning"),
         okButton: this.$t("message.delete"),
       });
       // If you throw an error, the method will terminate here unless you surround it wil try/catch
@@ -116,17 +126,33 @@ export default {
         this.deleting = false;
       }
     },
-    userCanTouchThis(another_user){
-      return this.$store.getters.getUserHierarchy < another_user.role.hierarchy || this.$store.getters.getUserHierarchy===0;
-    }
+    userCanTouchThis(another_user) {
+      return (
+        this.$store.getters.getUserHierarchy < another_user.role.hierarchy ||
+        this.$store.getters.getUserHierarchy === 0
+      );
+    },
   },
   computed: {
     userCanUpdate() {
-      return Permissions.checkUserPermission(this.$store.state.user, Permissions.core.UPDATE_USERS);
+      return Permissions.checkUserPermission(
+        this.$store.state.user,
+        Permissions.core.UPDATE_USERS
+      );
     },
     userCanDelete() {
-      return Permissions.checkUserPermission(this.$store.state.user, Permissions.core.DELETE_USERS);
-    }
-  }
+      return Permissions.checkUserPermission(
+        this.$store.state.user,
+        Permissions.core.DELETE_USERS
+      );
+    },
+  },
 };
 </script>
+<style scoped>
+.hidden-column {
+  border-top: 0px;
+  padding: 0 !important;
+  margin-top: 0 !important;
+}
+</style>
