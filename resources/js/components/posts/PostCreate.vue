@@ -42,6 +42,16 @@
           </div>
         </div>
       </div>
+      <div class="form-group">
+        <label for="description">{{ $t("modules.posts.description") }}</label>
+        <textarea
+          name="description"
+          class="form-control"
+          v-model="new_post.description"
+          :class="[{ 'is-invalid': errorFor('description') }]"
+        ></textarea>
+        <validation-error :errors="errorFor('description')"></validation-error>
+      </div>
     </form>
     <div class="form-group">
       <label for="content">{{ $t("modules.posts.content") }}</label>
@@ -76,6 +86,7 @@ export default {
       submitting: false,
       new_post: {
         title: null,
+        description: null,
         content: null,
         visible: false,
         private: false,

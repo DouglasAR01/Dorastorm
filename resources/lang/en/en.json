@@ -71,6 +71,7 @@
             "deleted": "The post has been deleted.",
             "delete_warning": "Are you sure you want to delete this post? It cannot be undone.",
             "title": "Post title:",
+            "description": "Brief post description",
             "content": "Post content:",
             "options": "Visibility options",
             "visible": "This post is visible",

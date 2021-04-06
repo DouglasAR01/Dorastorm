@@ -7,7 +7,7 @@
             {{post.title}}
           </router-link>
           <p class="card-text">
-            Desc..
+            {{post.description}}
             <span>
               <router-link class="text-muted" :to="postLink">
                 {{$t("modules.posts.read_more")}}

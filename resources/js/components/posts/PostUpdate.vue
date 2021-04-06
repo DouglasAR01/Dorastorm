@@ -46,6 +46,18 @@
             </div>
           </div>
         </div>
+        <div class="form-group">
+          <label for="description">{{ $t("modules.posts.description") }}</label>
+          <textarea
+            name="description"
+            class="form-control"
+            v-model="post.description"
+            :class="[{ 'is-invalid': errorFor('description') }]"
+          ></textarea>
+          <validation-error
+            :errors="errorFor('description')"
+          ></validation-error>
+        </div>
       </form>
       <div class="form-group">
         <label for="content">{{ $t("modules.posts.content") }}</label>
@@ -73,11 +85,9 @@ import ValidationError from "../../shared/components/ValidationError";
 export default {
   components: {
     ValidationError,
-    TextEditor
+    TextEditor,
   },
-  mixins: [
-    ErrorTraits
-  ],
+  mixins: [ErrorTraits],
   data() {
     return {
       loading: false,
@@ -92,9 +102,9 @@ export default {
       return;
     }
     try {
-      this.post = (await axios.get(
-        "/api/posts/" + this.$route.params.postId + "/edit"
-      )).data.data;
+      this.post = (
+        await axios.get("/api/posts/" + this.$route.params.postId + "/edit")
+      ).data.data;
     } catch (error) {
       if (is404(error)) {
         this.$toasts.error(this.$t("error.404.specific.post"));
@@ -112,7 +122,9 @@ export default {
     async submit() {
       this.submitting = true;
       try {
-        const post = (await axios.patch("/api/posts/" + this.post.id, this.post)).data.data;
+        const post = (
+          await axios.patch("/api/posts/" + this.post.id, this.post)
+        ).data.data;
         this.$toasts.success(this.$t("message.data_changed"));
         this.$router.push({
           name: "posts-read",

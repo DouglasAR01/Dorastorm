@@ -72,6 +72,7 @@
             "deleted": "La publicación ha sido eliminada.",
             "delete_warning": "¿Estás seguro de querer eliminar esta publicación? esta acción no se puede deshacer.",
             "title": "Título de la publicación:",
+            "description": "Breve descripción de la publicación",
             "content": "Contenido:",
             "options": "Opciones de visibilidad:",
             "visible": "Esta publicación es visible",

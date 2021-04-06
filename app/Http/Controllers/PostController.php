@@ -11,6 +11,7 @@ class PostController extends Controller
 {
     private $validation_rules = [
         'title' => 'required|string|min:5|max:190',
+        'description' => 'required|string|min:5|max:300',
         'content' => 'required|string',
         'visible' => 'boolean',
         'private' => 'boolean'
