@@ -22,7 +22,7 @@
           </div>
           <div class="col-4">
             <label>{{ $t("modules.posts.options") }}</label>
-            <div class="custom-control custom-checkbox">
+            <div class="custom-control custom-switch">
               <input
                 type="checkbox"
                 class="custom-control-input"
@@ -33,7 +33,7 @@
                 $t("modules.posts.visible")
               }}</label>
             </div>
-            <div class="custom-control custom-checkbox">
+            <div class="custom-control custom-switch">
               <input
                 type="checkbox"
                 class="custom-control-input"
