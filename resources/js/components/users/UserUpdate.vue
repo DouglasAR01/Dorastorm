@@ -103,6 +103,7 @@ export default {
   data() {
     return {
       loading: false,
+      errors: null,
       success: true,
       submiting: false,
       changing_password: false,
