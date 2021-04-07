@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom">
+  <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom" :class="[{ 'navbar-expand-sm' : !isLoggedIn }]">
     <router-link :to="{ name: 'home' }" class="navbar-brand">
       Dorastorm
     </router-link>

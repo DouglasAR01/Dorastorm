@@ -1,62 +1,66 @@
 <template>
-  <div class="d-flex w-50 m-auto align-items-center">
-    <div class="card card-body">
-      <form @submit.prevent="login">
-        <div class="form-group">
-          <validation-error :errors="errors" name="email" v-slot="{ e }">
-            <label for="email">{{ $t("message.email") }}</label>
-            <input
-              type="email"
-              class="form-control"
-              name="email"
-              v-model="user.email"
-              :class="[{ 'is-invalid': e }]"
-              required
-            />
-          </validation-error>
-        </div>
-        <div class="form-group">
-          <validation-error :errors="errors" name="password" v-slot="{ e }">
-            <label for="password">{{ $t("message.password") }}</label>
-            <input
-              type="password"
-              class="form-control"
-              name="password"
-              v-model="user.password"
-              :class="[{ 'is-invalid': e }]"
-              required
-            />
-          </validation-error>
-        </div>
-        <div class="row">
-          <div class="col-6">
-            <div class="form-check pb-2">
-              <input
-                type="checkbox"
-                class="form-check-input"
-                v-model="user.remember"
-                name="remember"
-              />
-              <label for="remember" class="form-check-label">{{
-                $t("message.remember_me")
-              }}</label>
+  <div class="row">
+      <div class="col-md-2 col-lg-3"></div>
+      <div class="col-md-8 col-lg-6">
+        <div class="card card-body">
+          <form @submit.prevent="login">
+            <div class="form-group">
+              <validation-error :errors="errors" name="email" v-slot="{ e }">
+                <label for="email">{{ $t("message.email") }}</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  name="email"
+                  v-model="user.email"
+                  :class="[{ 'is-invalid': e }]"
+                  required
+                />
+              </validation-error>
             </div>
-          </div>
-          <div class="col-6">
-            <router-link :to="{ name: 'forgot-password' }">{{
-              $t("message.forgot_password")
-            }}</router-link>
-          </div>
+            <div class="form-group">
+              <validation-error :errors="errors" name="password" v-slot="{ e }">
+                <label for="password">{{ $t("message.password") }}</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  name="password"
+                  v-model="user.password"
+                  :class="[{ 'is-invalid': e }]"
+                  required
+                />
+              </validation-error>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <div class="form-check pb-2">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    v-model="user.remember"
+                    name="remember"
+                  />
+                  <label for="remember" class="form-check-label">{{
+                    $t("message.remember_me")
+                  }}</label>
+                </div>
+              </div>
+              <div class="col-6">
+                <router-link :to="{ name: 'forgot-password' }">{{
+                  $t("message.forgot_password")
+                }}</router-link>
+              </div>
+            </div>
+            <input
+              type="submit"
+              :value="$t('message.submit')"
+              class="btn btn-primary btn-block"
+              :disabled="loading"
+            />
+          </form>
         </div>
-        <input
-          type="submit"
-          :value="$t('message.submit')"
-          class="btn btn-primary btn-block"
-          :disabled="loading"
-        />
-      </form>
+      </div>
+      <div class="col-md-2 col-lg-3"></div>
     </div>
-  </div>
 </template>
 <script>
 import { is422 } from "../../shared/utils/responses";
