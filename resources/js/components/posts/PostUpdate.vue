@@ -7,7 +7,7 @@
       <h3>{{ $t("modules.posts.update") }}</h3>
       <form>
         <div class="row">
-          <div class="col-8">
+          <div class="col-md-8">
             <div class="form-group">
               <validation-error :errors="errors" name="title" v-slot="{ e }">
                 <label for="title">{{ $t("modules.posts.title") }}</label>
@@ -21,7 +21,7 @@
               </validation-error>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-md-4">
             <label>{{ $t("modules.posts.options") }}</label>
             <div class="custom-control custom-switch">
               <input

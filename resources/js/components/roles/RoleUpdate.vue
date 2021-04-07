@@ -30,13 +30,13 @@
         </validation-error>
       </div>
       <div class="row">
-        <div class="col-8">
+        <div class="col-md-8">
           <role-permission-selector
             :preselected-permissions="initial_permissions"
             @selected="updateSelected"
           ></role-permission-selector>
         </div>
-        <div class="col-4">
+        <div class="col-md-4">
           <role-hierarchy-selector
             v-model="role.hierarchy"
             :rid="role.id"

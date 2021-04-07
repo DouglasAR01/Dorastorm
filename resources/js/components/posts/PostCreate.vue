@@ -2,7 +2,7 @@
   <div class="container rounded bg-white p-2">
     <h3>{{ $t("modules.posts.create") }}</h3>
     <form>
-      <div class="row">
+      <div class="form-row">
         <div class="col-md-8">
           <div class="form-group">
             <validation-error :errors="errors" name="title" v-slot="{ e }">
