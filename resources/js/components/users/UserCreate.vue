@@ -2,94 +2,116 @@
   <div class="container rounded bg-white p-3">
     <form @submit.prevent="submit">
       <div class="form-group">
-        <label for="name">{{ $t("modules.users.name") }}</label>
-        <input
-          type="text"
-          name="name"
-          class="form-control"
-          v-model="new_user.name"
-          :class="[{ 'is-invalid': errorFor('name') }]"
-          required
-        />
-        <validation-error :errors="errorFor('name')"></validation-error>
+        <validation-error :errors="errors" name="name" v-slot="{ e }">
+          <label for="name">{{ $t("modules.users.name") }}</label>
+          <input
+            type="text"
+            name="name"
+            class="form-control"
+            v-model="new_user.name"
+            :class="[{ 'is-invalid': e }]"
+            required
+          />
+        </validation-error>
       </div>
       <div class="form-group">
-        <label for="email">{{ $t("message.email") }}</label>
-        <input
-          type="email"
-          name="email"
-          class="form-control"
-          v-model="new_user.email"
-          :class="[{ 'is-invalid': errorFor('email') }]"
-          required
-        />
-        <validation-error :errors="errorFor('email')"></validation-error>
+        <validation-error :errors="errors" name="email" v-slot="{ e }">
+          <label for="email">{{ $t("message.email") }}</label>
+          <input
+            type="email"
+            name="email"
+            class="form-control"
+            v-model="new_user.email"
+            :class="[{ 'is-invalid': e }]"
+            required
+          />
+        </validation-error>
       </div>
       <div class="form-group">
-        <label for="password">{{ $t("message.password") }}</label>
-        <input
-          type="password"
-          name="password"
-          class="form-control"
-          v-model="new_user.password"
-          :class="[{ 'is-invalid': errorFor('password') }]"
-          required
-        />
-        <validation-error :errors="errorFor('password')"></validation-error>
+        <validation-error :errors="errors" name="password" v-slot="{ e }">
+          <label for="password">{{ $t("message.password") }}</label>
+          <input
+            type="password"
+            name="password"
+            class="form-control"
+            v-model="new_user.password"
+            :class="[{ 'is-invalid': e }]"
+            required
+          />
+        </validation-error>
       </div>
       <div class="form-group">
-        <label for="confirm_password">{{ $t("message.confirm_password") }}</label>
-        <input
-          type="password"
-          name="confirm_password"
-          class="form-control"
-          v-model="new_user.password_confirmation"
-          :class="[{ 'is-invalid': errorFor('password_confirmation') }]"
-          required
-        />
-        <validation-error :errors="errorFor('password_confirmation')"></validation-error>
-        <small v-if="!fieldConfirmed(new_user.password, new_user.password_confirmation)" class="text-danger">The passwords doesn't match</small>
-        
+        <validation-error
+          :errors="errors"
+          name="password_confirmation"
+          v-slot="{ e }"
+        >
+          <label for="confirm_password">{{
+            $t("message.confirm_password")
+          }}</label>
+          <input
+            type="password"
+            name="confirm_password"
+            class="form-control"
+            v-model="new_user.password_confirmation"
+            :class="[{ 'is-invalid': e }]"
+            required
+          />
+        </validation-error>
+        <small
+          v-if="
+            !fieldConfirmed(new_user.password, new_user.password_confirmation)
+          "
+          class="text-danger"
+          >The passwords doesn't match</small
+        >
       </div>
       <div class="form-group">
         <div v-if="!loading">
-          <label for="role_id">{{ $t("modules.users.role_select") }}</label>
-          <select
-            name="role_id"
-            class="custom-select form-control"
-            v-model="new_user.role_id"
-            :class="[{ 'is-invalid': errorFor('role_id') }]"
-            required
-          >
-            <option disabled value="">{{ $t("modules.users.role_default") }}</option>
-            <option
-              :value="role.id"
-              v-for="role in available_roles"
-              :key="role.id"
+          <validation-error :errors="errors" name="role_id" v-slot="{ e }">
+            <label for="role_id">{{ $t("modules.users.role_select") }}</label>
+            <select
+              name="role_id"
+              class="custom-select form-control"
+              v-model="new_user.role_id"
+              :class="[{ 'is-invalid': e }]"
+              required
             >
-              {{ role.name }}
-            </option>
-          </select>
-          <validation-error :errors="errorFor('role_id')"></validation-error>
+              <option disabled value="">
+                {{ $t("modules.users.role_default") }}
+              </option>
+              <option
+                :value="role.id"
+                v-for="role in available_roles"
+                :key="role.id"
+              >
+                {{ role.name }}
+              </option>
+            </select>
+          </validation-error>
         </div>
       </div>
-      <input type="submit" :value="$t('message.submit')" class="btn btn-primary btn-block" :disabled="
+      <input
+        type="submit"
+        :value="$t('message.submit')"
+        class="btn btn-primary btn-block"
+        :disabled="
           loading ||
           submitting ||
           !fieldConfirmed(new_user.password, new_user.password_confirmation)
-        ">
+        "
+      />
     </form>
   </div>
 </template>
 <script>
 import { is422 } from "../../shared/utils/responses";
-import ErrorTraits from "../../shared/mixins/error-traits";
 import FormTraits from "../../shared/mixins/form-traits";
 import ValidationError from "../../shared/components/ValidationError";
 import Obj from "../../shared/utils/object-utils";
 import Auth from "../../services/auth";
 export default {
-  mixins: [ErrorTraits, FormTraits],
+  mixins: [FormTraits],
   components: {
     ValidationError,
   },
@@ -97,6 +119,7 @@ export default {
     return {
       loading: false,
       submitting: false,
+      errors: null,
       available_roles: null,
       new_user: {
         name: null,

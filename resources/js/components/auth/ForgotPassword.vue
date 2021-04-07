@@ -3,16 +3,17 @@
     <h2>{{ $t("message.forgot_password") }}</h2>
     <form @submit.prevent="submit">
       <div class="form-group">
-        <label for="email">{{ $t("message.email") }}</label>
-        <input
-          type="email"
-          name="email"
-          class="form-control"
-          v-model="email"
-          :class="[{ 'is-invalid': errorFor('email') }]"
-          required
-        />
-        <validation-error :errors="errorFor('email')"></validation-error>
+        <validation-error :errors="errors" name="email" v-slot="{ e }">
+          <label for="email">{{ $t("message.email") }}</label>
+          <input
+            type="email"
+            name="email"
+            class="form-control"
+            v-model="email"
+            :class="[{ 'is-invalid': e }]"
+            required
+          />
+        </validation-error>
       </div>
       <input
         type="submit"
@@ -24,12 +25,10 @@
   </div>
 </template>
 <script>
-import ErrorTraits from "../../shared/mixins/error-traits";
 import ValidationError from "../../shared/components/ValidationError";
 import Auth from "../../services/auth";
 import { is422 } from "../../shared/utils/responses";
 export default {
-  mixins: [ErrorTraits],
   components: {
     ValidationError,
   },
@@ -38,6 +37,7 @@ export default {
     return {
       loading: false,
       email: null,
+      errors: null,
     };
   },
 

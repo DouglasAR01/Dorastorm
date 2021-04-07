@@ -1,44 +1,49 @@
 <template>
   <form @submit.prevent="submit">
     <div class="form-group">
-      <label for="cpassword">{{ $t("message.current_password") }}</label>
-      <input
-        type="password"
-        name="cpassword"
-        class="form-control"
-        v-model="payload.current_password"
-        :class="[{ 'is-invalid': errorFor('current_password') }]"
-        required
-      />
-      <validation-error
-        :errors="errorFor('current_password')"
-      ></validation-error>
+      <validation-error :errors="errors" name="current_password" v-slot="{ e }">
+        <label for="cpassword">{{ $t("message.current_password") }}</label>
+        <input
+          type="password"
+          name="cpassword"
+          class="form-control"
+          v-model="payload.current_password"
+          :class="[{ 'is-invalid': e }]"
+          required
+        />
+      </validation-error>
     </div>
     <div class="form-group">
-      <label for="password">{{ $t("message.new_password") }}</label>
-      <input
-        type="password"
-        name="password"
-        class="form-control"
-        v-model="payload.password"
-        :class="[{ 'is-invalid': errorFor('password') }]"
-        required
-      />
-      <validation-error :errors="errorFor('password')"></validation-error>
+      <validation-error :errors="errors" name="password" v-slot="{ e }">
+        <label for="password">{{ $t("message.new_password") }}</label>
+        <input
+          type="password"
+          name="password"
+          class="form-control"
+          v-model="payload.password"
+          :class="[{ 'is-invalid': e }]"
+          required
+        />
+      </validation-error>
     </div>
     <div class="form-group">
-      <label for="confirm_password">{{ $t("message.confirm_password") }}</label>
-      <input
-        type="password"
-        name="confirm_password"
-        class="form-control"
-        v-model="payload.password_confirmation"
-        :class="[{ 'is-invalid': errorFor('password_confirmation') }]"
-        required
-      />
       <validation-error
-        :errors="errorFor('password_confirmation')"
-      ></validation-error>
+        :errors="errors"
+        name="password_confirmation"
+        v-slot="{ e }"
+      >
+        <label for="confirm_password">{{
+          $t("message.confirm_password")
+        }}</label>
+        <input
+          type="password"
+          name="confirm_password"
+          class="form-control"
+          v-model="payload.password_confirmation"
+          :class="[{ 'is-invalid': e }]"
+          required
+        />
+      </validation-error>
       <small
         v-if="!fieldConfirmed(payload.password, payload.password_confirmation)"
         class="text-danger"
@@ -55,17 +60,16 @@
       "
     />
     <button class="btn btn-danger" @click.prevent="$emit('cancel')">
-      {{$t("message.cancel")}}
+      {{ $t("message.cancel") }}
     </button>
   </form>
 </template>
 <script>
 import * as Responses from "../../shared/utils/responses";
 import FormTraits from "../../shared/mixins/form-traits";
-import ErrorTraits from "../../shared/mixins/error-traits";
 import ValidationError from "../../shared/components/ValidationError";
 export default {
-  mixins: [FormTraits, ErrorTraits],
+  mixins: [FormTraits],
   components: {
     ValidationError,
   },
@@ -75,6 +79,7 @@ export default {
   data() {
     return {
       submitting: false,
+      errors: null,
       payload: {
         password: null,
         password_confirmation: null,

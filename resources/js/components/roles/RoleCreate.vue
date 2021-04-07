@@ -2,27 +2,29 @@
   <div class="container bg-white rounded p-2">
     <form @submit.prevent="submit">
       <div class="form-group">
-        <label for="name">{{ $t("modules.roles.name") }}</label>
-        <input
-          type="text"
-          name="name"
-          class="form-control"
-          v-model="new_role.name"
-          :class="[{ 'is-invalid': errorFor('name') }]"
-          required
-        />
-        <validation-error :errors="errorFor('name')"></validation-error>
+        <validation-error :errors="errors" name="name" v-slot="{ e }">
+          <label for="name">{{ $t("modules.roles.name") }}</label>
+          <input
+            type="text"
+            name="name"
+            class="form-control"
+            v-model="new_role.name"
+            :class="[{ 'is-invalid': e }]"
+            required
+          />
+        </validation-error>
       </div>
       <div class="form-group">
-        <label for="description">{{ $t("modules.roles.description") }}</label>
-        <textarea
-          name="description"
-          class="form-control"
-          v-model="new_role.description"
-          :class="[{ 'is-invalid': errorFor('description') }]"
-          required
-        ></textarea>
-        <validation-error :errors="errorFor('description')"></validation-error>
+        <validation-error :errors="errors" name="description" v-slot="{ e }">
+          <label for="description">{{ $t("modules.roles.description") }}</label>
+          <textarea
+            name="description"
+            class="form-control"
+            v-model="new_role.description"
+            :class="[{ 'is-invalid': e }]"
+            required
+          ></textarea>
+        </validation-error>
       </div>
       <div class="row">
         <div class="col-8">
@@ -36,7 +38,12 @@
           ></role-hierarchy-selector>
         </div>
       </div>
-      <input type="submit" :value="$t('message.submit')" class="btn btn-primary btn-block mt-2" :disabled="submitting">
+      <input
+        type="submit"
+        :value="$t('message.submit')"
+        class="btn btn-primary btn-block mt-2"
+        :disabled="submitting"
+      />
     </form>
   </div>
 </template>
@@ -44,7 +51,6 @@
 import RolePermissionSelector from "./RolePermissionSelector";
 import RoleHierarchySelector from "./RoleHierarchySelector";
 import ValidationError from "../../shared/components/ValidationError";
-import ErrorTraits from "../../shared/mixins/error-traits";
 import { is422 } from "../../shared/utils/responses";
 export default {
   components: {
@@ -52,10 +58,10 @@ export default {
     RoleHierarchySelector,
     ValidationError,
   },
-  mixins: [ErrorTraits],
   data() {
     return {
       submitting: false,
+      errors: null,
       new_role: {
         name: null,
         description: null,
@@ -71,7 +77,7 @@ export default {
         await axios.post("/api/roles", this.new_role);
         this.$toasts.success(this.$t("modules.roles.created"));
         this.$router.push({
-          name: 'roles-index'
+          name: "roles-index",
         });
       } catch (error) {
         if (is422(error)) {
@@ -82,8 +88,8 @@ export default {
     },
     updateSelected(payload) {
       var permissions = {};
-      payload.forEach(element => {
-        permissions[element] = 1
+      payload.forEach((element) => {
+        permissions[element] = 1;
       });
       this.new_role.permissions = permissions;
     },

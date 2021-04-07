@@ -9,15 +9,16 @@
         <div class="row">
           <div class="col-8">
             <div class="form-group">
-              <label for="title">{{ $t("modules.posts.title") }}</label>
-              <input
-                type="text"
-                name="title"
-                class="form-control"
-                v-model="post.title"
-                :class="[{ 'is-invalid': errorFor('title') }]"
-              />
-              <validation-error :errors="errorFor('title')"></validation-error>
+              <validation-error :errors="errors" name="title" v-slot="{ e }">
+                <label for="title">{{ $t("modules.posts.title") }}</label>
+                <input
+                  type="text"
+                  name="title"
+                  class="form-control"
+                  v-model="post.title"
+                  :class="[{ 'is-invalid': e }]"
+                />
+              </validation-error>
             </div>
           </div>
           <div class="col-4">
@@ -47,25 +48,27 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="description">{{ $t("modules.posts.description") }}</label>
-          <textarea
-            name="description"
-            class="form-control"
-            v-model="post.description"
-            :class="[{ 'is-invalid': errorFor('description') }]"
-          ></textarea>
-          <validation-error
-            :errors="errorFor('description')"
-          ></validation-error>
+          <validation-error :errors="errors" name="description" v-slot="{ e }">
+            <label for="description">{{
+              $t("modules.posts.description")
+            }}</label>
+            <textarea
+              name="description"
+              class="form-control"
+              v-model="post.description"
+              :class="[{ 'is-invalid': e }]"
+            ></textarea>
+          </validation-error>
         </div>
       </form>
       <div class="form-group">
-        <label for="content">{{ $t("modules.posts.content") }}</label>
-        <text-editor
-          v-model="post.content"
-          :class="[{ 'is-invalid': errorFor('content') }]"
-        ></text-editor>
-        <validation-error :errors="errorFor('content')"></validation-error>
+        <validation-error :errors="errors" name="content" v-slot="{ e }">
+          <label for="content">{{ $t("modules.posts.content") }}</label>
+          <text-editor
+            v-model="post.content"
+            :class="[{ 'is-invalid': e }]"
+          ></text-editor>
+        </validation-error>
       </div>
       <button
         class="btn btn-primary btn-block"
@@ -80,19 +83,18 @@
 <script>
 import { is404, is422 } from "../../shared/utils/responses";
 import TextEditor from "../../shared/components/RichTextEditor";
-import ErrorTraits from "../../shared/mixins/error-traits";
 import ValidationError from "../../shared/components/ValidationError";
 export default {
   components: {
     ValidationError,
     TextEditor,
   },
-  mixins: [ErrorTraits],
   data() {
     return {
       loading: false,
       submitting: false,
       post: null,
+      errors: null,
     };
   },
   async created() {

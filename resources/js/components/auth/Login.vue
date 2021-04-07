@@ -3,28 +3,30 @@
     <div class="card card-body">
       <form @submit.prevent="login">
         <div class="form-group">
-          <label for="email">{{ $t("message.email") }}</label>
-          <input
-            type="email"
-            class="form-control"
-            name="email"
-            v-model="user.email"
-            :class="[{ 'is-invalid': errorFor('email') }]"
-            required
-          />
-          <validation-error :errors="errorFor('email')"></validation-error>
+          <validation-error :errors="errors" name="email" v-slot="{ e }">
+            <label for="email">{{ $t("message.email") }}</label>
+            <input
+              type="email"
+              class="form-control"
+              name="email"
+              v-model="user.email"
+              :class="[{ 'is-invalid': e }]"
+              required
+            />
+          </validation-error>
         </div>
         <div class="form-group">
-          <label for="password">{{ $t("message.password") }}</label>
-          <input
-            type="password"
-            class="form-control"
-            name="password"
-            v-model="user.password"
-            :class="[{ 'is-invalid': errorFor('password') }]"
-            required
-          />
-          <validation-error :errors="errorFor('password')"></validation-error>
+          <validation-error :errors="errors" name="password" v-slot="{ e }">
+            <label for="password">{{ $t("message.password") }}</label>
+            <input
+              type="password"
+              class="form-control"
+              name="password"
+              v-model="user.password"
+              :class="[{ 'is-invalid': e }]"
+              required
+            />
+          </validation-error>
         </div>
         <div class="row">
           <div class="col-6">
@@ -58,11 +60,9 @@
 </template>
 <script>
 import { is422 } from "../../shared/utils/responses";
-import ErrorTraits from "../../shared/mixins/error-traits";
 import ValidationError from "../../shared/components/ValidationError";
 import Auth from "../../services/auth";
 export default {
-  mixins: [ErrorTraits],
   components: {
     ValidationError,
   },
@@ -74,6 +74,7 @@ export default {
         remember: false,
       },
       loading: false,
+      errors: null,
     };
   },
   methods: {

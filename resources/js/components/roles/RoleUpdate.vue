@@ -5,27 +5,29 @@
   <div class="container bg-white rounded p-2" v-else>
     <form @submit.prevent="submit">
       <div class="form-group">
-        <label for="name">{{ $t("modules.roles.name") }}</label>
-        <input
-          type="text"
-          name="name"
-          class="form-control"
-          v-model="role.name"
-          :class="[{ 'is-invalid': errorFor('name') }]"
-          required
-        />
-        <validation-error :errors="errorFor('name')"></validation-error>
+        <validation-error :errors="errors" name="name" v-slot="{ e }">
+          <label for="name">{{ $t("modules.roles.name") }}</label>
+          <input
+            type="text"
+            name="name"
+            class="form-control"
+            v-model="role.name"
+            :class="[{ 'is-invalid': e }]"
+            required
+          />
+        </validation-error>
       </div>
       <div class="form-group">
-        <label for="description">{{ $t("modules.roles.description") }}</label>
-        <textarea
-          name="description"
-          class="form-control"
-          v-model="role.description"
-          :class="[{ 'is-invalid': errorFor('description') }]"
-          required
-        ></textarea>
-        <validation-error :errors="errorFor('description')"></validation-error>
+        <validation-error :errors="errors" name="description" v-slot="{ e }">
+          <label for="description">{{ $t("modules.roles.description") }}</label>
+          <textarea
+            name="description"
+            class="form-control"
+            v-model="role.description"
+            :class="[{ 'is-invalid': e }]"
+            required
+          ></textarea>
+        </validation-error>
       </div>
       <div class="row">
         <div class="col-8">
@@ -56,10 +58,7 @@ import Obj from "../../shared/utils/object-utils";
 import RolePermissionSelector from "./RolePermissionSelector";
 import RoleHierarchySelector from "./RoleHierarchySelector";
 import ValidationError from "../../shared/components/ValidationError";
-import ErrorTraits from "../../shared/mixins/error-traits";
 export default {
-  mixins: [ErrorTraits],
-
   components: {
     RolePermissionSelector,
     RoleHierarchySelector,
@@ -68,6 +67,7 @@ export default {
 
   data() {
     return {
+      errors: null,
       loading: false,
       submitting: false,
       role: null,
@@ -99,14 +99,14 @@ export default {
     },
     preparePermissionsForSubmit() {
       var permissions = {};
-      this.role.permissions.forEach(element => {
-        permissions[element] = 1
+      this.role.permissions.forEach((element) => {
+        permissions[element] = 1;
       });
-      this.initial_permissions.forEach(element => {
-        if (!(element in permissions)){
+      this.initial_permissions.forEach((element) => {
+        if (!(element in permissions)) {
           permissions[element] = 0;
         }
-      })
+      });
       return permissions;
     },
     async submit() {
@@ -116,12 +116,12 @@ export default {
           name: this.role.name,
           hierarchy: this.role.hierarchy,
           description: this.role.description,
-          permissions: this.preparePermissionsForSubmit()
+          permissions: this.preparePermissionsForSubmit(),
         };
         await axios.patch("/api/roles/" + this.role.id, modified_role);
         this.$toasts.success(this.$t("message.data_changed"));
         this.$router.push({
-          name: 'roles-index'
+          name: "roles-index",
         });
       } catch (error) {
         if (is404(error)) {
@@ -132,7 +132,7 @@ export default {
         }
       }
       this.submitting = false;
-    }
-  }
+    },
+  },
 };
 </script>

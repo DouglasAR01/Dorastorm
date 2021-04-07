@@ -7,26 +7,30 @@
         <h3>{{ $t("modules.users.user_info") }}</h3>
         <form @submit.prevent="submit">
           <div class="form-group">
-            <label for="name">{{ $t("modules.users.name") }}</label>
-            <input
-              type="text"
-              name="name"
-              class="form-control"
-              :placeholder="updated_user.name"
-              v-model="updated_user.name"
-              required
-            />
+            <validation-error :errors="errors" name="name" v-slot="{ e }">
+              <label for="name">{{ $t("modules.users.name") }}</label>
+              <input
+                type="text"
+                name="name"
+                class="form-control"
+                v-model="updated_user.name"
+                :class="[{ 'is-invalid': e }]"
+                required
+              />
+            </validation-error>
           </div>
           <div class="form-group">
-            <label for="email">{{ $t("message.email") }}</label>
-            <input
-              type="email"
-              name="email"
-              class="form-control"
-              :placeholder="updated_user.email"
-              v-model="updated_user.email"
-              required
-            />
+            <validation-error :errors="errors" name="email" v-slot="{ e }">
+              <label for="email">{{ $t("message.email") }}</label>
+              <input
+                type="email"
+                name="email"
+                class="form-control"
+                v-model="updated_user.email"
+                :class="[{ 'is-invalid': e }]"
+                required
+              />
+            </validation-error>
           </div>
           <div
             class="form-group"
@@ -35,21 +39,27 @@
               available_roles.length > 0
             "
           >
-            <label for="role_id">{{ $t("modules.users.role_select") }}</label>
-            <select
-              name="role_id"
-              class="custom-select form-control"
-              v-model="updated_user.role.id"
-            >
-              <option disabled value="">{{ $t("modules.users.role_default") }}</option>
-              <option
-                :value="role.id"
-                v-for="role in available_roles"
-                :key="role.id"
+            <validation-error :errors="errors" name="role_id" v-slot="{ e }">
+              <label for="role_id">{{ $t("modules.users.role_select") }}</label>
+              <select
+                name="role_id"
+                class="custom-select form-control"
+                v-model="updated_user.role_id"
+                :class="[{ 'is-invalid': e }]"
+                required
               >
-                {{ role.name }}
-              </option>
-            </select>
+                <option disabled value="">
+                  {{ $t("modules.users.role_default") }}
+                </option>
+                <option
+                  :value="role.id"
+                  v-for="role in available_roles"
+                  :key="role.id"
+                >
+                  {{ role.name }}
+                </option>
+              </select>
+            </validation-error>
           </div>
           <input
             type="submit"
@@ -80,13 +90,12 @@
 import * as Responses from "../../shared/utils/responses";
 import Obj from "../../shared/utils/object-utils";
 import FormTraits from "../../shared/mixins/form-traits";
-import ErrorTraits from "../../shared/mixins/error-traits";
 import ValidationError from "../../shared/components/ValidationError";
 import PermissionsHandling from "../../shared/mixins/permissions-handling";
 import Auth from "../../services/auth";
 import UserPasswordUpdate from "./UserPasswordUpdate";
 export default {
-  mixins: [FormTraits, ErrorTraits, PermissionsHandling],
+  mixins: [FormTraits, PermissionsHandling],
   components: {
     ValidationError,
     UserPasswordUpdate,
@@ -144,9 +153,7 @@ export default {
           this.$toasts.error(this.$t("error.404.specific.user"));
         }
         if (Responses.is409(error)) {
-          this.$toasts.error(
-            this.$t("error.409.specific.last_admin")
-          );
+          this.$toasts.error(this.$t("error.409.specific.last_admin"));
         }
         if (Responses.is422(error)) {
           this.errors = error.response.data.errors;
