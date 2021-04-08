@@ -77,11 +77,11 @@ export default {
 
   async created() {
     this.loading = true;
-    const role_id = this.$route.query.role_id;
-    if (Obj.isEmpty(this.$route.query) || role_id == null) {
+    if (!("roleId" in this.$route.params)) {
       this.$toasts.error(this.$t("error.fatal"));
       return;
     }
+    const role_id = this.$route.params.roleId;
     try {
       this.role = (await axios.get("/api/roles/" + role_id)).data.data;
       this.initial_permissions = this.role.permissions;

@@ -116,8 +116,8 @@ export default {
     this.loading = true;
     this.user_id = this.$store.getters.getUserID;
     this.updated_user = Obj.clone(this.$store.state.user);
-    if (!Obj.isEmpty(this.$route.query) && this.$route.query.user_id) {
-      this.user_id = this.$route.query.user_id;
+    if ("userId" in this.$route.params) {
+      this.user_id = this.$route.params.userId;
     }
     if (this.user_id != this.updated_user.id) {
       try {

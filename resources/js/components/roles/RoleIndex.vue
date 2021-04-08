@@ -34,7 +34,7 @@
                 <router-link
                 :to="{
                   name: 'roles-update',
-                  query: { role_id: role.id },
+                  params: { roleId: role.id },
                 }"
                 data-toggle="tooltip"
                 data-placement="top"

@@ -39,7 +39,7 @@
                   <router-link
                     :to="{
                       name: 'users-update',
-                      query: { user_id: user.id },
+                      params: { userId: user.id },
                     }"
                     data-toggle="tooltip"
                     data-placement="top"

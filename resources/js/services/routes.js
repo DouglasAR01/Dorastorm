@@ -96,7 +96,7 @@ const routes = [
         }
     },
     {
-        path: '/users/update',
+        path: '/users/update/:userId',
         component: UserUpdate,
         name: 'users-update',
         meta: {
@@ -122,7 +122,7 @@ const routes = [
         }
     },
     {
-        path: '/roles/update',
+        path: '/roles/update/:roleId',
         component: RoleUpdate,
         name: 'roles-update',
         meta: {
