@@ -98,7 +98,7 @@ export default {
     };
   },
   created() {
-    this.ep = "/api/users?page=";
+    this.ep = "/api/users";
   },
   methods: {
     async deleteUser(user_id) {

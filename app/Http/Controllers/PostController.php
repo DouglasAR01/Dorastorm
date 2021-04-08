@@ -21,20 +21,17 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return PostResource::collection(Post::where($this->indexShowConditions())->orderBy('created_at', 'desc')->paginate(15));
-    }
-
-    public function search(Request $request)
-    {
-        $q = $request->input('q');
-        return PostResource::collection(
-            Post::where($this->indexShowConditions())->where(function($query) use ($q){
-               $query->where('title', 'LIKE', "%$q%")
-                ->orWhere('content', 'LIKE', "%$q%");
-            })->orderBy('created_at', 'desc')->paginate(15)
-        );
+        $query = Post::where($this->indexShowConditions());
+        if ($request->filled('q')) {
+            $q = $request->input('q');
+            $query->where(function ($query) use ($q) {
+                $query->where('title', 'LIKE', "%$q%")
+                    ->orWhere('content', 'LIKE', "%$q%");
+            });
+        }
+        return PostResource::collection($query->orderBy('created_at', 'desc')->paginate(15));
     }
 
     /**

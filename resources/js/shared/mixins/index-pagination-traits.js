@@ -3,6 +3,7 @@ export default {
         return {
             loading: false,
             ep: null,
+            q: null,
             data: null,
             meta: null,
             links: null
@@ -15,7 +16,11 @@ export default {
         async navigate(page) {
             this.loading = true;
             try {
-                const resp = await axios.get(this.ep + page);
+                var query = `${this.ep}?page=${page}`;
+                if (this.q){
+                    query += `&q=${this.q}`;
+                }
+                const resp = await axios.get(query);
                 this.data = resp.data.data;
                 this.meta = resp.data.meta;
                 this.links = resp.data.links;
@@ -23,6 +28,6 @@ export default {
             } catch (error) {
                 this.$toasts.error(this.$t("error.fatal"));
             }
-        },
+        }
     },
 }
