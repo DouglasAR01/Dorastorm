@@ -82,7 +82,8 @@
             "index": "Ver publicaciones",
             "previous": "Más recientes",
             "next": "Más antiguas",
-            "first": "Portada"
+            "first": "Portada",
+            "recent": "Lo último"
         }
     },
     "navbar": {
@@ -130,6 +131,7 @@
         "updated_at": "Modificado el:",
         "paginate_first": "Primera página",
         "paginate_next": "Página siguiente",
-        "paginate_prev": "Página anterior"
+        "paginate_prev": "Página anterior",
+        "search": "Búsqueda..."
     }
 }
