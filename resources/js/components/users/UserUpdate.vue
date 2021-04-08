@@ -44,7 +44,7 @@
               <select
                 name="role_id"
                 class="custom-select form-control"
-                v-model="updated_user.role_id"
+                v-model="updated_user.role.id"
                 :class="[{ 'is-invalid': e }]"
                 required
               >

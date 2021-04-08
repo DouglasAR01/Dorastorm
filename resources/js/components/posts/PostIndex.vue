@@ -5,10 +5,10 @@
     </div>
     <div v-else>
       <div class="row mb-2">
-        <div class="col-md-8">
+        <div class="col-sm-8">
           <h3>{{ $t("modules.posts.recent") }}</h3>
         </div>
-        <div class="col-md-4">
+        <div class="col-sm-4">
           <search-input @search="navigate(1)" v-model="q"></search-input>
         </div>
       </div>
