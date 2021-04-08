@@ -23,12 +23,18 @@ class PostController extends Controller
      */
     public function index()
     {
-        // Pagination is required
-        $condition = [['visible', '=', 1]];
-        if (!Auth::check()){
-            array_push($condition, ['private', '=', 0]);
-        }
-        return PostResource::collection(Post::where($condition)->orderBy('created_at', 'desc')->paginate(15));
+        return PostResource::collection(Post::where($this->indexShowConditions())->orderBy('created_at', 'desc')->paginate(15));
+    }
+
+    public function search(Request $request)
+    {
+        $q = $request->input('q');
+        return PostResource::collection(
+            Post::where($this->indexShowConditions())->where(function($query) use ($q){
+               $query->where('title', 'LIKE', "%$q%")
+                ->orWhere('content', 'LIKE', "%$q%");
+            })->orderBy('created_at', 'desc')->paginate(15)
+        );
     }
 
     /**
@@ -39,7 +45,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->user()->cannot('create',Post::class)){
+        if ($request->user()->cannot('create', Post::class)) {
             abort(403);
         }
         $data = $request->validate($this->validation_rules);
@@ -62,17 +68,17 @@ class PostController extends Controller
         if (empty($post)) {
             abort(404);
         }
-        if($post->visible && !$post->private){
+        if ($post->visible && !$post->private) {
             return new PostResource($post);
         }
         // If the post is visible and its private the user must be authenticated 
-        if($post->visible && $post->private && Auth::check()){
+        if ($post->visible && $post->private && Auth::check()) {
             return new PostResource($post);
         }
         // If the post is not visible the user should not see it unless it's the owner of the post or have permissions of updating
-        if(!$post->visible && Auth::check() && $request->user()->can('update', $post)){
+        if (!$post->visible && Auth::check() && $request->user()->can('update', $post)) {
             return new PostResource($post);
-        } 
+        }
         abort(403);
     }
 
@@ -101,11 +107,11 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $post = Post::findOrFail($id);
-        if($request->user()->cannot('update', $post)){
+        if ($request->user()->cannot('update', $post)) {
             abort(403);
         }
         $data = $request->validate($this->validation_rules);
-        
+
         $post->title = $data['title'];
         $post->content = $data['content'];
         $post->visible = $data['visible'] ?? $post->visible;
@@ -123,10 +129,18 @@ class PostController extends Controller
     public function destroy(Request $request, $id)
     {
         $post = Post::findOrFail($id);
-        if($request->user()->cannot('delete', $post)){
+        if ($request->user()->cannot('delete', $post)) {
             abort(403);
         }
         $post->delete();
     }
 
+    private function indexShowConditions()
+    {
+        $condition = [['visible', '=', 1]];
+        if (!Auth::check()) {
+            array_push($condition, ['private', '=', 0]);
+        }
+        return $condition;
+    }
 }

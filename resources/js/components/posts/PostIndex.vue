@@ -4,6 +4,14 @@
       {{ $t("message.loading") }}
     </div>
     <div v-else>
+      <div class="row mb-2">
+        <div class="col-md-8">
+          <h3>{{ $t("modules.posts.recent") }}</h3>
+        </div>
+        <div class="col-md-4">
+          <search-input @search="search" v-model="q"></search-input>
+        </div>
+      </div>
       <post-list :posts="data" class="mb-2"></post-list>
       <simple-pagination
         :meta="meta"
@@ -21,15 +29,29 @@
 <script>
 import PostList from "./PostList";
 import SimplePagination from "../../shared/components/SimplePagination";
+import SearchInput from "../../shared/components/SearchInput";
 import IndexPaginationTraits from "../../shared/mixins/index-pagination-traits";
 export default {
   components: {
     PostList,
     SimplePagination,
+    SearchInput
   },
   mixins: [IndexPaginationTraits],
+  data() {
+    return {
+      q: null,
+      searching: false,
+    };
+  },
   created() {
     this.ep = "/api/posts?page=";
+  },
+  methods: {
+    search() {
+      this.ep = "/api/search/posts?q=" + this.q + "&page=";
+      this.navigate(1);
+    }
   }
 };
 </script>
