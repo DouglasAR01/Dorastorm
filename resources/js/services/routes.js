@@ -5,19 +5,9 @@ import Permissions from "./role-permissions";
 // Components
 import Home from "../components/Home";
 import Login from "../components/auth/Login";
+// Static (not splitted) components
 import ForgotPassword from "../components/auth/ForgotPassword";
-import ResetPassword from "../components/auth/ResetPassword";
-import UserHome from "../components/users/UserHome";
-import UserCreate from "../components/users/UserCreate";
-import UserUpdate from "../components/users/UserUpdate";
-import UserRead from "../components/users/UserRead";
-import UserIndex from "../components/users/UserIndex";
-import RoleCreate from "../components/roles/RoleCreate";
-import RoleUpdate from "../components/roles/RoleUpdate";
-import RoleIndex from "../components/roles/RoleIndex";
-import PostCreate from "../components/posts/PostCreate";
 import PostRead from "../components/posts/PostRead";
-import PostUpdate from "../components/posts/PostUpdate";
 import PostIndex from "../components/posts/PostIndex";
 import Error404 from "../components/errors/Error404";
 import Error403 from "../components/errors/Error403";
@@ -37,7 +27,7 @@ const routes = [
     },
     {
         path: '/reset-password',
-        component: ResetPassword,
+        component: () => import (/* webpackChunkName: "auth" */"../components/auth/ResetPassword"),
         name: 'reset-password',
         meta: {
             guest: true
@@ -53,7 +43,7 @@ const routes = [
     },
     {
         path: '/me',
-        component: UserHome,
+        component: () => import (/* webpackChunkName: "users" */"../components/users/UserHome"),
         name: 'me',
         meta: {
             auth: true
@@ -61,7 +51,7 @@ const routes = [
     },
     {
         path: '/me2',
-        component: UserHome,
+        component: () => import (/* webpackChunkName: "users" */"../components/users/UserHome"),
         name: 'me2',
         meta: {
             auth: true,
@@ -70,7 +60,7 @@ const routes = [
     },
     {
         path: '/users',
-        component: UserIndex,
+        component: () => import (/* webpackChunkName: "users" */"../components/users/UserIndex"),
         name: 'users-index',
         meta: {
             auth: true,
@@ -79,7 +69,7 @@ const routes = [
     },
     {
         path: '/users/view',
-        component: UserRead,
+        component: () => import (/* webpackChunkName: "users" */"../components/users/UserRead"),
         name: 'users-read',
         meta: {
             auth: true,
@@ -88,7 +78,7 @@ const routes = [
     },
     {
         path: '/users/create',
-        component: UserCreate,
+        component: () => import (/* webpackChunkName: "users" */"../components/users/UserCreate"),
         name: 'users-create',
         meta: {
             auth: true,
@@ -97,7 +87,7 @@ const routes = [
     },
     {
         path: '/users/update/:userId',
-        component: UserUpdate,
+        component: () => import (/* webpackChunkName: "users" */"../components/users/UserUpdate"),
         name: 'users-update',
         meta: {
             auth: true
@@ -105,7 +95,7 @@ const routes = [
     },
     {
         path: '/roles',
-        component: RoleIndex,
+        component: () => import (/* webpackChunkName: "roles" */"../components/roles/RoleIndex"),
         name: 'roles-index',
         meta: {
             auth: true,
@@ -114,7 +104,7 @@ const routes = [
     },
     {
         path: '/roles/create',
-        component: RoleCreate,
+        component: () => import (/* webpackChunkName: "roles" */"../components/roles/RoleCreate"),
         name: 'roles-create',
         meta: {
             auth: true,
@@ -123,7 +113,7 @@ const routes = [
     },
     {
         path: '/roles/update/:roleId',
-        component: RoleUpdate,
+        component: () => import (/* webpackChunkName: "roles" */"../components/roles/RoleUpdate"),
         name: 'roles-update',
         meta: {
             auth: true,
@@ -133,7 +123,7 @@ const routes = [
     ,
     {
         path: '/posts/create',
-        component: PostCreate,
+        component: () => import (/* webpackChunkName: "posts" */"../components/posts/PostCreate"),
         name: 'posts-create',
         meta: {
             auth: true,
@@ -152,7 +142,7 @@ const routes = [
     },
     {
         path: '/posts/update/:postId',
-        component: PostUpdate,
+        component: () => import (/* webpackChunkName: "posts" */"../components/posts/PostUpdate"),
         name: 'posts-update',
         meta: {
             auth: true,
