@@ -33,6 +33,7 @@
                     aria-haspopup="true"
                     aria-expanded="false"
                     :aria-controls="'co' + user.id"
+                    v-tooltip="$t('modules.users.read')"
                   >
                     <i class="far fa-eye"></i>
                   </button>
@@ -41,9 +42,7 @@
                       name: 'users-update',
                       params: { userId: user.id },
                     }"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    :title="$t('modules.users.update')"
+                    v-tooltip="$t('modules.users.update')"
                     class="btn btn-link btn-sm"
                     v-if="userCanUpdate && userCanTouchThis(user)"
                   >
@@ -53,9 +52,7 @@
                     class="btn btn-link btn-sm"
                     @click.prevent="deleteUser(user.id)"
                     :disabled="deleting"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    :title="$t('modules.users.delete')"
+                    v-tooltip="$t('modules.users.delete')"
                     v-if="userCanDelete && userCanTouchThis(user)"
                   >
                     <i class="fas fa-trash-alt"></i>

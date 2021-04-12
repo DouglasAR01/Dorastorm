@@ -27,8 +27,10 @@ import i18n from "./services/multilang";
 import VueMyToast from 'vue-my-toasts';
 import 'vue-my-toasts/dist/vue-my-toasts.css'
 import BootstrapComponent from "vue-my-toasts/src/components/toasts/BootstrapComponent";
+import VTooltip from 'v-tooltip'
 
 //window.Vue = require('vue');
+Vue.use(VTooltip);
 Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.use(VueMyToast, {

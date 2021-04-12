@@ -28,6 +28,7 @@
                   aria-haspopup="true"
                   aria-expanded="false"
                   :aria-controls="'co' + role.id"
+                  v-tooltip="$t('modules.roles.read')"
                 >
                   <i class="far fa-eye"></i>
                 </button>
@@ -36,9 +37,7 @@
                   name: 'roles-update',
                   params: { roleId: role.id },
                 }"
-                data-toggle="tooltip"
-                data-placement="top"
-                :title="$t('modules.roles.update')"
+                v-tooltip="$t('modules.roles.update')"
                 class="btn btn-link btn-sm"
                 v-if="userCanUpdate && userCanTouchThis(role)"
               >
@@ -48,9 +47,7 @@
                   class="btn btn-link btn-sm"
                   @click.prevent="deleteRole(role.id)"
                   :disabled="deleting"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  :title="$t('modules.roles.delete')"
+                  v-tooltip="$t('modules.roles.delete')"
                   v-if="userCanDelete && userCanTouchThis(role)"
                 >
                   <i class="fas fa-trash-alt"></i>

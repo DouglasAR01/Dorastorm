@@ -60,7 +60,8 @@
             "deleted": "The role has been deleted.",
             "list": "Roles list",
             "role_permissions": "Role permissions:",
-            "update": "Update role data"
+            "update": "Update role data",
+            "read": "View role details"
         },
         "posts": {
             "create": "Create posts",

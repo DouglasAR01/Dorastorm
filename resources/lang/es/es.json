@@ -61,7 +61,8 @@
             "deleted": "El rol ha sido eliminado.",
             "list": "Lista de roles",
             "role_permissions": "Permisos del rol:",
-            "update": "Modificar datos del rol"
+            "update": "Modificar datos del rol",
+            "read": "Ver detalles del rol"
         },
         "posts": {
             "create": "Crear publicación",
