@@ -1,8 +1,10 @@
 <template>
   <transition name="fade">
     <div class="popup-modal" v-if="isVisible">
-      <div class="window">
-        <slot></slot>
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <slot></slot>
+        </div>
       </div>
     </div>
   </transition>
@@ -52,15 +54,5 @@ export default {
   display: flex;
   align-items: center;
   z-index: 1;
-}
-
-.window {
-  background: #fff;
-  border-radius: 5px;
-  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
-  max-width: 480px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 1rem;
 }
 </style>

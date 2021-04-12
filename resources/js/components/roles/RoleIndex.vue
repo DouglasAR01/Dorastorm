@@ -117,6 +117,7 @@ export default {
         title: this.$t("modules.roles.delete"),
         message: this.$t("modules.roles.delete_warning"),
         okButton: this.$t("message.delete"),
+        okButtonColor: "btn-danger"
       });
       if (ok) {
         this.deleting = true;

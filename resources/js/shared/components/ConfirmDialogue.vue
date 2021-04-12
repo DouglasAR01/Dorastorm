@@ -1,10 +1,21 @@
 <template>
   <popup-modal ref="popup">
-    <h2>{{ title }}</h2>
-    <p>{{ message }}</p>
-    <div class="d-flex flex-row justify-content-between">
-      <button class="btn btn-info" @click="_cancel">{{ cancelButton }}</button>
-      <span class="btn btn-danger" @click="_confirm">{{ okButton }}</span>
+    <div class="modal-header">
+      <h5 class="modal-title">{{ title }}</h5>
+      <button type="button" class="close" aria-label="Close" @click="_cancel">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>{{ message }}</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline-secondary" @click="_cancel">
+        {{ cancelButton }}
+      </button>
+      <button :class="`btn ${okButtonColor}`" @click="_confirm">
+        {{ okButton }}
+      </button>
     </div>
   </popup-modal>
 </template>
@@ -24,6 +35,7 @@ export default {
       title: undefined,
       message: undefined, // Main text content
       okButton: undefined, // Text for confirm button; leave it empty because we don't know what we're using it for
+      okButtonColor: "btn-primary",
       cancelButton: this.$t("message.cancel"), // text for cancel button
 
       // Private variables
@@ -39,6 +51,9 @@ export default {
       this.okButton = opts.okButton;
       if (opts.cancelButton) {
         this.cancelButton = opts.cancelButton;
+      }
+      if (opts.okButtonColor) {
+        this.okButtonColor = opts.okButtonColor;
       }
       // Once we set our config, we tell the popup modal to open
       this.$refs.popup.open();

@@ -103,6 +103,7 @@ export default {
         title: this.$t("modules.users.delete"),
         message: this.$t("modules.users.delete_warning"),
         okButton: this.$t("message.delete"),
+        okButtonColor: "btn-danger"
       });
       // If you throw an error, the method will terminate here unless you surround it wil try/catch
       if (ok) {

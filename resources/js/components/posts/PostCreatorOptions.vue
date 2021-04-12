@@ -72,6 +72,7 @@ export default {
         message:
           this.$t("modules.posts.delete_warning"),
         okButton: this.$t("message.delete"),
+        okButtonColor: "btn-danger"
       });
       if (ok) {
         this.deleting = true;
