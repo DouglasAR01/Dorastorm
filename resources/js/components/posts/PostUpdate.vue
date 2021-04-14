@@ -1,5 +1,5 @@
 <template>
-  <div class="container bg-white rounded p-2">
+  <div class="wp-light">
     <div v-if="loading">
       {{ $t("message.loading") }}
     </div>

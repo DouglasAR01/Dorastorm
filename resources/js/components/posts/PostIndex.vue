@@ -1,8 +1,6 @@
 <template>
-  <div class="container bg-white rounded p-3">
-    <div v-if="loading">
-      {{ $t("message.loading") }}
-    </div>
+  <div>
+    <posts-loading v-if="loading"></posts-loading>
     <div v-else>
       <div class="row mb-2">
         <div class="col-sm-8">
@@ -31,11 +29,13 @@ import PostList from "./PostList";
 import SimplePagination from "../../shared/components/SimplePagination";
 import SearchInput from "../../shared/components/SearchInput";
 import IndexPaginationTraits from "../../shared/mixins/index-pagination-traits";
+import PostsLoading from "../../shared/components/loading/Posts";
 export default {
   components: {
     PostList,
     SimplePagination,
-    SearchInput
+    SearchInput,
+    PostsLoading
   },
   mixins: [IndexPaginationTraits],
   created() {

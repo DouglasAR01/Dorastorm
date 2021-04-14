@@ -1,5 +1,5 @@
 <template>
-  <div class="container rounded bg-white p-2">
+  <div class="wp-light">
     <h3>{{ $t("modules.posts.create") }}</h3>
     <form>
       <div class="form-row">

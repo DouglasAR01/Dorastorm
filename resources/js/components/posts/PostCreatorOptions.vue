@@ -21,7 +21,6 @@
         </button>
       </div>
     </div>
-    <hr />
     <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
   </div>
 </template>

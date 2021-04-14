@@ -1,5 +1,5 @@
 <template>
-  <div class="container bg-white rounded p-2">
+  <div class="wp-light">
     <div class="row justify-content-center">
       <h3>{{ $t("modules.roles.list") }}</h3>
     </div>

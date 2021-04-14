@@ -1,26 +1,32 @@
 <template>
-  <div class="container bg-white rounded p-3">
-    <div v-if="loading">
-      {{ $t("message.loading") }}
-    </div>
+  <div>
+    <post-loading v-if="loading"> </post-loading>
     <div v-else>
-      <post-creator-options :author-id="post.author.id" :post-id="post.id"></post-creator-options>
-      <h1>{{ post.title }}</h1>
-      <div class="editor__content" v-html="post.content"></div>
-      <hr>
-      <div class="row">
-        <div class="col-6">
-          <span>
-            <b>{{$t("modules.posts.author")}}</b> {{post.author.name}}
-          </span>
-        </div>
-        <div class="col-6">
-          <span class="d-block">
-            <b>{{$t("message.created_at")}}</b> {{post.created | humanDate}}
-          </span>
-          <span class="d-block text-muted">
-            <b>{{$t("message.updated_at")}}</b> {{post.modified | humanDate}}
-          </span>
+      <post-creator-options
+        :author-id="post.author.id"
+        :post-id="post.id"
+        class="wp-light mb-2"
+      ></post-creator-options>
+      <div class="wp-light">
+        <h1>{{ post.title }}</h1>
+        <div class="editor__content" v-html="post.content"></div>
+        <hr />
+        <div class="row">
+          <div class="col-6">
+            <span>
+              <b>{{ $t("modules.posts.author") }}</b> {{ post.author.name }}
+            </span>
+          </div>
+          <div class="col-6">
+            <span class="d-block">
+              <b>{{ $t("message.created_at") }}</b>
+              {{ post.created | humanDate }}
+            </span>
+            <span class="d-block text-muted">
+              <b>{{ $t("message.updated_at") }}</b>
+              {{ post.modified | humanDate }}
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -29,9 +35,11 @@
 <script>
 import { is404 } from "../../shared/utils/responses";
 import PostCreatorOptions from "./PostCreatorOptions";
+import PostLoading from "../../shared/components/loading/Post";
 export default {
   components: {
-    PostCreatorOptions
+    PostCreatorOptions,
+    PostLoading,
   },
   data() {
     return {

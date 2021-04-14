@@ -1,5 +1,5 @@
 <template>
-  <div class="container bg-white rounded p-2">
+  <div class="wp-light">
     <form @submit.prevent="submit">
       <div class="form-group">
         <validation-error :errors="errors" name="name" v-slot="{ e }">
