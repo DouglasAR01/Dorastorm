@@ -1,0 +1,11 @@
+@mixin genericWrapper($bg-color) {
+    padding: 1rem !important;
+    border-radius: 0.25rem !important;
+    background-color: $bg-color;
+}
+.wp-light {
+    @include genericWrapper($white)
+}
+.wp-dark {
+    @include genericWrapper($dark)
+}
