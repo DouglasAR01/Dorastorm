@@ -62,8 +62,8 @@ return [
     // CUSTOM: reset-password. This is a custom entry in order to make Fortify
     // build-in Reset Password system work with the SPA.
 
-    'home' => env('SPA_URL') . '/me',
-    'reset-password' => env('SPA_URL') . '/reset-password?token=',
+    'home' => env('APP_URL') . '/me',
+    'reset-password' => env('APP_URL') . '/reset-password?token=',
 
     /*
     |--------------------------------------------------------------------------
@@ -136,7 +136,7 @@ return [
     'features' => [
         // Features::registration(),
         Features::resetPasswords(),
-        // Features::emailVerification(),
+        Features::emailVerification(),
         // Features::updateProfileInformation(),
         // Features::twoFactorAuthentication([
         //     'confirmPassword' => true,

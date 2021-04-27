@@ -10,6 +10,8 @@ use App\Rules\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class UserController extends Controller
 {
@@ -58,6 +60,7 @@ class UserController extends Controller
         $new_user->role_id = $data['role_id'];
         $new_user->password = Hash::make($data['password']);
         $new_user->save();
+        event(new Registered($new_user));
         return new UserResource($new_user);
     }
 
@@ -83,10 +86,20 @@ class UserController extends Controller
         }
 
         // Start of the differential updating
+        $email_changed = False;
         foreach ($data as $att => $value) {
+            if (
+                $att === 'email' && $value !== $user->email
+            ) {
+                $user->email_verified_at = null;
+                $email_changed = True;
+            }
             $user->$att = $value;
         }
         $user->save();
+        if ($email_changed && $user instanceof MustVerifyEmail){
+            $user->sendEmailVerificationNotification();
+        }
     }
 
     public function updatePassword(Request $request, $id)
@@ -146,8 +159,8 @@ class UserController extends Controller
             'min:1',
             'exists:roles,id',
             new UserRole($user_role)
-        ], function ($input){
-            return !($input->role_id===null);
+        ], function ($input) {
+            return !($input->role_id === null);
         });
     }
 }
