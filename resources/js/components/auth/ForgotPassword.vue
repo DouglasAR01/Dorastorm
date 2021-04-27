@@ -1,5 +1,5 @@
 <template>
-  <div class="container rounded bg-white p-2">
+  <div class="wp-light">
     <h2>{{ $t("message.forgot_password") }}</h2>
     <form @submit.prevent="submit">
       <div class="form-group">
