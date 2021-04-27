@@ -110,7 +110,7 @@ export default {
         this.deleting = true;
         try {
           await axios.delete("/api/users/" + user_id);
-          this.users = this.users.filter((user) => user.id != user_id);
+          this.data = this.data.filter((user) => user.id != user_id);
           this.$toasts.success(this.$t("modules.users.deleted"));
         } catch (error) {
           if (is404(error)) {
