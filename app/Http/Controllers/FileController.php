@@ -36,6 +36,9 @@ class FileController extends Controller
     {
         $validation = array_merge($this->file_validations, $additional_rules);
         $data = $request->validate($validation);
-        return $request->file('file')->store($folder, $data['disk'] ?? 'local');
+        $path = $request->file('file')->store($folder, $data['disk'] ?? 'local');
+        return response()->json([
+            'path' => $path,
+        ], 204);
     }
 }
