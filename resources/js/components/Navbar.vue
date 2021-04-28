@@ -26,7 +26,7 @@
             {{ $t("navbar.login") }}
           </router-link>
         </li>
-        <li class="nav-item" v-if="isLoggedIn">
+        <li class="nav-item" v-if="isLoggedIn && checkUserPermission(loggedUser, corePms.CREATE_POSTS)">
           <router-link :to="{ name: 'posts-create' }" class="nav-link">
             {{$t("modules.posts.create")}}
           </router-link>
