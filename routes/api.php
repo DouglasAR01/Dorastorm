@@ -25,5 +25,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/users', 'UserController')->except(['create', 'edit']);
     Route::resource('/roles','RoleController')->except(['create', 'edit']);
     Route::resource('/posts','PostController')->except(['index', 'show', 'create']);
+    Route::post('/upload/image', 'FileController@uploadImage')->name('upload.image');
+    Route::post('/upload/document', 'FileController@uploadDocument')->name('upload.document');
 });
 

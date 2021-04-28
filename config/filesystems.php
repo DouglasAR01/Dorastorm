@@ -34,10 +34,14 @@ return [
             'driver' => 'local',
             'root' => storage_path('app'),
         ],
-
+        // For compatibility purposes, we are not using simlinks for the storage path. There is a "storage"
+        // folder in the public folder and we are pointing to it. However, if the system you are implementing
+        // Dorastorm allows you to create simlinks without any problem or headaches, you should uncomment the
+        // root line and create the simlink.
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
+            // 'root' => storage_path('app/public'),
+            'root' => public_path('storage'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
