@@ -3,7 +3,8 @@
     <div class="row no-gutters">
       <div class="col-md-4 p-2">
         <router-link :to="postLink">
-          <img src="https://socialsciences.uottawa.ca/human-motivation/sites/socialsciences.uottawa.ca.human-motivation/files/generic_female_0.jpg" alt="" class="card-img">
+          <img :src="post.banner" alt="" class="card-img" v-if="post.banner">
+          <img src="https://socialsciences.uottawa.ca/human-motivation/sites/socialsciences.uottawa.ca.human-motivation/files/generic_female_0.jpg" alt="" class="card-img" v-else>          
         </router-link>
       </div>
       <div class="col-md-8">

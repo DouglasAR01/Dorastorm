@@ -4,6 +4,8 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+use function PHPUnit\Framework\isEmpty;
+
 class PostResource extends JsonResource
 {
     /**
@@ -15,6 +17,7 @@ class PostResource extends JsonResource
     public function toArray($request)
     {
         $author = $this->user;
+        $path = is_null($this->banner)? null : config('app.app_url').'/storage/'.$this->banner;
         return [
             'id' => $this->id,
             'title' => $this->title,
@@ -23,6 +26,7 @@ class PostResource extends JsonResource
             'visible' => $this->visible ?? false,
             'private' => $this->private ?? false,
             'slug' => $this->slug,
+            'banner' => $path,
             'author' => [
                 'id' => $author->id,
                 'name' => $author->name
