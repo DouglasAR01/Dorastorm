@@ -39,6 +39,6 @@ class FileController extends Controller
         $path = $request->file('file')->store($folder, $data['disk'] ?? 'local');
         return response()->json([
             'path' => $path,
-        ], 204);
+        ], 201);
     }
 }
