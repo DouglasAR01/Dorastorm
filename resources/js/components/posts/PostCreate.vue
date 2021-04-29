@@ -18,6 +18,38 @@
           </div>
         </div>
         <div class="col-md-4">
+          <div class="form-group">
+            <label for="upload">{{ $t("modules.posts.banner") }}</label>
+            <single-file-upload
+              name="upload"
+              endpoint="/api/upload/image"
+              disk="public"
+              v-model="new_post.banner"
+            ></single-file-upload>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-8">
+          <div class="form-group">
+            <validation-error
+              :errors="errors"
+              name="description"
+              v-slot="{ e }"
+            >
+              <label for="description">{{
+                $t("modules.posts.description")
+              }}</label>
+              <textarea
+                name="description"
+                class="form-control"
+                v-model="new_post.description"
+                :class="[{ 'is-invalid': e }]"
+              ></textarea>
+            </validation-error>
+          </div>
+        </div>
+        <div class="col-md-4">
           <label>{{ $t("modules.posts.options") }}</label>
           <div class="custom-control custom-switch">
             <input
@@ -43,17 +75,6 @@
           </div>
         </div>
       </div>
-      <div class="form-group">
-        <validation-error :errors="errors" name="description" v-slot="{ e }">
-          <label for="description">{{ $t("modules.posts.description") }}</label>
-          <textarea
-            name="description"
-            class="form-control"
-            v-model="new_post.description"
-            :class="[{ 'is-invalid': e }]"
-          ></textarea>
-        </validation-error>
-      </div>
     </form>
     <div class="form-group">
       <validation-error :errors="errors" name="content" v-slot="{ e }">
@@ -76,11 +97,13 @@
 <script>
 import TextEditor from "../../shared/components/RichTextEditor";
 import ValidationError from "../../shared/components/ValidationError";
+import SingleFileUpload from "../../shared/components/SingleFileUpload";
 import { is422 } from "../../shared/utils/responses";
 export default {
   components: {
     TextEditor,
     ValidationError,
+    SingleFileUpload,
   },
   data() {
     return {
@@ -92,6 +115,7 @@ export default {
         content: null,
         visible: false,
         private: false,
+        banner: null,
       },
     };
   },

@@ -13,6 +13,7 @@ class PostController extends Controller
         'title' => 'required|string|min:5|max:190',
         'description' => 'required|string|min:5|max:300',
         'content' => 'required|string',
+        'banner' => 'string|max:191',
         'visible' => 'boolean',
         'private' => 'boolean'
     ];
