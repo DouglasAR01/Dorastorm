@@ -84,7 +84,8 @@
             "previous": "Más recientes",
             "next": "Más antiguas",
             "first": "Portada",
-            "recent": "Lo último"
+            "recent": "Lo último",
+            "banner": "Imagen principal de la publicación"
         }
     },
     "navbar": {
@@ -133,6 +134,8 @@
         "paginate_first": "Primera página",
         "paginate_next": "Página siguiente",
         "paginate_prev": "Página anterior",
-        "search": "Búsqueda..."
+        "search": "Búsqueda...",
+        "file_upload": "Selecciona un archivo",
+        "file_uploaded": "¡El archivo ha sido subido con éxito!"
     }
 }
