@@ -1,0 +1,41 @@
+<template>
+  <div class="img-container">
+    <img :src="src" alt="img" :style="gen">
+    <div class="opt-container">
+      <slot></slot>
+    </div>
+  </div>
+</template>
+<script>
+import ViewOption from "./ViewOption"
+export default {
+  props: ["src", "maxHeight"],
+  components: {
+    ViewOption
+  },
+  computed: {
+    gen () {
+      return `width: 100%; transition: .5s ease; object-fit: cover; max-height: ${this.maxHeight}px`
+    }
+  }
+}
+</script>
+<style scoped>
+.img-container {
+  position: relative;
+}
+.opt-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  opacity: 0;
+}
+.img-container:hover > img{
+  opacity: 0.3;
+}
+.img-container:hover .opt-container{
+  opacity: 1;
+}
+</style>
