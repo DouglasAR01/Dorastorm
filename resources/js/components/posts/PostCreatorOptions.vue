@@ -79,7 +79,7 @@ export default {
           await axios.delete("/api/posts/" + this.postId);
           this.$toasts.success(this.$t("modules.posts.deleted"));
           this.$router.push({
-            name: "me"
+            name: "posts-index"
           });
         } catch (error) {
           if (is404(error)) {
