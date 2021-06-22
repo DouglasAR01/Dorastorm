@@ -1,7 +1,6 @@
 <template>
   <modal
-    name="image-modal"
-    transition="pop-out"
+    :name="modalName"
     :adaptive="true"
     class="modal-container"
     classes="modal-image-dialog"
@@ -9,7 +8,7 @@
     height="auto"
   >
     <div slot="top-right">
-      <span class="modal-image-close" @click="$modal.hide('image-modal')">&times;</span>
+      <span class="modal-image-close" @click="$modal.hide(modalName)">&times;</span>
     </div>
     <div class="modal-image-content">
       <img :src="src" class="modal-image">
@@ -18,7 +17,33 @@
 </template>
 <script>
 export default {
-  props: ["src", "caption", "alt"],
+  props: {
+    src: {
+      type: String,
+      required: true
+    },
+    caption: {
+      type: String,
+      default: () => {
+        return null;
+      }
+    },
+    alt: {
+      type: String,
+      default: () => {
+        return "img";
+      }
+    },
+    id: {
+      type: Number,
+      default: 1
+    }
+  },
+  computed: {
+    modalName() {
+      return "image-modal" + this.id;
+    }
+  }
 };
 </script>
 <style>

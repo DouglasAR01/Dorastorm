@@ -7,11 +7,19 @@
   </div>
 </template>
 <script>
-import ViewOption from "./ViewOption"
 export default {
   props: ["src", "maxHeight"],
-  components: {
-    ViewOption
+  props: {
+    src: {
+      type: String,
+      required: true
+    },
+    maxHeight: {
+      type: String,
+      default: () => {
+        return "300"
+      }
+    }
   },
   computed: {
     gen () {
