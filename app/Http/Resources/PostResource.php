@@ -17,7 +17,7 @@ class PostResource extends JsonResource
     public function toArray($request)
     {
         $author = $this->user;
-        $path = is_null($this->banner)? null : config('app.app_url').'/storage/'.$this->banner;
+        $path = is_null($this->banner)? null : config('app.url').'/storage/'.$this->banner;
         return [
             'id' => $this->id,
             'title' => $this->title,
