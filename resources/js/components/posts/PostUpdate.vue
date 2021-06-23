@@ -25,13 +25,26 @@
             <div class="form-group">
               <label for="upload">{{ $t("modules.posts.banner") }}</label>
               <div v-if="bannerURL">
-                <image-modal :src="bannerURL" />
-                <image-hover-options
-                  :src="bannerURL"
-                  max-height="37"
-                >
-                  <image-view-option-button> </image-view-option-button>
-                  <image-replace-option-button @confirmed="post.banner = null"></image-replace-option-button>
+                <image-modal ref="imgm" />
+                <confirm-dialogue-modal ref="cdm" />
+                <image-hover-options :src="bannerURL" max-height="37">
+                  <!-- <image-view-option-button> </image-view-option-button> -->
+                  <button
+                    class="btn btn-info btn-sm"
+                    @click.prevent="
+                      $refs.imgm.show({
+                        src: bannerURL,
+                      })
+                    "
+                  >
+                    {{ $t("message.view") }}
+                  </button>
+                  <button
+                    class="btn btn-warning btn-sm"
+                    @click.prevent="replaceBanner()"
+                  >
+                    {{ $t("modules.posts.replace_banner_ok") }}
+                  </button>
                 </image-hover-options>
               </div>
               <div v-else>
@@ -115,20 +128,18 @@
 import { is404, is422 } from "../../shared/utils/responses";
 import TextEditor from "../../shared/components/RichTextEditor";
 import ValidationError from "../../shared/components/ValidationError";
-import ImageHoverOptions from "../../shared/components/images/ImageHoverOptions";
+import ImageHoverOptions from "../../shared/components/ImageHoverOptions";
 import ImageModal from "../../shared/components/modals/ImageModal";
-import ImageViewOptionButton from "../../shared/components/images/ImageViewOptionButton";
+import ConfirmDialogueModal from "../../shared/components/modals/ConfirmDialogueModal";
 import SingleFileUpload from "../../shared/components/SingleFileUpload";
-import ImageReplaceOptionButton from '../../shared/components/images/ImageReplaceOptionButton.vue';
 export default {
   components: {
     ValidationError,
     TextEditor,
     ImageHoverOptions,
     ImageModal,
-    ImageViewOptionButton,
     SingleFileUpload,
-    ImageReplaceOptionButton
+    ConfirmDialogueModal,
   },
   data() {
     return {
@@ -136,7 +147,7 @@ export default {
       submitting: false,
       post: null,
       errors: null,
-      temp_path: null
+      temp_path: null,
     };
   },
   async created() {
@@ -163,16 +174,16 @@ export default {
     this.loading = false;
   },
   computed: {
-    bannerURL(){
-      if (this.post.banner){
+    bannerURL() {
+      if (this.post.banner) {
         return this.post.banner;
       }
-      if (this.temp_path){
+      if (this.temp_path) {
         this.post.banner = this.temp_path;
         return "/storage/" + this.temp_path;
       }
       return null;
-    }
+    },
   },
   methods: {
     async submit() {
@@ -196,6 +207,17 @@ export default {
         }
       }
       this.submitting = false;
+    },
+    async replaceBanner() {
+      const ok = await this.$refs.cdm.show({
+        title: this.$t("modules.posts.replace_banner_title"),
+        message: this.$t("modules.posts.replace_banner_message"),
+        okButton: this.$t("modules.posts.replace_banner_ok"),
+        okButtonColor: "btn-danger",
+      });
+      if (ok) {
+        this.post.banner = null;
+      }
     },
   },
 };

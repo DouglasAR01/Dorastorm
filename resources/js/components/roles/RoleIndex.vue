@@ -64,18 +64,18 @@
           </template>
         </tbody>
       </table>
-      <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
+      <confirm-dialogue-modal ref="confirmDialogue"></confirm-dialogue-modal>
     </div>
   </div>
 </template>
 <script>
-import ConfirmDialogue from "../../shared/components/ConfirmDialogue";
+import ConfirmDialogueModal from "../../shared/components/modals/ConfirmDialogueModal";
 import { is404 } from "../../shared/utils/responses";
 import Permissions from "../../services/role-permissions";
 import RoleDataCard from "./RoleDataCard";
 export default {
   components: {
-    ConfirmDialogue,
+    ConfirmDialogueModal,
     RoleDataCard,
   },
   data() {

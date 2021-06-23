@@ -71,12 +71,12 @@
         </table>
       </div>
       <simple-pagination :meta="meta" :links="links" @navigating="navigate"></simple-pagination>
-      <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
+      <confirm-dialogue-modal ref="confirmDialogue"></confirm-dialogue-modal>
     </div>
   </div>
 </template>
 <script>
-import ConfirmDialogue from "../../shared/components/ConfirmDialogue";
+import ConfirmDialogueModal from "../../shared/components/modals/ConfirmDialogueModal";
 import { is404, is409 } from "../../shared/utils/responses";
 import Permissions from "../../services/role-permissions";
 import UserDataCard from "./UserDataCard";
@@ -84,7 +84,7 @@ import SimplePagination from "../../shared/components/SimplePagination";
 import IndexPaginationTraits from "../../shared/mixins/index-pagination-traits";
 export default {
   components: {
-    ConfirmDialogue,
+    ConfirmDialogueModal,
     UserDataCard,
     SimplePagination,
   },

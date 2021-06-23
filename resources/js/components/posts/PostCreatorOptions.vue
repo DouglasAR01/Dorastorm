@@ -21,17 +21,17 @@
         </button>
       </div>
     </div>
-    <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
+    <confirm-dialogue-modal ref="confirmDialogue"></confirm-dialogue-modal>
   </div>
 </template>
 <script>
 import PermissionsHandling from "../../shared/mixins/permissions-handling";
-import ConfirmDialogue from "../../shared/components/ConfirmDialogue";
+import ConfirmDialogueModal from "../../shared/components/modals/ConfirmDialogueModal";
 export default {
   mixins: [PermissionsHandling],
   props: ["authorId", "postId"],
   components: {
-    ConfirmDialogue
+    ConfirmDialogueModal
   },
   data () {
     return {
