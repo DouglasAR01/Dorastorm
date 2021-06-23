@@ -29,9 +29,6 @@ import 'vue-my-toasts/dist/vue-my-toasts.css'
 import BootstrapComponent from "vue-my-toasts/src/components/toasts/BootstrapComponent";
 import VTooltip from 'v-tooltip'
 
-// Nice modals support
-import Vmodal from 'vue-js-modal';
-
 //window.Vue = require('vue');
 Vue.use(VTooltip);
 Vue.use(VueRouter);
@@ -44,7 +41,7 @@ Vue.use(VueMyToast, {
         padding: '1rem'
     }
 });
-Vue.use(Vmodal);
+
 Vue.filter('fromNow', value => dayjs(value).fromNow());
 Vue.filter('humanDate', value => dayjs(value).format('YYYY/MM/DD'));
 

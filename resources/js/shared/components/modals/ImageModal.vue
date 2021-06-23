@@ -1,56 +1,47 @@
 <template>
-  <modal
-    :name="modalName"
-    :adaptive="true"
-    class="modal-container"
-    classes="modal-image-dialog"
-    :focus-trap="true"
-    height="auto"
-  >
-    <div slot="top-right">
-      <span class="modal-image-close" @click="$modal.hide(modalName)">&times;</span>
-    </div>
+  <base-modal ref="base" overlay-classes="modal-image-overlay" content-classes="modal-image-dialog">
+    <template v-slot:top-right-close>
+      <span class="modal-image-close" @click="hide()">&times;</span>
+    </template>
     <div class="modal-image-content">
       <img :src="src" class="modal-image">
     </div>
-  </modal>
+  </base-modal>
 </template>
 <script>
+import BaseModal from "./BaseModal";
 export default {
-  props: {
-    src: {
-      type: String,
-      required: true
-    },
-    caption: {
-      type: String,
-      default: () => {
-        return null;
-      }
-    },
-    alt: {
-      type: String,
-      default: () => {
-        return "img";
-      }
-    },
-    id: {
-      type: Number,
-      default: 1
+  components: {
+    BaseModal
+  },
+  data () {
+    return {
+      src: null,
+      caption: null,
+      alt: null
     }
   },
-  computed: {
-    modalName() {
-      return "image-modal" + this.id;
+  methods: {
+    show(opts = {}){
+      this.src = opts.src;
+      if (opts.caption){
+        this.caption = opts.caption;
+      }
+      if (opts.alt){
+        this.alt = opts.alt;
+      }      
+      this.$refs.base.open();
+    },
+    hide(){
+      this.$refs.base.close();
     }
   }
-};
+}
 </script>
 <style>
 .modal-image-content {
-  height: 100%;
-  max-height: 90vh;
-  width: 100%;
+  width: 80%;
+  margin: auto;
 }
 .modal-image {
   display: block;
@@ -59,13 +50,22 @@ export default {
   height: 100%;
   width: 100%;
 }
-.modal-container {
+.modal-image-overlay {
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.85);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  z-index: 998;
 }
 .modal-image-dialog {
   background-color: transparent;
-  position: absolute;
+  margin: auto;
 }
 .modal-image-close {
   position: absolute;
