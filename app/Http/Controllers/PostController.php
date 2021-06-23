@@ -114,6 +114,7 @@ class PostController extends Controller
         $post->content = $data['content'];
         $post->visible = $data['visible'] ?? $post->visible;
         $post->private = $data['private'] ?? $post->private;
+        $post->banner = $data['banner'] ?? $post->banner;
         $post->save();
         return new PostResource($post);
     }
