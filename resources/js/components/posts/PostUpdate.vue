@@ -6,7 +6,7 @@
     <div v-else>
       <h3>{{ $t("modules.posts.update") }}</h3>
       <form>
-        <div class="row">
+        <div class="form-row">
           <div class="col-md-8">
             <div class="form-group">
               <validation-error :errors="errors" name="title" v-slot="{ e }">
@@ -18,6 +18,50 @@
                   v-model="post.title"
                   :class="[{ 'is-invalid': e }]"
                 />
+              </validation-error>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="upload">{{ $t("modules.posts.banner") }}</label>
+              <div v-if="bannerURL">
+                <image-modal :src="bannerURL" />
+                <image-hover-options
+                  :src="bannerURL"
+                  max-height="37"
+                >
+                  <image-view-option-button> </image-view-option-button>
+                  <image-replace-option-button @confirmed="post.banner = null"></image-replace-option-button>
+                </image-hover-options>
+              </div>
+              <div v-else>
+                <single-file-upload
+                  name="upload"
+                  endpoint="/api/upload/image"
+                  disk="public"
+                  v-model="temp_path"
+                ></single-file-upload>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-md-8">
+            <div class="form-group">
+              <validation-error
+                :errors="errors"
+                name="description"
+                v-slot="{ e }"
+              >
+                <label for="description">{{
+                  $t("modules.posts.description")
+                }}</label>
+                <textarea
+                  name="description"
+                  class="form-control"
+                  v-model="post.description"
+                  :class="[{ 'is-invalid': e }]"
+                ></textarea>
               </validation-error>
             </div>
           </div>
@@ -47,19 +91,6 @@
             </div>
           </div>
         </div>
-        <div class="form-group">
-          <validation-error :errors="errors" name="description" v-slot="{ e }">
-            <label for="description">{{
-              $t("modules.posts.description")
-            }}</label>
-            <textarea
-              name="description"
-              class="form-control"
-              v-model="post.description"
-              :class="[{ 'is-invalid': e }]"
-            ></textarea>
-          </validation-error>
-        </div>
       </form>
       <div class="form-group">
         <validation-error :errors="errors" name="content" v-slot="{ e }">
@@ -84,10 +115,20 @@
 import { is404, is422 } from "../../shared/utils/responses";
 import TextEditor from "../../shared/components/RichTextEditor";
 import ValidationError from "../../shared/components/ValidationError";
+import ImageHoverOptions from "../../shared/components/images/ImageHoverOptions";
+import ImageModal from "../../shared/components/modals/ImageModal";
+import ImageViewOptionButton from "../../shared/components/images/ImageViewOptionButton";
+import SingleFileUpload from "../../shared/components/SingleFileUpload";
+import ImageReplaceOptionButton from '../../shared/components/images/ImageReplaceOptionButton.vue';
 export default {
   components: {
     ValidationError,
     TextEditor,
+    ImageHoverOptions,
+    ImageModal,
+    ImageViewOptionButton,
+    SingleFileUpload,
+    ImageReplaceOptionButton
   },
   data() {
     return {
@@ -95,6 +136,7 @@ export default {
       submitting: false,
       post: null,
       errors: null,
+      temp_path: null
     };
   },
   async created() {
@@ -119,6 +161,18 @@ export default {
       }
     }
     this.loading = false;
+  },
+  computed: {
+    bannerURL(){
+      if (this.post.banner){
+        return this.post.banner;
+      }
+      if (this.temp_path){
+        this.post.banner = this.temp_path;
+        return "/storage/" + this.temp_path;
+      }
+      return null;
+    }
   },
   methods: {
     async submit() {
