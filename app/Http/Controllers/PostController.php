@@ -114,7 +114,13 @@ class PostController extends Controller
         $post->content = $data['content'];
         $post->visible = $data['visible'] ?? $post->visible;
         $post->private = $data['private'] ?? $post->private;
-        $post->banner = $data['banner'] ?? null;
+        $url = config('filesystems.disks.public.url') . '/';
+        if (!empty($post->banner)) {
+            $url .= $post->banner;
+        }
+        if ($data['banner'] != $url) {
+            $post->banner = $data['banner'];
+        }
         $post->save();
         return new PostResource($post);
     }
