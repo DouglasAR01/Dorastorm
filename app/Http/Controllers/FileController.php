@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class FileController extends Controller
@@ -17,6 +18,16 @@ class FileController extends Controller
         ];
         $this->file_key_name = 'file';
     }
+
+    // public function testDownload($path)
+    // {
+    //     $path = public_path('storage/images/') . $path;       
+    //     //dd (Storage::disk('public')->files('images')); 
+    //     //dd(Storage::disk('public')->exists('images/'.$path));
+    //     //return Storage::download($path);
+    //     //return Storage::disk('public')->get('images/'.$path);
+    //     return response()->download($path);
+    // }
 
     public function uploadImage(Request $request)
     {
