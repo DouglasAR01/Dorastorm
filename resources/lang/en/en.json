@@ -84,7 +84,10 @@
             "next": "Older",
             "first": "Newest",
             "recent": "Lastest posts",
-            "banner": "Post banner"
+            "banner": "Post banner",
+            "replace_banner_title": "Replace banner",
+            "replace_banner_message": "Are you sure you want to replace this post banner?",
+            "replace_banner_ok": "Replace"
         }
     },
     "navbar": {
@@ -134,6 +137,7 @@
         "paginate_prev": "Previous page",
         "search": "Search...",
         "file_upload": "Select a file",
-        "file_uploaded": "File uploaded successfully!"
+        "file_uploaded": "File uploaded successfully!",
+        "view": "View"
     }
 }

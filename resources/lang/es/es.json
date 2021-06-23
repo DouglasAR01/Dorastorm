@@ -85,7 +85,10 @@
             "next": "Más antiguas",
             "first": "Portada",
             "recent": "Lo último",
-            "banner": "Imagen principal de la publicación"
+            "banner": "Imagen principal de la publicación",
+            "replace_banner_title": "Reemplazar imagen principal",
+            "replace_banner_message": "¿Estás seguro de querer cambiar la imagen principal de la publicación?",
+            "replace_banner_ok": "Reemplazar"
         }
     },
     "navbar": {
@@ -136,6 +139,7 @@
         "paginate_prev": "Página anterior",
         "search": "Búsqueda...",
         "file_upload": "Selecciona un archivo",
-        "file_uploaded": "¡El archivo ha sido subido con éxito!"
+        "file_uploaded": "¡El archivo ha sido subido con éxito!",
+        "view": "Ver"
     }
 }
