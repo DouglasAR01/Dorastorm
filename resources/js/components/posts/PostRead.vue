@@ -8,6 +8,7 @@
         class="wp-light mb-2"
       ></post-creator-options>
       <div class="wp-light">
+        <img :src="post.banner" class="img-fluid mb-2 mx-auto d-block rounded post-banner">
         <h1>{{ post.title }}</h1>
         <div class="editor__content" v-html="post.content"></div>
         <hr />
@@ -68,3 +69,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.post-banner {
+  max-height: 700px;
+}
+</style>
