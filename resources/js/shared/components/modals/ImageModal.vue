@@ -1,5 +1,5 @@
 <template>
-  <base-modal ref="base" overlay-classes="modal-image-overlay" content-classes="modal-image-dialog">
+  <base-modal ref="base" overlay-classes="modal-image-overlay" dialog-classes="m-auto" content-classes="modal-image-dialog">
     <template v-slot:top-right-close>
       <span class="modal-image-close" @click="hide()">&times;</span>
     </template>

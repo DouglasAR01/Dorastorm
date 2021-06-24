@@ -4,7 +4,7 @@
       <div class="modal-close-slot">
         <slot name="top-right-close"></slot>
       </div>
-      <div class="modal-dialog">
+      <div :class="dialogClasses">
         <div :class="contentClasses">
           <slot></slot>
         </div>
@@ -26,12 +26,18 @@ export default {
         return "modal-overlay";
       },
     },
+    dialogClasses: {
+      type: String,
+      default: () => {
+        return "modal-dialog";
+      }
+    },
     contentClasses: {
       type: String,
       default: () => {
         return "modal-content";
       },
-    },
+    }
   },
 
   data() {
