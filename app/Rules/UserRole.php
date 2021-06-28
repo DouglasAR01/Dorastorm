@@ -29,6 +29,9 @@ class UserRole implements Rule
     public function passes($attribute, $value)
     {
         $value_role = Role::find($value);
+        if ($this->user_role->id === $value_role->id){
+            return true;
+        }
         if (($value_role->hierarchy > $this->user_role->hierarchy) || $this->user_role->hierarchy === 0) {
             return true;
         }
