@@ -1,5 +1,6 @@
 <template>
   <div class="editor border rounded">
+    <single-image-upload-modal ref="imgup" @confirmed="addCommand"/>
     <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
       <div class="menubar border-bottom mb-0">
         <div class="btn-toolbar">
@@ -87,6 +88,11 @@
               <i class="fas fa-grip-lines"></i>
             </button>
           </div>
+          <div class="btn-group mr-1">
+            <button class="btn menubar__button" @click="tryImageUpload(commands.image)">
+                <i class="far fa-image"></i>
+            </button>
+          </div>
           <div class="btn-group mr-1" role="group" aria-label="Group 4">
             <button
               class="btn menubar__button"
@@ -146,17 +152,24 @@ import {
   Bold,
   Code,
   Italic,
+  Image,
   Link,
   Strike,
   Underline,
   History,
 } from "tiptap-extensions";
+import SingleImageUploadModal from './SingleImageUploadModal.vue';
 export default {
   components: {
     EditorContent,
     EditorMenuBar,
+    SingleImageUploadModal,
   },
-  props: ["value"],
+  props: {
+    value: {
+      type: String
+    }
+  },
   data() {
     return {
       editor: null,
@@ -179,6 +192,7 @@ export default {
         new Bold(),
         new Code(),
         new Italic(),
+        new Image(),
         new Strike(),
         new Underline(),
         new History(),
@@ -193,5 +207,13 @@ export default {
   beforeDestroy() {
     this.editor.destroy();
   },
+  methods: {
+    tryImageUpload(command){
+      this.$refs.imgup.show(command);
+    },
+    addCommand(payload){
+      payload.command(payload.data);
+    }
+  }
 };
 </script>

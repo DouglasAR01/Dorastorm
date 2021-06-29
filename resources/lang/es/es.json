@@ -138,6 +138,8 @@
         "paginate_next": "Página siguiente",
         "paginate_prev": "Página anterior",
         "search": "Búsqueda...",
+        "upload_document": "Subir un documento",
+        "upload_image": "Subir una imagen",
         "file_upload": "Selecciona un archivo",
         "file_uploaded": "¡El archivo ha sido subido con éxito!",
         "view": "Ver"

@@ -126,7 +126,7 @@
 </template>
 <script>
 import { is404, is422 } from "../../shared/utils/responses";
-import TextEditor from "../../shared/components/RichTextEditor";
+import TextEditor from "../../shared/components/text-editor/RichTextEditor";
 import ValidationError from "../../shared/components/ValidationError";
 import ImageHoverOptions from "../../shared/components/ImageHoverOptions";
 import ImageModal from "../../shared/components/modals/ImageModal";
