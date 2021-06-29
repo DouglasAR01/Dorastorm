@@ -6,7 +6,7 @@ use App\Http\Resources\RoleResource;
 use App\Http\Resources\UserResource;
 use App\Models\Role;
 use App\Models\User;
-use App\Rules\UserRole;
+use App\Rules\UserRoleRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -75,7 +75,12 @@ class UserController extends Controller
             'email' => 'sometimes|required|email|max:191|unique:users,email,' . $user->id,
             'role_id' => 'nullable'
         ]);
-        $this->addRoleValidationRules($request->user()->role, $validator);
+        // Check if user is trying to change his role. If so, the rules are applied.
+        if (!empty($request['role_id']) && $user->role_id != $request['role_id']){
+            $this->addRoleValidationRules($request->user()->role, $validator);
+        } else {
+            unset($request['role_id']);
+        }        
         $data = $validator->validate();
         // Check if the user is the last admin left and he is trying to change his role
         if (
@@ -97,6 +102,7 @@ class UserController extends Controller
             $user->$att = $value;
         }
         $user->save();
+        // Send the email verification mail
         if ($email_changed && $user instanceof MustVerifyEmail){
             $user->sendEmailVerificationNotification();
         }
@@ -158,7 +164,7 @@ class UserController extends Controller
             'numeric',
             'min:1',
             'exists:roles,id',
-            new UserRole($user_role)
+            new UserRoleRule($user_role)
         ], function ($input) {
             return !($input->role_id === null);
         });

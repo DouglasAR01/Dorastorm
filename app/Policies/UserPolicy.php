@@ -52,7 +52,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        return $user->role->read_users || $user->id === $model->id;
+        return $user->role->update_users || $user->id === $model->id;
     }
 
     /**
