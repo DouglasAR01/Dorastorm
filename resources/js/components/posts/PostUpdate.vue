@@ -132,6 +132,7 @@ import ImageHoverOptions from "../../shared/components/ImageHoverOptions";
 import ImageModal from "../../shared/components/modals/ImageModal";
 import ConfirmDialogueModal from "../../shared/components/modals/ConfirmDialogueModal";
 import SingleFileUpload from "../../shared/components/SingleFileUpload";
+import PermissionsHandling from "../../shared/mixins/permissions-handling";
 export default {
   components: {
     ValidationError,
@@ -141,6 +142,7 @@ export default {
     SingleFileUpload,
     ConfirmDialogueModal,
   },
+  mixins: [PermissionsHandling],
   data() {
     return {
       loading: false,
@@ -160,6 +162,12 @@ export default {
       this.post = (
         await axios.get("/api/posts/" + this.$route.params.postId + "/edit")
       ).data.data;
+      if (!this._checkIfUpdatable()){
+        this.$toasts.error(this.$t("error.403.default_title"));
+        this.$router.push({
+          name: "posts-index"
+        });
+      }
     } catch (error) {
       if (is404(error)) {
         this.$toasts.error(this.$t("error.404.specific.post"));
@@ -219,6 +227,15 @@ export default {
         this.post.banner = null;
       }
     },
+
+    _checkIfUpdatable(){
+      const user = this.loggedUser;
+      // User is the owner
+      if (this.post.author && this.post.author.id === user.id){
+        return true;
+      }
+      return this.checkUserPermission(user, this.corePms.UPDATE_ELSES_POSTS);
+    }
   },
 };
 </script>

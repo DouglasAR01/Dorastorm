@@ -112,6 +112,7 @@ class PostController extends Controller
 
         $post->title = $data['title'];
         $post->content = $data['content'];
+        $post->description = $data['description'];
         $post->visible = $data['visible'] ?? $post->visible;
         $post->private = $data['private'] ?? $post->private;
         $url = config('filesystems.disks.public.url') . '/';

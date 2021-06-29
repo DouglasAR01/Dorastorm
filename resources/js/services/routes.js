@@ -145,8 +145,9 @@ const routes = [
         component: () => import (/* webpackChunkName: "posts" */"../components/posts/PostUpdate"),
         name: 'posts-update',
         meta: {
-            auth: true,
-            permission: Permissions.core.UPDATE_ELSES_POSTS
+            auth: true
+            // User ownership is checked at PostUpdate component
+            // permission: Permissions.core.UPDATE_ELSES_POSTS
         }
     },
     {
