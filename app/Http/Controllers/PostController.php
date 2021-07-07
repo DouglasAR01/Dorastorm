@@ -35,6 +35,14 @@ class PostController extends Controller
         return PostResource::collection($query->orderBy('created_at', 'desc')->paginate(15));
     }
 
+    public function myPostsIndex(Request $request){
+        if ($request->user()->cannot('create', Post::class)){
+            abort(403);
+        }
+        $query = Post::where('user_id', $request->user()->id);
+        return PostResource::collection($query->orderBy('created_at', 'desc')->paginate(15));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
