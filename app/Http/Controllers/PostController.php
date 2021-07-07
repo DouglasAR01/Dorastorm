@@ -24,7 +24,14 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Post::where($this->indexShowConditions());
+        // The index will always show visible posts
+        $query = Post::where('visible', 1);
+        // If the request has the p field filled, the index will only show visible and private posts
+        $private = 0;
+        if (Auth::check() && $request->filled('p')){
+            $private = 1;
+        }
+        $query->where('private', $private);
         if ($request->filled('q')) {
             $q = $request->input('q');
             $query->where(function ($query) use ($q) {
@@ -81,7 +88,7 @@ class PostController extends Controller
         if ($post->visible && $post->private && Auth::check()) {
             return new PostResource($post);
         }
-        // If the post is not visible the user should not see it unless it's the owner of the post or have permissions of updating
+        // If the post is not visible the user should not see it unless he is the owner of the post or have permissions of updating
         if (!$post->visible && Auth::check() && $request->user()->can('update', $post)) {
             return new PostResource($post);
         }
@@ -147,14 +154,5 @@ class PostController extends Controller
             abort(403);
         }
         $post->delete();
-    }
-
-    private function indexShowConditions()
-    {
-        $condition = [['visible', '=', 1]];
-        if (!Auth::check()) {
-            array_push($condition, ['private', '=', 0]);
-        }
-        return $condition;
     }
 }
