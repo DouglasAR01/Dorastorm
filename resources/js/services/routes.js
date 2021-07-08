@@ -136,6 +136,19 @@ const routes = [
         name: 'posts-index'
     },
     {
+        path: '/private/posts',
+        component: PostIndex,
+        name: 'private-posts-index',
+        props: {
+            aditionalParams: {
+                p: 1
+            }
+        },
+        meta: {
+            auth: true
+        }
+    },
+    {
         path: '/posts/:slug',
         component: PostRead,
         name: 'posts-read'

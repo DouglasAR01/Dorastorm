@@ -37,12 +37,21 @@ export default {
     SearchInput,
     PostsLoading
   },
+  props: {
+    aditionalParams: {
+      required: false,
+      type: Object
+    }
+  },
   mixins: [IndexPaginationTraits],
   created() {
     this.ep = "/api/posts";
     this.params = {
       q: null
     };
+    if (this.aditionalParams){
+      Object.keys(this.aditionalParams).forEach(param => this.params[param] = this.aditionalParams[param]);
+    }
   },
 };
 </script>
