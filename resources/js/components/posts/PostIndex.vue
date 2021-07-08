@@ -7,7 +7,7 @@
           <h3>{{ $t("modules.posts.recent") }}</h3>
         </div>
         <div class="col-sm-4">
-          <search-input @search="navigate(1)" v-model="q"></search-input>
+          <search-input @search="navigate(1)" v-model="params.q"></search-input>
         </div>
       </div>
       <post-list :posts="data" class="mb-2"></post-list>
@@ -40,6 +40,9 @@ export default {
   mixins: [IndexPaginationTraits],
   created() {
     this.ep = "/api/posts";
+    this.params = {
+      q: null
+    };
   },
 };
 </script>

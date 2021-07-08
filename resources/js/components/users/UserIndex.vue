@@ -96,6 +96,9 @@ export default {
   },
   created() {
     this.ep = "/api/users";
+    this.params = {
+      q: null
+    };
   },
   methods: {
     async deleteUser(user_id) {

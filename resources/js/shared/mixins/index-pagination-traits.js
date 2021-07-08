@@ -3,7 +3,7 @@ export default {
         return {
             loading: false,
             ep: null,
-            q: null,
+            params: null,
             data: null,
             meta: null,
             links: null
@@ -17,8 +17,12 @@ export default {
             this.loading = true;
             try {
                 var query = `${this.ep}?page=${page}`;
-                if (this.q){
-                    query += `&q=${this.q}`;
+                if (this.params){
+                    Object.keys(this.params).forEach(key => {
+                        if (this.params[key]){
+                            query += `&${key}=${this.params[key]}`;
+                        }
+                    });
                 }
                 const resp = await axios.get(query);
                 this.data = resp.data.data;
