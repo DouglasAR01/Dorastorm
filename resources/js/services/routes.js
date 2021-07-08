@@ -149,6 +149,19 @@ const routes = [
         }
     },
     {
+        path: '/user/posts',
+        component: PostIndex,
+        name: 'user-posts',
+        props: {
+            aditionalParams: {
+                mine: 1
+            }
+        },
+        meta: {
+            auth: true
+        }
+    },
+    {
         path: '/posts/:slug',
         component: PostRead,
         name: 'posts-read'
