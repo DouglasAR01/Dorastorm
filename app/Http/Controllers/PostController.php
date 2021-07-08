@@ -24,11 +24,25 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
+        // Check if the user is trying to get their own posts
+        if ($request->filled('mine')){
+            if (!Auth::check()){
+                abort(401);
+            }
+            if ($request->user()->cannot('create', Post::class)){
+                abort(403);
+            }
+            $query = Post::where('user_id', $request->user()->id);
+            return PostResource::collection($query->orderBy('created_at', 'desc')->paginate(15));
+        }
         // The index will always show visible posts
         $query = Post::where('visible', 1);
         // If the request has the p field filled, the index will only show visible and private posts
         $private = 0;
-        if (Auth::check() && $request->filled('p')){
+        if ($request->filled('p')){
+            if (!Auth::check()){
+                abort(401);
+            }
             $private = 1;
         }
         $query->where('private', $private);
@@ -39,14 +53,6 @@ class PostController extends Controller
                     ->orWhere('content', 'LIKE', "%$q%");
             });
         }
-        return PostResource::collection($query->orderBy('created_at', 'desc')->paginate(15));
-    }
-
-    public function myPostsIndex(Request $request){
-        if ($request->user()->cannot('create', Post::class)){
-            abort(403);
-        }
-        $query = Post::where('user_id', $request->user()->id);
         return PostResource::collection($query->orderBy('created_at', 'desc')->paginate(15));
     }
 

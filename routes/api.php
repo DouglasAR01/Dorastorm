@@ -23,7 +23,6 @@ Route::middleware('auth:sanctum')->group(function () {
     // Your protected routes goes here
     Route::get('/user', 'UserController@showMe')->name('user.data');
     Route::get('/user/roles-below', 'UserController@rolesBelow')->name('user.roles-below');
-    Route::get('/user/posts', 'PostController@myPostsIndex')->name('user.posts');
     Route::patch('/users/{user}/password', 'UserController@updatePassword')->name('users.password');
     Route::resource('/users', 'UserController')->except(['create', 'edit']);
     Route::resource('/roles','RoleController')->except(['create', 'edit']);
