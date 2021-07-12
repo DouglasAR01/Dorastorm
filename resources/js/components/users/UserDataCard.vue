@@ -1,26 +1,77 @@
 <template>
-  <div class="card text-center card-body">
-    <h3 class="card-title"><strong>{{ $t("modules.users.name") }}</strong> {{ payload.name }}</h3>
-    <hr />
-    <p class="card-text"><strong>{{ $t("message.email") }}</strong> {{ payload.email }}</p>
-    <hr />
-    <div class="" v-if="payload.role">
-      <p class="card-text">
-        <strong>{{ $t("modules.users.role") }}</strong>
-        <span>
-          {{ payload.role.name }}
-        </span>
-      </p>
-      <hr />
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="row no-gutters">
+          <div class="col-sm-4 px-4 p-sm-2 d-flex justify-content-center">
+            <img
+              src="https://socialsciences.uottawa.ca/human-motivation/sites/socialsciences.uottawa.ca.human-motivation/files/generic_female_0.jpg"
+              alt=""
+              class="profile-img"
+            />
+          </div>
+          <div class="col-sm-8">
+            <router-link
+              :to="{ name: 'users-update', params: { userId: payload.id } }"
+            >
+              <span class="user-data-cog">
+                <i class="fas fa-cog"></i>
+              </span>
+            </router-link>
+            <div class="card-body">
+              <h3 class="card-title">
+                {{ payload.name }}
+              </h3>
+              <p class="card-text">
+                {{ payload.email }}
+              </p>
+              <p class="card-text">
+                <strong>{{ $t("modules.users.role") }}</strong>
+                <span>
+                  {{ payload.role.name }}
+                </span>
+              </p>
+              <p class="card-text text-muted">
+                {{ $t("message.member_since") }}
+                {{ payload.created_at | fromNow }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <p class="card-text text-muted">{{ $t("message.member_since") }} {{ payload.created_at | fromNow }}</p>
+    <div class="col-md-2"></div>
   </div>
 </template>
 <script>
 export default {
   props: {
-    payload: Object
+    payload: Object,
   },
 };
 </script>
+<style scoped>
+.profile-img {
+  border-radius: calc(0.25rem - 1px);
+  width: 100%;
+}
+.user-data-cog {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+}
+@media only screen and (max-width: 575px) {
+  .profile-img {
+    width: 50%;
+    padding: 0;
+  }
+}
+@media only screen and (max-width: 400px) {
+  .profile-img {
+    width: 100%;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+</style>

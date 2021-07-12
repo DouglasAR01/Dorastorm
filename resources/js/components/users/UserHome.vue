@@ -2,22 +2,15 @@
   <div>
     <div v-if="loading">{{ $t("message.loading") }}</div>
     <div v-else>
-      <div class="row mr-auto mb-4">
-        <user-data-card :payload="user" class="col-md-12" />
-      </div>
-      <div class="row">
-        <div class="col-6">
-          <router-link :to="{name:'users-update', params: {userId: user.id}}" class="btn btn-info btn-block">{{ $t("modules.users.update") }}</router-link>
-        </div>
+      <div class="row mb-2">
+        <user-data-card :payload="user"/>
       </div>
     </div>
   </div>
 </template>
 <script>
 import UserDataCard from "./UserDataCard";
-import ItemArrangement from "../../shared/mixins/item-arrangement";
 export default {
-  mixins: [ItemArrangement],
   components: {
     UserDataCard
   },
