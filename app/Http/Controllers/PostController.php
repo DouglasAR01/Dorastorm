@@ -46,13 +46,6 @@ class PostController extends Controller
             $private = 1;
         }
         $query->where('private', $private);
-        if ($request->filled('q')) {
-            $q = $request->input('q');
-            $query->where(function ($query) use ($q) {
-                $query->where('title', 'LIKE', "%$q%")
-                    ->orWhere('content', 'LIKE', "%$q%");
-            });
-        }
         return $this->executeIndexQuery($request, $query);
     }
 
