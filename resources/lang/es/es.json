@@ -91,7 +91,10 @@
             "replace_banner_ok": "Reemplazar",
             "tag_invisible": "Invisible",
             "tag_yours": "Tuyo",
-            "tag_private": "Privado"
+            "tag_private": "Privado",
+            "posts": "Publicaciones",
+            "private_index": "Publicaciones para el personal",
+            "my_posts": "Mis publicaciones"
         }
     },
     "navbar": {

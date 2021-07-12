@@ -90,7 +90,10 @@
             "replace_banner_ok": "Replace",
             "tag_invisible": "Invisible",
             "tag_yours": "Yours",
-            "tag_private": "Private"
+            "tag_private": "Private",
+            "posts": "Posts",
+            "private_index": "Staff posts",
+            "my_posts": "My posts"
         }
     },
     "navbar": {
