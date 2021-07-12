@@ -1,4 +1,11 @@
 export default {
+    props: {
+        aditionalParams: {
+            required: false,
+            type: Object,
+            default: () => (null)
+        },
+    },
     data() {
         return {
             loading: false,
@@ -10,16 +17,30 @@ export default {
         };
     },
     beforeMount() {
-        this.navigate(1);
+        this._initializeComponent();
     },
-    methods: {
+    methods: {        
+        _initializeParams() {
+            this.params = {
+                q: null,
+            };
+            if (this.aditionalParams) {
+                Object.keys(this.aditionalParams).forEach(
+                    (param) => (this.params[param] = this.aditionalParams[param])
+                );
+            }
+        },
+        _initializeComponent() {
+            this._initializeParams();
+            this.navigate(1);
+        },
         async navigate(page) {
             this.loading = true;
             try {
                 var query = `${this.ep}?page=${page}`;
-                if (this.params){
+                if (this.params) {
                     Object.keys(this.params).forEach(key => {
-                        if (this.params[key]){
+                        if (this.params[key]) {
                             query += `&${key}=${this.params[key]}`;
                         }
                     });
@@ -34,4 +55,9 @@ export default {
             }
         }
     },
+    watch: {
+        aditionalParams: function () {
+            this._initializeComponent();
+        }
+    }
 }
