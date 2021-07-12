@@ -17,9 +17,15 @@
           <router-link class="h5 card-title" :to="postLink">
             {{ post.title }}
             <div class="d-inline" v-if="isUserOwner">
-              <span class="badge badge-success" v-if="isUserOwner">Yours</span>
-              <span class="badge badge-secondary" v-if="!post.visible">Invisible</span>
-              <span class="badge badge-info" v-if="post.private">Private</span>
+              <span class="badge badge-success" v-if="isUserOwner">
+                {{$t("modules.posts.tag_yours")}}
+              </span>
+              <span class="badge badge-secondary" v-if="!post.visible">
+                {{$t("modules.posts.tag_invisible")}}
+              </span>
+              <span class="badge badge-info" v-if="post.private">
+                {{$t("modules.posts.tag_private")}}
+              </span>
             </div>
           </router-link>
           <p class="card-text">

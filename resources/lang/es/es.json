@@ -88,7 +88,10 @@
             "banner": "Imagen principal de la publicación",
             "replace_banner_title": "Reemplazar imagen principal",
             "replace_banner_message": "¿Estás seguro de querer cambiar la imagen principal de la publicación?",
-            "replace_banner_ok": "Reemplazar"
+            "replace_banner_ok": "Reemplazar",
+            "tag_invisible": "Invisible",
+            "tag_yours": "Tuyo",
+            "tag_private": "Privado"
         }
     },
     "navbar": {

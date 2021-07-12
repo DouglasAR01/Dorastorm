@@ -87,7 +87,10 @@
             "banner": "Post banner",
             "replace_banner_title": "Replace banner",
             "replace_banner_message": "Are you sure you want to replace this post banner?",
-            "replace_banner_ok": "Replace"
+            "replace_banner_ok": "Replace",
+            "tag_invisible": "Invisible",
+            "tag_yours": "Yours",
+            "tag_private": "Private"
         }
     },
     "navbar": {
