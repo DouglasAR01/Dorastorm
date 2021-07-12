@@ -43,13 +43,6 @@
             {{ $t("modules.posts.posts") }}
           </a>
           <div class="dropdown-menu" id="posts">
-            <router-link class="nav-link" :to="{ name: 'posts-index' }">
-              {{ $t("modules.posts.index") }}
-            </router-link>
-            <router-link class="nav-link" :to="{ name: 'private-posts-index' }">
-              {{ $t("modules.posts.private_index") }}
-            </router-link>
-            <hr class="w-75 my-1">
             <router-link
               :to="{ name: 'posts-create' }"
               class="nav-link"
@@ -63,6 +56,13 @@
               v-if="checkUserPermission(loggedUser, corePms.CREATE_POSTS)"
             >
               {{ $t("modules.posts.my_posts") }}
+            </router-link>
+            <hr class="w-75 my-1">
+            <router-link class="nav-link" :to="{ name: 'posts-index' }">
+              {{ $t("modules.posts.index") }}
+            </router-link>
+            <router-link class="nav-link" :to="{ name: 'private-posts-index' }">
+              {{ $t("modules.posts.private_index") }}
             </router-link>
           </div>
         </li>
@@ -144,34 +144,15 @@
             }}</router-link>
           </div>
         </li>
-        <li class="nav-item dropdown" v-if="isLoggedIn">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="permissions"
-            role="button"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            {{ $t("navbar.permissions.title") }}
-          </a>
-          <div class="dropdown-menu" id="permissions">
-            <router-link
-              :to="{ name: 'me2' }"
-              class="nav-link"
-              v-if="checkUserPermission(loggedUser, corePms.READ_USERS)"
-            >
-              {{ $t("navbar.permissions.only") }}
-            </router-link>
-            <router-link :to="{ name: 'me2' }" class="nav-link">
-              {{ $t("navbar.permissions.even") }}
-            </router-link>
-            <router-link :to="{ name: 'me' }" class="nav-link">
-              {{ $t("navbar.permissions.any") }}
-            </router-link>
-          </div>
+
+        <li class="ml-3 nav-item" v-if="isLoggedIn">
+          <router-link :to="{ name: 'me' }" class="nav-link">
+            <span>
+              <i class="fas fa-user"></i> {{userName}}
+            </span>
+          </router-link>
         </li>
+        
         <li class="nav-item" v-if="isLoggedIn">
           <a
             href="#"
@@ -195,6 +176,11 @@ export default {
     return {
       isLoggingOut: false,
     };
+  },
+  computed: {
+    userName() {
+      return this.loggedUser.name.split(" ")[0];
+    }
   },
   methods: {
     async logout() {
