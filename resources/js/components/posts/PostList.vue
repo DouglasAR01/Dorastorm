@@ -8,7 +8,12 @@
 <script>
 import PostDataCard from "./PostDataCard";
 export default {
-  props: ["posts"],
+  props: {
+    posts: {
+      type: Array,
+      required: true
+    }
+  },
   components: {
     PostDataCard
   }
