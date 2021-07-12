@@ -33,7 +33,7 @@ class PostController extends Controller
                 abort(403);
             }
             $query = Post::where('user_id', $request->user()->id);
-            return PostResource::collection($query->orderBy('created_at', 'desc')->paginate(15));
+            return $this->executeIndexQuery($request, $query);
         }
         // The index will always show visible posts
         $query = Post::where('visible', 1);
@@ -53,7 +53,7 @@ class PostController extends Controller
                     ->orWhere('content', 'LIKE', "%$q%");
             });
         }
-        return PostResource::collection($query->orderBy('created_at', 'desc')->paginate(15));
+        return $this->executeIndexQuery($request, $query);
     }
 
     /**
@@ -160,5 +160,17 @@ class PostController extends Controller
             abort(403);
         }
         $post->delete();
+    }
+
+    private function executeIndexQuery(Request $request, $query)
+    {
+        if ($request->filled('q')) {
+            $q = $request->input('q');
+            $query->where(function ($query) use ($q) {
+                $query->where('title', 'LIKE', "%$q%")
+                    ->orWhere('content', 'LIKE', "%$q%");
+            });
+        }
+        return PostResource::collection($query->orderBy('created_at', 'desc')->paginate(15));
     }
 }
