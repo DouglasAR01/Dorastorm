@@ -1,5 +1,8 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom" :class="[{ 'navbar-expand-sm' : !isLoggedIn }]">
+  <nav
+    class="navbar navbar-expand-lg navbar-light bg-light border-bottom"
+    :class="[{ 'navbar-expand-sm': !isLoggedIn }]"
+  >
     <router-link :to="{ name: 'home' }" class="navbar-brand">
       Dorastorm
     </router-link>
@@ -16,9 +19,9 @@
     </button>
     <div class="collapse navbar-collapse" id="responsive">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
+        <li class="nav-item" v-if="!isLoggedIn">
           <router-link class="nav-link" :to="{ name: 'posts-index' }">
-            {{$t("modules.posts.index")}}
+            {{ $t("modules.posts.index") }}
           </router-link>
         </li>
         <li class="nav-item" v-if="!isLoggedIn">
@@ -26,11 +29,44 @@
             {{ $t("navbar.login") }}
           </router-link>
         </li>
-        <li class="nav-item" v-if="isLoggedIn && checkUserPermission(loggedUser, corePms.CREATE_POSTS)">
-          <router-link :to="{ name: 'posts-create' }" class="nav-link">
-            {{$t("modules.posts.create")}}
-          </router-link>
+
+        <li class="nav-item dropdown" v-if="isLoggedIn">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="posts"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            {{ $t("modules.posts.posts") }}
+          </a>
+          <div class="dropdown-menu" id="posts">
+            <router-link class="nav-link" :to="{ name: 'posts-index' }">
+              {{ $t("modules.posts.index") }}
+            </router-link>
+            <router-link class="nav-link" :to="{ name: 'private-posts-index' }">
+              {{ $t("modules.posts.private_index") }}
+            </router-link>
+            <hr class="w-75 my-1">
+            <router-link
+              :to="{ name: 'posts-create' }"
+              class="nav-link"
+              v-if="checkUserPermission(loggedUser, corePms.CREATE_POSTS)"
+            >
+              {{ $t("modules.posts.create") }}
+            </router-link>
+            <router-link
+              :to="{ name: 'user-posts' }"
+              class="nav-link"
+              v-if="checkUserPermission(loggedUser, corePms.CREATE_POSTS)"
+            >
+              {{ $t("modules.posts.my_posts") }}
+            </router-link>
+          </div>
         </li>
+
         <li
           class="nav-item dropdown"
           v-if="
@@ -101,7 +137,7 @@
               v-if="checkUserPermission(loggedUser, corePms.READ_ROLES)"
               class="nav-link"
             >
-            {{$t("navbar.roles.read")}}
+              {{ $t("navbar.roles.read") }}
             </router-link>
             <router-link class="nav-link" :to="{ name: 'roles-create' }">{{
               $t("navbar.roles.create")
