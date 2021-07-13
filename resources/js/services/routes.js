@@ -68,15 +68,6 @@ const routes = [
         }
     },
     {
-        path: '/users/view',
-        component: () => import (/* webpackChunkName: "users" */"../components/users/UserRead"),
-        name: 'users-read',
-        meta: {
-            auth: true,
-            permission: Permissions.core.READ_USERS
-        }
-    },
-    {
         path: '/users/create',
         component: () => import (/* webpackChunkName: "users" */"../components/users/UserCreate"),
         name: 'users-create',
