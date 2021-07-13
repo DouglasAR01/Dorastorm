@@ -1,8 +1,6 @@
 <template>
   <nav
-    class="navbar navbar-expand-lg navbar-light bg-light border-bottom"
-    :class="[{ 'navbar-expand-sm': !isLoggedIn }]"
-  >
+    class="navbar navbar-expand-sm navbar-light bg-light border-bottom">
     <router-link :to="{ name: 'home' }" class="navbar-brand">
       Dorastorm
     </router-link>
@@ -145,7 +143,7 @@
           </div>
         </li>
 
-        <li class="ml-3 nav-item" v-if="isLoggedIn">
+        <li class="ml-sm-3 nav-item" v-if="isLoggedIn">
           <router-link :to="{ name: 'me' }" class="nav-link">
             <span>
               <i class="fas fa-user"></i> {{userName}}
