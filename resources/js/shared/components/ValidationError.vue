@@ -16,25 +16,28 @@
 <script>
 export default {
   props: {
-    errors:{
+    errors: {
       type: Object,
-      required: false
+      required: false,
     },
     name: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     hasErrors() {
-      return (
+      return !!(
         this.errors &&
         this.errors[this.name] &&
         this.errors[this.name].length > 0
       );
     },
     errorFor() {
-      return this.errors[this.name];
+      if (this.hasErrors) {
+        return this.errors[this.name];
+      }
+      return [];
     },
   },
 };
