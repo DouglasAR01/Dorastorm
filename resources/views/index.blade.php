@@ -11,7 +11,7 @@
     </head>
     <body>
         <div id="app">
-            <Index></Index>
+            <the-index></the-index>
         </div>
     </body>
 </html>

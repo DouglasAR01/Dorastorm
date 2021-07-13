@@ -9,7 +9,7 @@ require('./bootstrap');
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Vuex from "vuex";
-import Index from "./Index";
+import TheIndex from "./TheIndex";
 
 // Dayjs common use set up
 import dayjs from "dayjs";
@@ -75,6 +75,6 @@ const app = new Vue({
     store,
     i18n,
     components: {
-        "index": Index
+        TheIndex
     }
 });
