@@ -3,7 +3,7 @@
     <h2>{{ $t("message.reset_password") }}</h2>
     <form @submit.prevent="submit">
       <div class="form-group">
-        <validation-error :errors="errors" name="email" v-slot="{ e }">
+        <validation-error :errors="errors" name="email" #default="{ e }">
           <label for="email">{{ $t("message.email") }}</label>
           <input
             type="email"
@@ -16,7 +16,7 @@
         </validation-error>
       </div>
       <div class="form-group">
-        <validation-error :errors="errors" name="password" v-slot="{ e }">
+        <validation-error :errors="errors" name="password" #default="{ e }">
           <label for="password">{{ $t("message.new_password") }}</label>
           <input
             type="password"
@@ -32,7 +32,7 @@
         <validation-error
           :errors="errors"
           name="password_confirmation"
-          v-slot="{ e }"
+          #default="{ e }"
         >
           <label for="cpassword">{{ $t("message.confirm_password") }}</label>
           <input

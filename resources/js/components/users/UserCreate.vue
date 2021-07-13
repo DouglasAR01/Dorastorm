@@ -2,7 +2,7 @@
   <div class="wp-light">
     <form @submit.prevent="submit">
       <div class="form-group">
-        <validation-error :errors="errors" name="name" v-slot="{ e }">
+        <validation-error :errors="errors" name="name" #default="{ e }">
           <label for="name">{{ $t("modules.users.name") }}</label>
           <input
             type="text"
@@ -15,7 +15,7 @@
         </validation-error>
       </div>
       <div class="form-group">
-        <validation-error :errors="errors" name="email" v-slot="{ e }">
+        <validation-error :errors="errors" name="email" #default="{ e }">
           <label for="email">{{ $t("message.email") }}</label>
           <input
             type="email"
@@ -28,7 +28,7 @@
         </validation-error>
       </div>
       <div class="form-group">
-        <validation-error :errors="errors" name="password" v-slot="{ e }">
+        <validation-error :errors="errors" name="password" #default="{ e }">
           <label for="password">{{ $t("message.password") }}</label>
           <input
             type="password"
@@ -44,7 +44,7 @@
         <validation-error
           :errors="errors"
           name="password_confirmation"
-          v-slot="{ e }"
+          #default="{ e }"
         >
           <label for="confirm_password">{{
             $t("message.confirm_password")
@@ -68,7 +68,7 @@
       </div>
       <div class="form-group">
         <div v-if="!loading">
-          <validation-error :errors="errors" name="role_id" v-slot="{ e }">
+          <validation-error :errors="errors" name="role_id" #default="{ e }">
             <label for="role_id">{{ $t("modules.users.role_select") }}</label>
             <select
               name="role_id"

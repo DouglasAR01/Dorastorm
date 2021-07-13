@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="submit">
     <div class="form-group">
-      <validation-error :errors="errors" name="current_password" v-slot="{ e }">
+      <validation-error :errors="errors" name="current_password" #default="{ e }">
         <label for="cpassword">{{ $t("message.current_password") }}</label>
         <input
           type="password"
@@ -14,7 +14,7 @@
       </validation-error>
     </div>
     <div class="form-group">
-      <validation-error :errors="errors" name="password" v-slot="{ e }">
+      <validation-error :errors="errors" name="password" #default="{ e }">
         <label for="password">{{ $t("message.new_password") }}</label>
         <input
           type="password"
@@ -30,7 +30,7 @@
       <validation-error
         :errors="errors"
         name="password_confirmation"
-        v-slot="{ e }"
+        #default="{ e }"
       >
         <label for="confirm_password">{{
           $t("message.confirm_password")

@@ -5,7 +5,7 @@
       <div class="card card-body">
         <form @submit.prevent="login">
           <div class="form-group">
-            <validation-error :errors="errors" name="email" v-slot="{ e }">
+            <validation-error :errors="errors" name="email" #default="{ e }">
               <label for="email">{{ $t("message.email") }}</label>
               <input
                 type="email"
@@ -18,7 +18,7 @@
             </validation-error>
           </div>
           <div class="form-group">
-            <validation-error :errors="errors" name="password" v-slot="{ e }">
+            <validation-error :errors="errors" name="password" #default="{ e }">
               <label for="password">{{ $t("message.password") }}</label>
               <input
                 type="password"

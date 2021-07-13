@@ -3,7 +3,7 @@
     <h2>{{ $t("message.forgot_password") }}</h2>
     <form @submit.prevent="submit">
       <div class="form-group">
-        <validation-error :errors="errors" name="email" v-slot="{ e }">
+        <validation-error :errors="errors" name="email" #default="{ e }">
           <label for="email">{{ $t("message.email") }}</label>
           <input
             type="email"

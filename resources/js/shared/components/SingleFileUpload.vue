@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="custom-file" v-if="isInitial || isFailed">
-      <validation-error :errors="uploadErrors" name="file" v-slot="{ e }">
+      <validation-error :errors="uploadErrors" name="file" #default="{ e }">
         <input
           type="file"
           name="file"

@@ -5,7 +5,7 @@
   <div class="wp-light" v-else>
     <form @submit.prevent="submit">
       <div class="form-group">
-        <validation-error :errors="errors" name="name" v-slot="{ e }">
+        <validation-error :errors="errors" name="name" #default="{ e }">
           <label for="name">{{ $t("modules.roles.name") }}</label>
           <input
             type="text"
@@ -18,7 +18,7 @@
         </validation-error>
       </div>
       <div class="form-group">
-        <validation-error :errors="errors" name="description" v-slot="{ e }">
+        <validation-error :errors="errors" name="description" #default="{ e }">
           <label for="description">{{ $t("modules.roles.description") }}</label>
           <textarea
             name="description"

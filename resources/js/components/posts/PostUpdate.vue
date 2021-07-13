@@ -9,7 +9,7 @@
         <div class="form-row">
           <div class="col-md-8">
             <div class="form-group">
-              <validation-error :errors="errors" name="title" v-slot="{ e }">
+              <validation-error :errors="errors" name="title" #default="{ e }">
                 <label for="title">{{ $t("modules.posts.title") }}</label>
                 <input
                   type="text"
@@ -64,7 +64,7 @@
               <validation-error
                 :errors="errors"
                 name="description"
-                v-slot="{ e }"
+                #default="{ e }"
               >
                 <label for="description">{{
                   $t("modules.posts.description")
@@ -106,7 +106,7 @@
         </div>
       </form>
       <div class="form-group">
-        <validation-error :errors="errors" name="content" v-slot="{ e }">
+        <validation-error :errors="errors" name="content" #default="{ e }">
           <label for="content">{{ $t("modules.posts.content") }}</label>
           <text-editor
             v-model="post.content"

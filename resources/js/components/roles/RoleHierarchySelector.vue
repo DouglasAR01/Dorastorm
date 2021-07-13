@@ -1,7 +1,7 @@
 <template>
   <div v-if="!loading">
     <h3>{{ $t("modules.roles.select_hierarchy") }}</h3>
-    <sortable-list lockAxis="y" v-bind:value="rolesAvailable" v-on:input="input($event)">
+    <sortable-list lockAxis="y" :value="rolesAvailable" @input="input($event)">
       <sortable-list-element v-for="(item, index) in rolesAvailable" :index="index" :key="index">
         <div class="d-flex justify-content-center align-items-center">
           <span class="badge badge-info badge-pill" v-if="item.selected"><i class="fas fa-asterisk"></i></span>
