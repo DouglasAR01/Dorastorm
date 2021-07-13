@@ -1,13 +1,13 @@
 <script>
-import ContentLoader from "./Loader";
+import AnimationLoader from "./AnimationLoader";
 
 export default {
-  components: { ContentLoader },
+  components: { AnimationLoader },
 };
 </script>
 
 <template>
-  <content-loader
+  <animation-loader
     :width="200"
     :height="142"
     :speed="2"
@@ -20,5 +20,5 @@ export default {
     <path
       d="M 74.688 99.666 h 82 v 12 h -82 z M 74.438 115.332 h 99 v 25 h -99 z"
     />
-  </content-loader>
+  </animation-loader>
 </template>

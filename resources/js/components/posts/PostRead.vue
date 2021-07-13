@@ -36,7 +36,7 @@
 <script>
 import { is404 } from "../../shared/utils/responses";
 import PostCreatorOptions from "./PostCreatorOptions";
-import PostLoading from "../../shared/components/loading/Post";
+import PostLoading from "../../shared/components/loading/PostAnimation";
 export default {
   components: {
     PostCreatorOptions,

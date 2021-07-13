@@ -29,7 +29,7 @@ import PostList from "./PostList";
 import SimplePagination from "../../shared/components/SimplePagination";
 import SearchInput from "../../shared/components/SearchInput";
 import IndexPaginationTraits from "../../shared/mixins/index-pagination-traits";
-import PostsLoading from "../../shared/components/loading/Posts";
+import PostsLoading from "../../shared/components/loading/PostsAnimation";
 export default {
   components: {
     PostList,

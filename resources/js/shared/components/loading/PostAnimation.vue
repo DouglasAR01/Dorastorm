@@ -1,5 +1,5 @@
 <template>
-  <content-loader
+  <animation-loader
     :width="400"
     :height="142"
     :speed="2"
@@ -30,12 +30,12 @@
     <rect x="0" y="525" rx="5" ry="5" width="65%" height="8" />
     <rect x="75%" y="525" rx="5" ry="5" width="30%" height="8" />
     <rect x="75%" y="550" rx="5" ry="5" width="10%" height="10" />
-  </content-loader>
+  </animation-loader>
 </template>
 <script>
-import ContentLoader from "./Loader";
+import AnimationLoader from "./AnimationLoader";
 
 export default {
-  components: { ContentLoader },
+  components: { AnimationLoader },
 };
 </script>
