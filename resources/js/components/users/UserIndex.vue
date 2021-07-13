@@ -62,7 +62,7 @@
               <tr :key="'co' + user.id">
                 <td colspan="5" class="hidden-column">
                   <div class="collapse" :id="'co' + user.id">
-                    <user-data-card :payload="user"></user-data-card>
+                    <user-data-card :user="user"></user-data-card>
                   </div>
                 </td>
               </tr>

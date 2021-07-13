@@ -8,7 +8,7 @@
     >
       <h6>{{ categorie }}</h6>
       <div class="custom-control custom-checkbox" v-for="permission in content" :key="permission" @change="selected">
-        <input type="checkbox" :id="permission" :value="permission" class="custom-control-input" v-model="selected_permissions">
+        <input type="checkbox" :id="permission" :value="permission" class="custom-control-input" v-model="selectedPermissions">
         <label :for="permission" class="custom-control-label">{{permission}}</label>
       </div>
     </div>
@@ -28,7 +28,7 @@ export default {
   data() {
     return {
       loading: false,
-      selected_permissions: this.preselectedPermissions.concat([]),
+      selectedPermissions: this.preselectedPermissions.concat([]),
     };
   },
   computed: {
@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     selected() {
-      this.$emit("selected", this.selected_permissions);
+      this.$emit("selected", this.selectedPermissions);
     },
   },
 };

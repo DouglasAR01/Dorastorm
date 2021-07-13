@@ -8,7 +8,7 @@
             type="text"
             name="name"
             class="form-control"
-            v-model="new_user.name"
+            v-model="newUser.name"
             :class="[{ 'is-invalid': e }]"
             required
           />
@@ -21,7 +21,7 @@
             type="email"
             name="email"
             class="form-control"
-            v-model="new_user.email"
+            v-model="newUser.email"
             :class="[{ 'is-invalid': e }]"
             required
           />
@@ -34,7 +34,7 @@
             type="password"
             name="password"
             class="form-control"
-            v-model="new_user.password"
+            v-model="newUser.password"
             :class="[{ 'is-invalid': e }]"
             required
           />
@@ -53,14 +53,14 @@
             type="password"
             name="confirm_password"
             class="form-control"
-            v-model="new_user.password_confirmation"
+            v-model="newUser.password_confirmation"
             :class="[{ 'is-invalid': e }]"
             required
           />
         </validation-error>
         <small
           v-if="
-            !fieldConfirmed(new_user.password, new_user.password_confirmation)
+            !fieldConfirmed(newUser.password, newUser.password_confirmation)
           "
           class="text-danger"
           >The passwords doesn't match</small
@@ -73,7 +73,7 @@
             <select
               name="role_id"
               class="custom-select form-control"
-              v-model="new_user.role_id"
+              v-model="newUser.role_id"
               :class="[{ 'is-invalid': e }]"
               required
             >
@@ -82,7 +82,7 @@
               </option>
               <option
                 :value="role.id"
-                v-for="role in available_roles"
+                v-for="role in availableRoles"
                 :key="role.id"
               >
                 {{ role.name }}
@@ -98,7 +98,7 @@
         :disabled="
           loading ||
           submitting ||
-          !fieldConfirmed(new_user.password, new_user.password_confirmation)
+          !fieldConfirmed(newUser.password, newUser.password_confirmation)
         "
       />
     </form>
@@ -120,21 +120,21 @@ export default {
       loading: false,
       submitting: false,
       errors: null,
-      available_roles: null,
-      new_user: {
+      availableRoles: null,
+      newUser: {
         name: null,
         email: null,
         password: null,
-        password_confirmation: null,
-        role_id: "",
+        password_confirmation: null, // DO NOT change this variable name
+        role_id: "", // DO NOT change this variable name
       },
     };
   },
   async created() {
-    this.form_initial_state = Obj.clone(this.new_user);
+    this.formInitialState = Obj.clone(this.newUser);
     try {
       this.loading = true;
-      this.available_roles = (await Auth.userRolesBelow()).data.data;
+      this.availableRoles = (await Auth.userRolesBelow()).data.data;
       this.loading = false;
     } catch (error) {
       this.$toasts.error(this.$t("error.fatal"));
@@ -144,10 +144,10 @@ export default {
     async submit() {
       this.submitting = true;
       try {
-        let user = (await axios.post("/api/users", this.new_user)).data;
+        let user = (await axios.post("/api/users", this.newUser)).data;
         this.submitting = false;
         this.$toasts.success(this.$t("modules.users.created"));
-        this.new_user = Obj.clone(this.form_initial_state);
+        this.newUser = Obj.clone(this.formInitialState);
         // Send to UserView
       } catch (error) {
         if (is422(error)) {

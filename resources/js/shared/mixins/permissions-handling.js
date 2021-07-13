@@ -5,8 +5,8 @@ export default {
         checkUserPermission(user, permission) {
             return Permissions.checkUserPermission(user, permission);
         },
-        checkUserAnyPermission(user, permissions_array) {
-            return Permissions.checkUserAnyPermission(user, permissions_array);
+        checkUserAnyPermission(user, permissionsArray) {
+            return Permissions.checkUserAnyPermission(user, permissionsArray);
         }
     },
     computed: {

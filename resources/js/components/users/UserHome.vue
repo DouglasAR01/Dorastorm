@@ -3,7 +3,7 @@
     <div v-if="loading">{{ $t("message.loading") }}</div>
     <div v-else>
       <div class="row mb-2">
-        <user-data-card :payload="user"/>
+        <user-data-card :user="user"/>
       </div>
     </div>
   </div>

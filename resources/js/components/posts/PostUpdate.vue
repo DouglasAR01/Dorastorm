@@ -52,7 +52,7 @@
                   name="upload"
                   endpoint="/api/upload/image"
                   disk="public"
-                  v-model="temp_path"
+                  v-model="tempPath"
                 ></single-file-upload>
               </div>
             </div>
@@ -149,7 +149,7 @@ export default {
       submitting: false,
       post: null,
       errors: null,
-      temp_path: null,
+      tempPath: null,
     };
   },
   async created() {
@@ -186,9 +186,9 @@ export default {
       if (this.post.banner) {
         return this.post.banner;
       }
-      if (this.temp_path) {
-        this.post.banner = this.temp_path;
-        return "/storage/" + this.temp_path;
+      if (this.tempPath) {
+        this.post.banner = this.tempPath;
+        return "/storage/" + this.tempPath;
       }
       return null;
     },

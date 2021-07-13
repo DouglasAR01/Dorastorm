@@ -13,7 +13,7 @@
                 type="text"
                 name="name"
                 class="form-control"
-                v-model="updated_user.name"
+                v-model="updatedUser.name"
                 :class="[{ 'is-invalid': e }]"
                 required
               />
@@ -26,7 +26,7 @@
                 type="email"
                 name="email"
                 class="form-control"
-                v-model="updated_user.email"
+                v-model="updatedUser.email"
                 :class="[{ 'is-invalid': e }]"
                 required
               />
@@ -36,7 +36,7 @@
             class="form-group"
             v-if="
               checkUserPermission(loggedUser, corePms.UPDATE_USERS) &&
-              available_roles.length > 0
+              availableRoles.length > 0
             "
           >
             <validation-error :errors="errors" name="role_id" v-slot="{ e }">
@@ -44,7 +44,7 @@
               <select
                 name="role_id"
                 class="custom-select form-control"
-                v-model="updated_user.role.id"
+                v-model="updatedUser.role.id"
                 :class="[{ 'is-invalid': e }]"
                 required
               >
@@ -53,7 +53,7 @@
                 </option>
                 <option
                   :value="role.id"
-                  v-for="role in available_roles"
+                  v-for="role in availableRoles"
                   :key="role.id"
                 >
                   {{ role.name }}
@@ -72,13 +72,13 @@
         <button
           class="btn btn-warning"
           @click.prevent="changePassword"
-          :class="[{ 'd-none': changing_password }]"
+          :class="[{ 'd-none': changingPassword }]"
         >
           {{ $t("modules.users.change_password") }}
         </button>
-        <div v-if="changing_password">
+        <div v-if="changingPassword">
           <user-password-update
-            :user_id="user_id"
+            :user-id="userId"
             @cancel="changePassword"
           ></user-password-update>
         </div>
@@ -106,23 +106,23 @@ export default {
       errors: null,
       success: true,
       submiting: false,
-      changing_password: false,
-      available_roles: null,
-      updated_user: null,
-      user_id: null,
+      changingPassword: false,
+      availableRoles: null,
+      updatedUser: null,
+      userId: null,
     };
   },
   async created() {
     this.loading = true;
-    this.user_id = this.$store.getters.getUserID;
-    this.updated_user = Obj.clone(this.$store.state.user);
+    this.userId = this.$store.getters.getUserID;
+    this.updatedUser = Obj.clone(this.$store.state.user);
     if ("userId" in this.$route.params) {
-      this.user_id = this.$route.params.userId;
+      this.userId = this.$route.params.userId;
     }
-    if (this.user_id != this.updated_user.id) {
+    if (this.userId != this.updatedUser.id) {
       try {
-        this.updated_user = (
-          await axios.get("/api/users/" + this.user_id)
+        this.updatedUser = (
+          await axios.get("/api/users/" + this.userId)
         ).data.data;
       } catch (error) {
         this.success = false;
@@ -132,20 +132,20 @@ export default {
       }
     }
     // Improve
-    this.available_roles = (await Auth.userRolesBelow()).data.data;
+    this.availableRoles = (await Auth.userRolesBelow()).data.data;
     this.loading = false;
   },
   methods: {
     changePassword() {
-      this.changing_password = !this.changing_password;
+      this.changingPassword = !this.changingPassword;
     },
     async submit() {
       this.submiting = true;
-      this.updated_user.role_id = this.updated_user.role.id;
+      this.updatedUser.role_id = this.updatedUser.role.id;
       try {
-        await axios.patch("/api/users/" + this.user_id, this.updated_user);
+        await axios.patch("/api/users/" + this.userId, this.updatedUser);
         this.$toasts.success(this.$t("message.data_changed"));
-        if (this.user_id === this.$store.getters.getUserID) {
+        if (this.userId === this.$store.getters.getUserID) {
           let user = await Auth.loadUser();
           this.$store.commit("setUser", user);
         }

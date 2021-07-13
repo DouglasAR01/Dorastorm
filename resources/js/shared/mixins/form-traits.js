@@ -1,7 +1,7 @@
 export default {
     data() {
         return {
-            form_initial_state: null
+            formInitialState: null
         };
     },
     methods: {

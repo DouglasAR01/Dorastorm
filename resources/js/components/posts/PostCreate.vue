@@ -11,7 +11,7 @@
                 type="text"
                 name="title"
                 class="form-control"
-                v-model="new_post.title"
+                v-model="newPost.title"
                 :class="[{ 'is-invalid': e }]"
               />
             </validation-error>
@@ -24,7 +24,7 @@
               name="upload"
               endpoint="/api/upload/image"
               disk="public"
-              v-model="new_post.banner"
+              v-model="newPost.banner"
             ></single-file-upload>
           </div>
         </div>
@@ -43,7 +43,7 @@
               <textarea
                 name="description"
                 class="form-control"
-                v-model="new_post.description"
+                v-model="newPost.description"
                 :class="[{ 'is-invalid': e }]"
               ></textarea>
             </validation-error>
@@ -56,7 +56,7 @@
               type="checkbox"
               class="custom-control-input"
               id="visible"
-              v-model="new_post.visible"
+              v-model="newPost.visible"
             />
             <label class="custom-control-label" for="visible">{{
               $t("modules.posts.visible")
@@ -67,7 +67,7 @@
               type="checkbox"
               class="custom-control-input"
               id="private"
-              v-model="new_post.private"
+              v-model="newPost.private"
             />
             <label class="custom-control-label" for="private">{{
               $t("modules.posts.private")
@@ -80,7 +80,7 @@
       <validation-error :errors="errors" name="content" v-slot="{ e }">
         <label for="content">{{ $t("modules.posts.content") }}</label>
         <text-editor
-          v-model="new_post.content"
+          v-model="newPost.content"
           :class="[{ 'is-invalid': e }]"
         ></text-editor>
       </validation-error>
@@ -109,7 +109,7 @@ export default {
     return {
       submitting: false,
       errors: null,
-      new_post: {
+      newPost: {
         title: null,
         description: null,
         content: null,
@@ -123,7 +123,7 @@ export default {
     async submit() {
       this.submitting = true;
       try {
-        const post = (await axios.post("/api/posts", this.new_post)).data.data;
+        const post = (await axios.post("/api/posts", this.newPost)).data.data;
         this.$toasts.success(this.$t("modules.posts.created"));
         this.$router.push({
           name: "posts-read",

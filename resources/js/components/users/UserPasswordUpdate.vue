@@ -74,7 +74,7 @@ export default {
     ValidationError,
   },
   props: {
-    user_id: null,
+    userId: null,
   },
   data() {
     return {
@@ -92,10 +92,10 @@ export default {
       this.submitting = true;
       try {
         await axios.patch(
-          "/api/users/" + this.user_id + "/password",
+          "/api/users/" + this.userId + "/password",
           this.payload
         );
-        this.$toasts.success(this.$t("modules.users.change_password"));
+        this.$toasts.success(this.$t("modules.users.password_changed"));
         this.$emit("cancel");
       } catch (error) {
         if (Responses.is404(error)) {

@@ -8,7 +8,7 @@
             type="text"
             name="name"
             class="form-control"
-            v-model="new_role.name"
+            v-model="newRole.name"
             :class="[{ 'is-invalid': e }]"
             required
           />
@@ -20,7 +20,7 @@
           <textarea
             name="description"
             class="form-control"
-            v-model="new_role.description"
+            v-model="newRole.description"
             :class="[{ 'is-invalid': e }]"
             required
           ></textarea>
@@ -34,7 +34,7 @@
         </div>
         <div class="col-md-4">
           <role-hierarchy-selector
-            v-model="new_role.hierarchy"
+            v-model="newRole.hierarchy"
           ></role-hierarchy-selector>
         </div>
       </div>
@@ -62,7 +62,7 @@ export default {
     return {
       submitting: false,
       errors: null,
-      new_role: {
+      newRole: {
         name: null,
         description: null,
         hierarchy: null,
@@ -74,7 +74,7 @@ export default {
     async submit() {
       this.submitting = true;
       try {
-        await axios.post("/api/roles", this.new_role);
+        await axios.post("/api/roles", this.newRole);
         this.$toasts.success(this.$t("modules.roles.created"));
         this.$router.push({
           name: "roles-index",
@@ -91,7 +91,7 @@ export default {
       payload.forEach((element) => {
         permissions[element] = 1;
       });
-      this.new_role.permissions = permissions;
+      this.newRole.permissions = permissions;
     },
   },
 };

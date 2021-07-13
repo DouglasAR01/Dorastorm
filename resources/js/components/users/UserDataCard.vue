@@ -13,7 +13,7 @@
           </div>
           <div class="col-sm-8">
             <router-link
-              :to="{ name: 'users-update', params: { userId: payload.id } }"
+              :to="{ name: 'users-update', params: { userId: user.id } }"
             >
               <span class="user-data-cog">
                 <i class="fas fa-cog"></i>
@@ -21,20 +21,20 @@
             </router-link>
             <div class="card-body">
               <h3 class="card-title">
-                {{ payload.name }}
+                {{ user.name }}
               </h3>
               <p class="card-text">
-                {{ payload.email }}
+                {{ user.email }}
               </p>
               <p class="card-text">
                 <strong>{{ $t("modules.users.role") }}</strong>
                 <span>
-                  {{ payload.role.name }}
+                  {{ user.role.name }}
                 </span>
               </p>
               <p class="card-text text-muted">
                 {{ $t("message.member_since") }}
-                {{ payload.created_at | fromNow }}
+                {{ user.created_at | fromNow }}
               </p>
             </div>
           </div>
@@ -47,7 +47,10 @@
 <script>
 export default {
   props: {
-    payload: Object,
+    user: {
+      type: Object,
+      required: true
+    }
   },
 };
 </script>

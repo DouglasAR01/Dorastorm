@@ -69,7 +69,7 @@ export default {
       payload: {
         email: null,
         password: null,
-        password_confirmation: null,
+        password_confirmation: null, // DO NOT change this variable name. That's how Laravel looks for it
         token: this.$route.query.token,
       },
     };

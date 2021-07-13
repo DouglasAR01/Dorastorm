@@ -32,7 +32,7 @@
       <div class="row">
         <div class="col-md-8">
           <role-permission-selector
-            :preselected-permissions="initial_permissions"
+            :preselected-permissions="initialPermissions"
             @selected="updateSelected"
           ></role-permission-selector>
         </div>
@@ -71,7 +71,7 @@ export default {
       loading: false,
       submitting: false,
       role: null,
-      initial_permissions: null,
+      initialPermissions: null,
     };
   },
 
@@ -84,7 +84,7 @@ export default {
     const role_id = this.$route.params.roleId;
     try {
       this.role = (await axios.get("/api/roles/" + role_id)).data.data;
-      this.initial_permissions = this.role.permissions;
+      this.initialPermissions = this.role.permissions;
     } catch (error) {
       if (is404(error)) {
         this.$toasts.error(this.$t("error.404.specific.role"));
@@ -102,7 +102,7 @@ export default {
       this.role.permissions.forEach((element) => {
         permissions[element] = 1;
       });
-      this.initial_permissions.forEach((element) => {
+      this.initialPermissions.forEach((element) => {
         if (!(element in permissions)) {
           permissions[element] = 0;
         }
