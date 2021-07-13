@@ -1,4 +1,4 @@
-export default {
+var indexPaginationTraits = {
     props: {
         aditionalParams: {
             required: false,
@@ -17,10 +17,10 @@ export default {
         };
     },
     beforeMount() {
-        this._initializeComponent();
+        this.$_indexPaginationTraits_initializeComponent();
     },
-    methods: {        
-        _initializeParams() {
+    methods: {
+        $_indexPaginationTraits_initializeParams() {
             this.params = {
                 q: null,
             };
@@ -30,8 +30,8 @@ export default {
                 );
             }
         },
-        _initializeComponent() {
-            this._initializeParams();
+        $_indexPaginationTraits_initializeComponent() {
+            this.$_indexPaginationTraits_initializeParams();
             this.navigate(1);
         },
         async navigate(page) {
@@ -57,7 +57,8 @@ export default {
     },
     watch: {
         aditionalParams: function () {
-            this._initializeComponent();
+            this.$_indexPaginationTraits_initializeComponent();
         }
     }
 }
+export default indexPaginationTraits;

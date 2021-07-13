@@ -1,7 +1,7 @@
 <template>
   <base-modal ref="base" overlay-classes="modal-image-overlay" dialog-classes="m-auto" content-classes="modal-image-dialog">
     <template v-slot:top-right-close>
-      <span class="modal-image-close" @click="hide()">&times;</span>
+      <span class="modal-image-close" @click="$_ImageModal_hide()">&times;</span>
     </template>
     <div class="modal-image-content">
       <img :src="src" class="modal-image">
@@ -32,7 +32,7 @@ export default {
       }      
       this.$refs.base.open();
     },
-    hide(){
+    $_ImageModal_hide(){
       this.$refs.base.close();
     }
   }

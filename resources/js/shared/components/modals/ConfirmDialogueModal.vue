@@ -2,7 +2,7 @@
   <base-modal ref="base">
     <div class="modal-header">
       <h5 class="modal-title">{{ title }}</h5>
-      <button type="button" class="close" aria-label="Close" @click="_cancel">
+      <button type="button" class="close" aria-label="Close" @click="$_ConfirmDialogueModal_cancel">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -10,10 +10,10 @@
       <p>{{ message }}</p>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-outline-secondary" @click.prevent="_cancel">
+      <button class="btn btn-outline-secondary" @click.prevent="$_ConfirmDialogueModal_cancel">
         {{ cancelButton }}
       </button>
-      <button :class="`btn ${okButtonColor}`" @click.prevent="_confirm">
+      <button :class="`btn ${okButtonColor}`" @click.prevent="$_ConfirmDialogueModal_confirm">
         {{ okButton }}
       </button>
     </div>
@@ -62,12 +62,12 @@ export default {
       });
     },
 
-    _confirm() {
+    $_ConfirmDialogueModal_confirm() {
       this.$refs.base.close();
       this.resolvePromise(true);
     },
 
-    _cancel() {
+    $_ConfirmDialogueModal_cancel() {
       this.$refs.base.close();
       this.resolvePromise(false);
       // Or you can throw an error
