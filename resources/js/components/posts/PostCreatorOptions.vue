@@ -29,7 +29,16 @@ import PermissionsHandling from "../../shared/mixins/permissions-handling";
 import ConfirmDialogueModal from "../../shared/components/modals/ConfirmDialogueModal";
 export default {
   mixins: [PermissionsHandling],
-  props: ["authorId", "postId"],
+  props: {
+    authorId: {
+      type: Number,
+      required: true
+    },
+    postId: {
+      type: Number,
+      required: true
+    }
+  },
   components: {
     ConfirmDialogueModal
   },

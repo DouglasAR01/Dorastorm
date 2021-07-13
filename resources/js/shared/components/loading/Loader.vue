@@ -9,7 +9,6 @@ export default {
   components: {
     ContentLoader,
   },
-  props: ["width", "height", "speed"],
   props: {
     width: {
       type: Number,

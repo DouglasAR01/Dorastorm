@@ -8,7 +8,6 @@
 </template>
 <script>
 export default {
-  props: ["src", "maxHeight"],
   props: {
     src: {
       type: String,

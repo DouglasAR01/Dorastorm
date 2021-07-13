@@ -15,7 +15,16 @@
 
 <script>
 export default {
-  props: ["errors", "name"],
+  props: {
+    errors:{
+      type: Object,
+      required: false
+    },
+    name: {
+      type: String,
+      required: true
+    }
+  },
   computed: {
     hasErrors() {
       return (
