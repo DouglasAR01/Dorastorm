@@ -3,7 +3,7 @@ import Auth, * as AuthExtra from "./auth";
 import Store from "./store";
 import Permissions from "./role-permissions";
 // Components
-import Home from "../components/Home";
+import TheHome from "../components/TheHome";
 import Login from "../components/auth/Login";
 // Static (not splitted) components
 import ForgotPassword from "../components/auth/ForgotPassword";
@@ -14,7 +14,7 @@ import Error403 from "../components/errors/Error403";
 const routes = [
     {
         path: "/",
-        component: Home,
+        component: TheHome,
         name: "home",
     },
     {

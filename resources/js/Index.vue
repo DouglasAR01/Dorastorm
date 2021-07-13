@@ -1,16 +1,16 @@
 <template>
   <div class="d-flex flex-column min-vh-100">
-    <navbar></navbar>
+    <the-navbar></the-navbar>
     <div class="container mt-4 mb-4 pr-4 pl-4">
       <router-view></router-view>
     </div>
-    <footer-component></footer-component>
+    <the-footer></the-footer>
   </div>
 </template>
 <script>
-import Navbar from "./components/Navbar";
-import FooterComponent from "./components/Footer";
+import TheNavbar from "./components/TheNavbar";
+import TheFooter from "./components/TheFooter";
 export default {
-  components: { Navbar, FooterComponent },
+  components: { TheNavbar, TheFooter },
 };
 </script>
