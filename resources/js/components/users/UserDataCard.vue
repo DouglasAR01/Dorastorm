@@ -14,6 +14,7 @@
           <div class="col-sm-8">
             <router-link
               :to="{ name: 'users-update', params: { userId: user.id } }"
+              v-if="allowEdit"
             >
               <span class="user-data-cog">
                 <i class="fas fa-cog"></i>
@@ -49,8 +50,13 @@ export default {
   props: {
     user: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
+    allowEdit: {
+      type: Boolean,
+      required: false,
+      default: () => true,
+    },
   },
 };
 </script>

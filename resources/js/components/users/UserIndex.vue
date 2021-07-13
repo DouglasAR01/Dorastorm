@@ -62,7 +62,10 @@
               <tr :key="'co' + user.id">
                 <td colspan="5" class="hidden-column">
                   <div class="collapse" :id="'co' + user.id">
-                    <user-data-card :user="user"></user-data-card>
+                    <user-data-card
+                      :user="user"
+                      :allow-edit="userCanDelete && userCanTouchThis(user)"
+                    ></user-data-card>
                   </div>
                 </td>
               </tr>
@@ -70,7 +73,11 @@
           </tbody>
         </table>
       </div>
-      <simple-pagination :meta="meta" :links="links" @navigating="navigate"></simple-pagination>
+      <simple-pagination
+        :meta="meta"
+        :links="links"
+        @navigating="navigate"
+      ></simple-pagination>
       <confirm-dialogue-modal ref="confirmDialogue"></confirm-dialogue-modal>
     </div>
   </div>
@@ -97,7 +104,7 @@ export default {
   created() {
     this.ep = "/api/users";
     this.params = {
-      q: null
+      q: null,
     };
   },
   methods: {
@@ -106,7 +113,7 @@ export default {
         title: this.$t("modules.users.delete"),
         message: this.$t("modules.users.delete_warning"),
         okButton: this.$t("message.delete"),
-        okButtonColor: "btn-danger"
+        okButtonColor: "btn-danger",
       });
       // If you throw an error, the method will terminate here unless you surround it wil try/catch
       if (ok) {
