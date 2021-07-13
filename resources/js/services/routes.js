@@ -4,7 +4,7 @@ import Store from "./store";
 import Permissions from "./role-permissions";
 // Components
 import TheHome from "../components/TheHome";
-import Login from "../components/auth/Login";
+import TheLogin from "../components/auth/TheLogin";
 // Static (not splitted) components
 import ForgotPassword from "../components/auth/ForgotPassword";
 import PostRead from "../components/posts/PostRead";
@@ -35,7 +35,7 @@ const routes = [
     },
     {
         path: '/login',
-        component: Login,
+        component: TheLogin,
         name: 'login',
         meta: {
             guest: true
