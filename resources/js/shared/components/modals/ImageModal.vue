@@ -38,7 +38,7 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
 .modal-image-content {
   width: 80%;
   margin: auto;
