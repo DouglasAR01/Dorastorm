@@ -32,40 +32,51 @@
               />
             </validation-error>
           </div>
-          <div
-            class="form-group"
-            v-if="
-              checkUserPermission(loggedUser, corePms.UPDATE_USERS) &&
-              availableRoles.length > 0
-            "
-          >
-            <validation-error :errors="errors" name="role_id" #default="{ e }">
-              <label for="role_id">{{ $t("modules.users.role_select") }}</label>
-              <select
+          <div v-if="loadingAvailableRoles" key="loadingRoles">
+            {{ $t("message.loading") }}
+          </div>
+          <div v-else key="loadingRoles">
+            <div
+              class="form-group"
+              v-if="
+                checkUserPermission(loggedUser, corePms.UPDATE_USERS) &&
+                availableRoles.length > 0
+              "
+            >
+              <validation-error
+                :errors="errors"
                 name="role_id"
-                class="custom-select form-control"
-                v-model="updatedUser.role.id"
-                :class="[{ 'is-invalid': e }]"
-                required
+                #default="{ e }"
               >
-                <option disabled value="">
-                  {{ $t("modules.users.role_default") }}
-                </option>
-                <option
-                  :value="role.id"
-                  v-for="role in availableRoles"
-                  :key="role.id"
+                <label for="role_id">{{
+                  $t("modules.users.role_select")
+                }}</label>
+                <select
+                  name="role_id"
+                  class="custom-select form-control"
+                  v-model="updatedUser.role.id"
+                  :class="[{ 'is-invalid': e }]"
+                  required
                 >
-                  {{ role.name }}
-                </option>
-              </select>
-            </validation-error>
+                  <option disabled value="">
+                    {{ $t("modules.users.role_default") }}
+                  </option>
+                  <option
+                    :value="role.id"
+                    v-for="role in availableRoles"
+                    :key="role.id"
+                  >
+                    {{ role.name }}
+                  </option>
+                </select>
+              </validation-error>
+            </div>
           </div>
           <input
             type="submit"
             :value="$t('modules.users.update')"
             class="btn btn-primary btn-block"
-            :disabled="submiting"
+            :disabled="submiting || loadingAvailableRoles"
           />
         </form>
         <hr />
@@ -100,26 +111,43 @@ export default {
     ValidationError,
     UserPasswordUpdate,
   },
+  props: {
+    userId: {
+      type: [Number, String],
+      required: true,
+    },
+  },
   data() {
     return {
       loading: false,
+      loadingAvailableRoles: false,
       errors: null,
       success: true,
       submiting: false,
       changingPassword: false,
       availableRoles: null,
       updatedUser: null,
-      userId: null,
+      updatingOtherUser: false,
     };
   },
-  async created() {
-    this.loading = true;
-    this.userId = this.$store.getters.getUserID;
-    this.updatedUser = Obj.clone(this.$store.state.user);
-    if ("userId" in this.$route.params) {
-      this.userId = this.$route.params.userId;
+  created() {
+    // If the logged user is trying to modify other user data
+    // we need to check if he have the permission to do it
+    if (this.loggedUser.id != this.userId) {
+      this.updatingOtherUser = true;
     }
-    if (this.userId != this.updatedUser.id) {
+    if (
+      this.updatingOtherUser &&
+      !this.checkUserPermission(this.loggedUser, this.corePms.UPDATE_USERS)
+    ) {
+      this.$router.push({
+        name: "403",
+      });
+    }
+  },
+  async beforeMount() {
+    this.loading = true;
+    if (this.updatingOtherUser) {
       try {
         this.updatedUser = (
           await axios.get("/api/users/" + this.userId)
@@ -130,10 +158,18 @@ export default {
           this.$toasts.error($t("error.404.specific.user"));
         }
       }
+    } else {
+      this.updatedUser = Obj.clone(this.loggedUser);
     }
-    // Improve
-    this.availableRoles = (await Auth.userRolesBelow()).data.data;
     this.loading = false;
+    // Improve
+    this.loadingAvailableRoles = true;
+    try {
+      this.availableRoles = (await Auth.userRolesBelow()).data.data;
+      this.loadingAvailableRoles = false;
+    } catch (error) {
+      this.$toasts.error($t("error.fatal"));
+    }        
   },
   methods: {
     changePassword() {

@@ -80,6 +80,7 @@ const routes = [
         path: '/users/update/:userId',
         component: () => import (/* webpackChunkName: "users" */"../components/users/UserUpdate"),
         name: 'users-update',
+        props: true,
         meta: {
             auth: true
         }
