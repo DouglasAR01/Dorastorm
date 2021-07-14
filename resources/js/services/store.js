@@ -25,26 +25,32 @@ export default {
             // Here comes all the commits that have to be made everytime the app initialize
 
             // LoggedIn logic should be the last in the execution list
-            let isLoggedIn = auth.isLoggedIn();
-            if (isLoggedIn) {
-                if (auth.isUserHere()) {
-                    context.commit('setLoggedIn', isLoggedIn);
-                    context.commit('setUser', auth.loadSavedUser());
-                } else {
-                    context.dispatch('logout');
-                }
+            let isApparentlyLoggedIn = auth.isApparentlyLoggedIn();
+            if (!isApparentlyLoggedIn) {
+                context.dispatch('logout');
+                return;
             }
+            if (!auth.isLoggedIn()) {
+                context.dispatch('logout');
+                return;
+            }
+            if (!auth.isUserHere()) {
+                context.dispatch('logout');
+                return;
+            }
+            context.commit('setLoggedIn', isApparentlyLoggedIn);
+            context.commit('setUser', auth.loadSavedUser());
         },
     },
     getters: {
         getUserID: state => {
-            return (state.user)? state.user.id : null;
+            return (state.user) ? state.user.id : null;
         },
         getUserHierarchy: state => {
-            return (state.user)? state.user.role.hierarchy : null;
+            return (state.user) ? state.user.role.hierarchy : null;
         },
         getUserPermissions: state => {
-            return (state.user)? state.user.role.permissions: null;
+            return (state.user) ? state.user.role.permissions : null;
         }
     }
 }

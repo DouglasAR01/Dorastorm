@@ -193,7 +193,7 @@ router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.auth)) {
         // this route requires auth, check if logged in
         // if not, redirect to login page.
-        if (AuthExtra.isLoggedIn() && AuthExtra.isUserHere()) {
+        if (AuthExtra.isApparentlyLoggedIn() && AuthExtra.isUserHere()) {
             // Check if the route have any permission tag, if not, continue.
             if (to.meta.permission) {
                 if (Permissions.checkUserPermission(Store.state.user, to.meta.permission)) {
@@ -224,7 +224,7 @@ router.beforeEach((to, from, next) => {
     } else if (to.matched.some(record => record.meta.guest)) {
         // this route requires to be a guest, check if user is logged in
         // if not, continue.
-        if (AuthExtra.isLoggedIn()) {
+        if (AuthExtra.isApparentlyLoggedIn()) {
             next({
                 name: 'me',
                 query: { redirect: to.fullPath }

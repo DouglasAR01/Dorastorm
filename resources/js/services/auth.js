@@ -1,5 +1,12 @@
-export const isLoggedIn = function () {
+export const isApparentlyLoggedIn = function () {
     return !!localStorage.getItem('happy');
+}
+export const isLoggedIn = async function (){
+    try {
+        return (await axios.get("/api/session")).data.result;
+    } catch (error) {
+        return false;
+    }    
 }
 export const isUserHere = function () {
     return !!localStorage.getItem('user');

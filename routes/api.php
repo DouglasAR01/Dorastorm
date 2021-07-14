@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\PostController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -17,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/posts','PostController@index')->name('posts.index');
 Route::get('/posts/{post_slug}','PostController@show')->name('posts.show');
+Route::get('/session', 'SessionController@check')->name('session.check');
 //Route::get('/test/testd/{nombre}', 'FileController@testDownload');
 
 Route::middleware('auth:sanctum')->group(function () {
