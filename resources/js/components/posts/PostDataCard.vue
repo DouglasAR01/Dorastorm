@@ -3,11 +3,11 @@
     <div class="row no-gutters">
       <div class="col-md-4 p-2">
         <router-link :to="postLink">
-          <img :src="post.banner" alt="" class="card-img" v-if="post.banner" />
+          <img :src="post.banner" alt="" class="card-img post-card-img" v-if="post.banner" />
           <img
-            src="https://socialsciences.uottawa.ca/human-motivation/sites/socialsciences.uottawa.ca.human-motivation/files/generic_female_0.jpg"
+            :src="require('../../../assets/default-image.svg')"
             alt=""
-            class="card-img"
+            class="card-img post-card-img"
             v-else
           />
         </router-link>
@@ -75,3 +75,15 @@ export default {
   },
 };
 </script>
+<style scoped>
+.post-card-img {
+  height: 20rem;
+  object-fit: cover;
+}
+@media only screen and (max-width: 768px) {
+  .post-card-img {
+    max-height: 15rem;
+    height: auto;
+  }  
+}
+</style>
