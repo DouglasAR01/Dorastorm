@@ -37,9 +37,20 @@ export default {
     SearchInput,
     PostsLoading,
   },
+  metaInfo() {
+    return {
+      meta: [
+        {
+          name: "description",
+          content: this.$t("modules.posts.recent"),
+        },
+      ],
+      title: this.$t("modules.posts.recent"),
+    };
+  },
   mixins: [IndexPaginationTraits],
   created() {
     this.ep = "/api/posts";
-  }
+  },
 };
 </script>

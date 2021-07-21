@@ -9,6 +9,7 @@ require('./bootstrap');
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Vuex from "vuex";
+import VueMeta from "vue-meta";
 import TheIndex from "./TheIndex";
 
 // Dayjs common use set up
@@ -41,6 +42,7 @@ Vue.use(VueMyToast, {
         padding: '1rem'
     }
 });
+Vue.use(VueMeta);
 
 Vue.filter('fromNow', value => dayjs(value).fromNow());
 Vue.filter('humanDate', value => dayjs(value).format('YYYY/MM/DD'));
@@ -76,5 +78,9 @@ const app = new Vue({
     i18n,
     components: {
         TheIndex
+    },
+    metaInfo: {
+        title: "Default title",
+        titleTemplate: "%s | Dorastorm"
     }
 });

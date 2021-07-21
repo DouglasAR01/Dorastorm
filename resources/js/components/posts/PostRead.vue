@@ -42,11 +42,36 @@ export default {
     PostCreatorOptions,
     PostLoading,
   },
+  metaInfo(){
+    return {
+      meta: [
+        {
+          name: "description",
+          content: this.metaDescription,
+        },
+      ],
+      title: this.metaTitle,
+    }
+  },
   data() {
     return {
       loading: false,
       post: null,
     };
+  },
+  computed: {
+    metaTitle() {
+      if (this.post){
+        return this.post.title;
+      }
+      return this.$t("message.loading");
+    },
+    metaDescription() {
+      if (this.post){
+        return this.post.description;
+      }
+      return this.$t("message.loading");
+    }
   },
   async created() {
     this.loading = true;

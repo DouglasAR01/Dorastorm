@@ -7,3 +7,12 @@
     <p>In this page you should place your landingpage, pitch elevator, etc.</p>
   </div>
 </template>
+<script>
+export default {
+  metaInfo: {
+    meta: [
+      {name:"description", content:"Landing page description"}
+    ]
+  }
+}
+</script>
