@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/posts','PostController@index')->name('posts.index');
 Route::get('/posts/{post_slug}','PostController@show')->name('posts.show');
 Route::get('/session', 'SessionController@check')->name('session.check');
+Route::resource('/quotes', 'QuoteController')->only(['index', 'show', 'store', 'destroy']);
 //Route::get('/test/testd/{nombre}', 'FileController@testDownload');
 
 Route::middleware('auth:sanctum')->group(function () {

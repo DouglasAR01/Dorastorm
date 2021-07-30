@@ -52,6 +52,10 @@ return [
             'read_roles',
             'update_roles',
             'delete_roles',
+
+            //Quotes related
+            'read_quotes',
+            'delete_quotes'
         ],
         
         'extended' => [
