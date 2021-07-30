@@ -15,29 +15,20 @@ class RoleTableSeeder extends Seeder
     public function run()
     {
         Role::unguard();
-        
-        Role::create([
+        $baseData = [
             'name' => 'ADMIN',
             'description' => 'Administrator',
             'hierarchy' => 0,
+        ];
 
-            'create_users' => true,
-            'read_users' => true,
-            'update_users' => true,
-            'delete_users' => true,
+        $permissions = array_merge(config('roles.permissions.core'), config('roles.permissions.extended'));
+        $extendedData = [];
+        foreach ($permissions as $permission){
+            $extendedData[$permission] = true;
+        }
+        $baseData = array_merge($baseData, $extendedData);
 
-            'create_posts' => true,
-            'update_elses_posts' => true,
-            'delete_elses_posts' => true,
-
-            'update_elses_comments' => true,
-            'delete_elses_comments' => true,
-
-            'create_roles' => true,
-            'read_roles' => true,
-            'update_roles' => true,
-            'delete_roles' => true,
-        ]);
+        Role::create($baseData);
         Role::create([
             'name' => 'EDITOR',
             'hierarchy' => 1,
