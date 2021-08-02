@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\QuoteReceived;
 use App\Models\Quote;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class QuoteController extends Controller
 {
@@ -36,6 +38,7 @@ class QuoteController extends Controller
             'content' => 'required|string|min:10'
         ]);
         Quote::create($data);
+        Mail::to($data['email'])->queue(new QuoteReceived($data['name'], $data['subject']));
         return response('', 201);
     }
 
