@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quote confirmation</title>
+    <title>@lang('emails.quotes.title')</title>
 </head>
 
 <body
@@ -68,10 +68,10 @@
                                                                                         align="left">
                                                                                         <div>
                                                                                             <h1 style="margin-top: 0; margin-bottom: 0; font-weight: 500; vertical-align: baseline; font-size: 36px; line-height: 43.2px;"
-                                                                                                align="left">Hello, {{$name}}</h1>
+                                                                                                align="left">@lang('emails.quotes.content_title'), {{$name}}</h1>
                                                                                             <h5 class="text-muted "
                                                                                                 style="margin-top: 0; margin-bottom: 0; font-weight: 500; vertical-align: baseline; font-size: 20px; line-height: 24px; color: #636c72;"
-                                                                                                align="left">We received your quotation. We are going to respond you as soons as we can.</h5>
+                                                                                                align="left">@lang('emails.quotes.content')</h5>
                                                                                             <table class="s-2 w-100"
                                                                                                 border="0"
                                                                                                 cellpadding="0"

@@ -23,7 +23,7 @@ class QuoteReceived extends Mailable
     {
         $this->name = $name;
         $this->qsub = $qsub;
-        $this->subject = 'Test';
+        $this->subject = trans('emails.general_subject');
     }
 
     /**
