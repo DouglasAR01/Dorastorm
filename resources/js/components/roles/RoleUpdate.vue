@@ -2,7 +2,7 @@
   <div v-if="loading">
     {{ $t("message.loading") }}
   </div>
-  <div class="wp-light" v-else>
+  <div class="container wp bg-light" v-else>
     <form @submit.prevent="submit">
       <div class="form-group">
         <validation-error :errors="errors" name="name" #default="{ e }">

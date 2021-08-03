@@ -1,13 +1,13 @@
 <template>
-  <div>
+  <div class="container wp">
     <post-loading v-if="loading"> </post-loading>
     <div v-else>
       <post-creator-options
         :author-id="post.author.id"
         :post-id="post.id"
-        class="wp-light mb-2"
+        class="wp bg-light mt-0"
       ></post-creator-options>
-      <div class="wp-light">
+      <div class="wp bg-light">
         <img :src="post.banner" class="img-fluid mb-2 mx-auto d-block rounded post-banner">
         <h1>{{ post.title }}</h1>
         <div class="editor__content" v-html="post.content"></div>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container wp">
     <div v-if="loading">{{ $t("message.loading") }}</div>
     <div v-else>
       <div class="row mb-2">

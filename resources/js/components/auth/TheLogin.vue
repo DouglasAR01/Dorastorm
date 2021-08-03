@@ -1,5 +1,6 @@
 <template>
-  <div class="row">
+<div class="container wp">
+   <div class="row">
     <div class="col-md-3 col-lg-4"></div>
     <div class="col-md-6 col-lg-4">
       <div class="card card-body">
@@ -56,6 +57,7 @@
     </div>
     <div class="col-md-3 col-lg-4"></div>
   </div>
+</div> 
 </template>
 <script>
 import { is422 } from "../../shared/utils/responses";

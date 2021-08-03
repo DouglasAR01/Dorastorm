@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container wp">
     <posts-loading v-if="loading"></posts-loading>
     <div v-else>
       <div class="row mb-2">

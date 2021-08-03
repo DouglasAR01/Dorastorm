@@ -1,5 +1,5 @@
 <template>
-  <div class="wp-light">
+  <div class="container wp bg-light">
     <div class="row justify-content-center">
       <h3>{{ $t("modules.users.list") }}</h3>
     </div>

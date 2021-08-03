@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-column min-vh-100">
     <the-navbar></the-navbar>
-    <div class="container mt-4 mb-4 pr-4 pl-4">
+    <div>
       <router-view></router-view>
     </div>
     <the-footer></the-footer>

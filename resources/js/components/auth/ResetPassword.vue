@@ -1,5 +1,5 @@
 <template>
-  <div class="wp-light">
+  <div class="container wp bg-light">
     <h2>{{ $t("message.reset_password") }}</h2>
     <form @submit.prevent="submit">
       <div class="form-group">
