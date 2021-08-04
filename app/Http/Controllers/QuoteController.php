@@ -20,7 +20,7 @@ class QuoteController extends Controller
         if ($request->user()->cannot('viewAny', Quote::class)) {
             abort(403);
         }
-        return QuoteResource::collection(Quote::paginate(15));
+        return QuoteResource::collection(Quote::orderBy('created_at', 'desc')->paginate(15));
     }
 
     /**
