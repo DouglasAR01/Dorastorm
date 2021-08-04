@@ -17,6 +17,12 @@
           {{ $t("navbar.login") }}
         </router-link>
       </single-navbar-list-element>
+      <!-- Quotes -->
+      <single-navbar-list-element v-if="isLoggedIn && checkUserPermission(loggedUser, corePms.READ_QUOTES)">
+        <router-link :to="{ name: 'quotes-index' }" class="nav-link">
+          {{ $t("modules.quotes.index") }}
+        </router-link>
+      </single-navbar-list-element>
       <!-- Post dropdown -->
       <navbar-list-dropdown-element cid="posts" v-if="isLoggedIn">
         <template #header>

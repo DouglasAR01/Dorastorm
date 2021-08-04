@@ -169,6 +169,14 @@ const routes = [
         }
     },
     {
+        path: '/quotes',
+        component: () => import (/* webpackChunkName: "quotes" */"../components/quotes/QuoteIndex"),
+        name: 'quotes-index',
+        meta: {
+            auth: true
+        }
+    },
+    {
         path: '/403',
         component: Error403,
         name: '403'
