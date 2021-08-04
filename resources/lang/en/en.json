@@ -95,6 +95,17 @@
             "posts": "Posts",
             "private_index": "Staff posts",
             "my_posts": "My posts"
+        },
+        "quotes": {
+            "index": "View quotes",
+            "subject": "Subject",
+            "name": "Client name",
+            "form_name": "Your name",
+            "phone": "Phone number",
+            "content": "Your message",
+            "list": "Quotes list",
+            "delete": "Delete a quote",
+            "delete_warning": "Are you sure you want to delete this quote? It cannot be undone."
         }
     },
     "navbar": {

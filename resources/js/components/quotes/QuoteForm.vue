@@ -2,7 +2,7 @@
   <form @submit.prevent="submit">
     <div class="form-group">
       <validation-error :errors="errors" name="subject" #default="{ e }">
-        <label for="subject">Subject:</label>
+        <label for="subject">{{$t("modules.quotes.subject")}}:</label>
         <input
           type="text"
           name="subject"
@@ -17,7 +17,7 @@
       <div class="col-md-8">
         <div class="form-group">
           <validation-error :errors="errors" name="name" #default="{ e }">
-            <label for="name">Your name:</label>
+            <label for="name">{{$t("modules.quotes.form_name")}}:</label>
             <input
               type="text"
               name="name"
@@ -32,7 +32,7 @@
       <div class="col-md-4">
         <div class="form-group">
           <validation-error :errors="errors" name="phone" #default="{ e }">
-            <label for="phone">Phone:</label>
+            <label for="phone">{{$t("modules.quotes.phone")}}:</label>
             <input
               type="text"
               name="phone"
@@ -46,7 +46,7 @@
     </div>
     <div class="form-group">
       <validation-error :errors="errors" name="email" #default="{ e }">
-        <label for="email">Email:</label>
+        <label for="email">{{$t("message.email")}}</label>
         <input
           type="email"
           name="email"
@@ -59,7 +59,7 @@
     </div>
     <div class="form-group">
       <validation-error :errors="errors" name="content" #default="{ e }">
-        <label for="content">Your message:</label>
+        <label for="content">{{$t("modules.quotes.content")}}:</label>
         <textarea
           name="content"
           rows="5"
