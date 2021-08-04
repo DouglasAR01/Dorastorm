@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\QuoteResource;
 use App\Mail\QuoteReceived;
 use App\Models\Quote;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class QuoteController extends Controller
         if ($request->user()->cannot('viewAny', Quote::class)) {
             abort(403);
         }
-        return Quote::paginate(15);
+        return QuoteResource::collection(Quote::paginate(15));
     }
 
     /**
