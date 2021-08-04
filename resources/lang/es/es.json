@@ -12,6 +12,7 @@
         "404": {
             "default_title": "404: Ups!",
             "default_message": "¿A dónde vas?",
+            "default_resource": "No pudimos encontrar el recurso especificado.",
             "specific": {
                 "user": "No pudimos encontrar el usuario especificado.",
                 "role": "No pudimos encontrar el rol especificado.",

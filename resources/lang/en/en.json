@@ -12,6 +12,7 @@
         "404": {
             "default_title": "404: Whoops!",
             "default_message": "Where are you going?!",
+            "default_resource": "We couldn't find the specified resource",
             "specific": {
                 "user": "We couldn't find the specified user.",
                 "role": "We couldn't find the specified role.",
