@@ -12,6 +12,7 @@
               <th scope="col">{{ $t("message.id") }}</th>
               <th scope="col">{{ $t("modules.quotes.subject") }}</th>
               <th scope="col">{{ $t("modules.quotes.name") }}</th>
+              <th scope="col">{{ $t("message.created_at")}}</th>
               <th scope="col">{{ $t("message.action") }}</th>
             </tr>
           </thead>
@@ -26,6 +27,9 @@
                 </td>
                 <td>
                   {{ quote.name }}
+                </td>
+                <td>
+                  {{ quote.created_at | humanDate}}
                 </td>
                 <td>
                   <button
@@ -44,7 +48,9 @@
                 </td>
               </tr>
               <tr :key="'co' + quote.id" v-if="opened.includes(quote.id)" class="list-item no-border">
-                <td colspan="4">{{ quote.content }}</td>
+                <td colspan="5" class="p-0">
+                  <quote-table-item-data :quote="quote" />
+                </td>
               </tr>
             </template>
           </transition-group>
@@ -60,6 +66,7 @@
   </div>
 </template>
 <script>
+import QuoteTableItemData from "./QuoteTableItemData";
 import ConfirmDialogueModal from "../../shared/components/modals/ConfirmDialogueModal";
 import { is404 } from "../../shared/utils/responses";
 import Permissions from "../../services/role-permissions";
@@ -69,6 +76,7 @@ export default {
   components: {
     ConfirmDialogueModal,
     SimplePagination,
+    QuoteTableItemData 
   },
   mixins: [IndexPaginationTraits],
   data() {
