@@ -105,7 +105,8 @@
             "content": "Your message",
             "list": "Quotes list",
             "delete": "Delete a quote",
-            "delete_warning": "Are you sure you want to delete this quote? It cannot be undone."
+            "delete_warning": "Are you sure you want to delete this quote? It cannot be undone.",
+            "deleted": "The quote has been deleted"
         }
     },
     "navbar": {
@@ -158,6 +159,7 @@
         "upload_image": "Upload an image",
         "file_upload": "Select a file",
         "file_uploaded": "File uploaded successfully!",
-        "view": "View"
+        "view": "View",
+        "message": "Message"
     }
 }
