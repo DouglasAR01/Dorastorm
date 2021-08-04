@@ -19,6 +19,10 @@ const permissions = {
         READ_ROLES: 'read_roles',
         UPDATE_ROLES: 'update_roles',
         DELETE_ROLES: 'delete_roles',
+
+        //Quotes related
+        READ_QUOTES: 'read_quotes',
+        DELETE_QUOTES: 'delete_quotes'
     },
     extended: {
 
