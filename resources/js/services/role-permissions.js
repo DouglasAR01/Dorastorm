@@ -39,13 +39,14 @@ const permissions = {
             this.checkUserPermission(user, permission));
     },
     categorizePermissions: function (permissions_array) {
-        const regex = /(?<=([a-z]+_)+)([a-z]+)$/g;
+        const regex = /([a-z]+_)+([a-z]+)/g;
         var result = {
             OTHERS: []
         };
         permissions_array.forEach(element => {
             if (regex.test(element)){
-                var match = element.match(regex)[0].toUpperCase();
+                var splitted = element.split("_");
+                var match = splitted[splitted.length - 1].toUpperCase();
                 if (!(match in result)){
                     result[match] = [];
                 }
