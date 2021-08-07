@@ -15,12 +15,7 @@
       ></li>
     </ol>
     <div class="carousel-inner" role="listbox">
-      <carousel-item
-        v-for="(item, index) in content"
-        :key="'i' + index"
-        :class="[{ active: index === 0 }]"
-        :item="item"
-      />
+      <slot></slot>
     </div>
     <a
       class="carousel-control-prev"
@@ -43,11 +38,7 @@
   </div>
 </template>
 <script>
-import CarouselItem from "./CarouselItem";
 export default {
-  components: {
-    CarouselItem,
-  },
   props: {
     content: {
       type: Array,
