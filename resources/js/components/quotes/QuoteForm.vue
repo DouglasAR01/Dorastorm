@@ -89,13 +89,7 @@ export default {
     return {
       loading: false,
       errors: null,
-      quote: {
-        subject: null,
-        email: null,
-        phone: null,
-        name: null,
-        content: null,
-      },
+      quote: this.$_quoteForm_reset(),
     };
   },
   methods: {
@@ -103,15 +97,25 @@ export default {
       this.loading = true;
       try {
         await axios.post("/api/quotes", this.quote);
-        this.$toasts.success("Quote sended");
+        this.$toasts.success(this.$t("modules.quotes.created"));
+        this.quote = this.$_quoteForm_reset();
       } catch (error) {
         if (is422(error)) {
           this.errors = error.response.data.errors;
         } else {
-          this.$toasts.error("Something happened");
+          this.$toasts.error(this.$t("error.fatal"));
         }
       }
       this.loading = false;
+    },
+    $_quoteForm_reset() {
+      return {
+        subject: null,
+        email: null,
+        phone: null,
+        name: null,
+        content: null,
+      };
     },
   },
 };
