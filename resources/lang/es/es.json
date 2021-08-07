@@ -107,7 +107,11 @@
             "list": "Lista de cotizaciones",
             "delete": "Eliminar cotización",
             "delete_warning": "¿Estás seguro de querer eliminar esta cotización? Esta acción no se puede deshacer.",
-            "deleted": "La cotización ha sido eliminada."
+            "deleted": "La cotización ha sido eliminada.",
+            "created": "La cotización ha sido enviada.",
+            "create": "Solicita una cotización",
+            "request": "Solicita este servicio",
+            "big_quote": "COTIZA AHORA"
         }
     },
     "navbar": {
