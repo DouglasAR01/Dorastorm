@@ -2,6 +2,7 @@ import VueRouter from "vue-router";
 import Auth, * as AuthExtra from "./auth";
 import Store from "./store";
 import Permissions from "./role-permissions";
+import { getLocalesCodes } from "./multilang";
 // Components
 import TheHome from "../components/TheHome";
 import TheLogin from "../components/auth/TheLogin";
@@ -11,12 +12,8 @@ import PostRead from "../components/posts/PostRead";
 import PostIndex from "../components/posts/PostIndex";
 import Error404 from "../components/errors/Error404";
 import Error403 from "../components/errors/Error403";
-const routes = [
-    {
-        path: "/",
-        component: TheHome,
-        name: "home",
-    },
+
+const CHILD_ROUTES = [
     {
         path: '/forgot-password',
         component: ForgotPassword,
@@ -27,7 +24,7 @@ const routes = [
     },
     {
         path: '/reset-password',
-        component: () => import (/* webpackChunkName: "auth" */"../components/auth/ResetPassword"),
+        component: () => import(/* webpackChunkName: "auth" */"../components/auth/ResetPassword"),
         name: 'reset-password',
         meta: {
             guest: true
@@ -43,24 +40,15 @@ const routes = [
     },
     {
         path: '/me',
-        component: () => import (/* webpackChunkName: "users" */"../components/users/UserHome"),
+        component: () => import(/* webpackChunkName: "users" */"../components/users/UserHome"),
         name: 'me',
         meta: {
             auth: true
         }
     },
     {
-        path: '/me2',
-        component: () => import (/* webpackChunkName: "users" */"../components/users/UserHome"),
-        name: 'me2',
-        meta: {
-            auth: true,
-            permission: Permissions.core.READ_USERS
-        }
-    },
-    {
         path: '/users',
-        component: () => import (/* webpackChunkName: "users" */"../components/users/UserIndex"),
+        component: () => import(/* webpackChunkName: "users" */"../components/users/UserIndex"),
         name: 'users-index',
         meta: {
             auth: true,
@@ -69,7 +57,7 @@ const routes = [
     },
     {
         path: '/users/create',
-        component: () => import (/* webpackChunkName: "users" */"../components/users/UserCreate"),
+        component: () => import(/* webpackChunkName: "users" */"../components/users/UserCreate"),
         name: 'users-create',
         meta: {
             auth: true,
@@ -78,7 +66,7 @@ const routes = [
     },
     {
         path: '/users/update/:userId',
-        component: () => import (/* webpackChunkName: "users" */"../components/users/UserUpdate"),
+        component: () => import(/* webpackChunkName: "users" */"../components/users/UserUpdate"),
         name: 'users-update',
         props: true,
         meta: {
@@ -87,7 +75,7 @@ const routes = [
     },
     {
         path: '/roles',
-        component: () => import (/* webpackChunkName: "roles" */"../components/roles/RoleIndex"),
+        component: () => import(/* webpackChunkName: "roles" */"../components/roles/RoleIndex"),
         name: 'roles-index',
         meta: {
             auth: true,
@@ -96,7 +84,7 @@ const routes = [
     },
     {
         path: '/roles/create',
-        component: () => import (/* webpackChunkName: "roles" */"../components/roles/RoleCreate"),
+        component: () => import(/* webpackChunkName: "roles" */"../components/roles/RoleCreate"),
         name: 'roles-create',
         meta: {
             auth: true,
@@ -105,7 +93,7 @@ const routes = [
     },
     {
         path: '/roles/update/:roleId',
-        component: () => import (/* webpackChunkName: "roles" */"../components/roles/RoleUpdate"),
+        component: () => import(/* webpackChunkName: "roles" */"../components/roles/RoleUpdate"),
         name: 'roles-update',
         meta: {
             auth: true,
@@ -115,7 +103,7 @@ const routes = [
     ,
     {
         path: '/posts/create',
-        component: () => import (/* webpackChunkName: "posts" */"../components/posts/PostCreate"),
+        component: () => import(/* webpackChunkName: "posts" */"../components/posts/PostCreate"),
         name: 'posts-create',
         meta: {
             auth: true,
@@ -160,7 +148,7 @@ const routes = [
     },
     {
         path: '/posts/update/:postId',
-        component: () => import (/* webpackChunkName: "posts" */"../components/posts/PostUpdate"),
+        component: () => import(/* webpackChunkName: "posts" */"../components/posts/PostUpdate"),
         name: 'posts-update',
         meta: {
             auth: true
@@ -170,7 +158,7 @@ const routes = [
     },
     {
         path: '/quotes',
-        component: () => import (/* webpackChunkName: "quotes" */"../components/quotes/QuoteIndex"),
+        component: () => import(/* webpackChunkName: "quotes" */"../components/quotes/QuoteIndex"),
         name: 'quotes-index',
         meta: {
             auth: true
@@ -187,10 +175,17 @@ const routes = [
         name: '404'
     }
 ];
+const BASE_ROUTES = [{
+    path: `/:locale${getLocalesCodes()}?`,
+    component: TheHome,
+    name: "home",
+    children: CHILD_ROUTES
+}];
+
 
 const router = new VueRouter({
     mode: 'history',
-    routes: routes,
+    routes: BASE_ROUTES,
 });
 
 // The logic in the method below is stupidly complex because the next() method
@@ -245,4 +240,5 @@ router.beforeEach((to, from, next) => {
     }
 });
 
+//router.beforeEnter()
 export default router;
