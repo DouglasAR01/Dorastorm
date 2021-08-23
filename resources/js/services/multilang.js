@@ -46,6 +46,10 @@ export const getBrowserLocale = function (options = {}) {
 
     return trimmedLocale
 }
+
+export const getSupportedLocales = function () {
+    return SUPPORTED_LOCALES;
+}
 /*
     Returns, if exist, the locale support info based on the langCode. If not exist, returns undefined.
 */
@@ -65,14 +69,12 @@ export const supportedLocalesInclude = function (langCode) {
     return getLocale();
 }
 /*
-
+    Check and set the locale to i18n.
 */
-export const setLocale = function (context, langCode, persistent = true) {
-    const newLocale = supportedLocalesInclude(langCode);
-    if (persistent) {
-        localStorage.setItem("lang", newLocale.code);
-    }
-    context.locale = newLocale.code;
+export const setLocale = async function (context, langCode) {
+    const code = supportedLocalesInclude(langCode).code;
+    await loadLocale(code);
+    context.locale = code;    
 }
 /*
     This function gets all DoraStorm supported langs and returns a n-tuple of its lang codes

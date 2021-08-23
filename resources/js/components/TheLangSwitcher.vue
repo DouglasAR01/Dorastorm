@@ -3,27 +3,30 @@
     <button
       class="btn btn-link"
       v-for="lang in langs"
-      :key="lang.lang_info.code"
-      @click.prevent="changeLang(lang.lang_info.code)"
+      :key="lang.code"
+      @click.prevent="changeLang(lang.code)"
     >
-      {{ lang.lang_info.title }}
+      {{ lang.name }}
     </button>
   </div>
 </template>
 <script>
-import {setLocale} from "../services/multilang";
+import {setLocale, getSupportedLocales} from "../services/multilang";
 export default {
   data() {
     return {
-      langs: this.$i18n.messages
+      langs: getSupportedLocales()
     }
   },
 
   methods: {
-    changeLang(langKey) {
-      setLocale(this.$i18n, langKey);
+    async changeLang(langKey) {      
       axios.post("/locale", {
         locale: langKey
+      });
+      await setLocale(this.$i18n, langKey);
+      this.$router.push({
+        path: `/${langKey}`
       });
     }
   }

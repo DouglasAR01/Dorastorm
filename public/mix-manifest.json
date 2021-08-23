@@ -2,11 +2,11 @@
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/js/auth.js": "/js/auth.js",
+    "/js/es-json.js": "/js/es-json.js",
     "/js/posts.js": "/js/posts.js",
     "/js/quotes.js": "/js/quotes.js",
     "/js/roles.js": "/js/roles.js",
     "/js/users.js": "/js/users.js",
     "/js/vendors~posts.js": "/js/vendors~posts.js",
-    "/js/vendors~roles.js": "/js/vendors~roles.js",
-    "/js/lang-[request].js": "/js/lang-[request].js"
+    "/js/vendors~roles.js": "/js/vendors~roles.js"
 }

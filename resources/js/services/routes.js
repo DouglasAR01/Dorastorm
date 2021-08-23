@@ -201,10 +201,16 @@ const router = new VueRouter({
     mode: 'history',
     routes: BASE_ROUTES
 });
-
+/*
+    This function allows DoraStorm to use named routes at router-links instead of using the Datastore + path hrefs.
+    It cost double beforeEach tags verification for languages different than the default one because what this function
+    does is to redirect every single path to another with the locate prefix.
+    The 3rd arg is used only when you are going to redirect to an specific route.
+    This function returns an object with the fixed path (prefix + original path) if the route doesn't include it
+    by itself. If the route is fixed, it returns undefined, which is necessary in order to prevent an infinite 
+    loop of redirections.
+*/
 const prefixResolver = function (from, to, resolve = null) {
-    console.log(from);
-    console.log(to);
     var toPath = to.fullPath;
     var flag = false;
     if (resolve !== null) {
