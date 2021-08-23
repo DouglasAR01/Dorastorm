@@ -187,11 +187,10 @@ const BASE_ROUTES = [{
     },
     children: CHILD_ROUTES,
     beforeEnter(to, from, next) {
-        const locale = getLocale(to.params.locale);
-        if (locale.code != i18n.locale) {
-            loadLocale(locale.code).then(() => {
-                i18n.locale = locale.code;
-                Store.state.locale = locale;
+        const locale = getLocale(to.params.locale).code;
+        if (locale != i18n.locale) {
+            loadLocale(locale).then(() => {
+                i18n.locale = locale;
             });
         }
         next();
@@ -203,6 +202,35 @@ const router = new VueRouter({
     routes: BASE_ROUTES
 });
 
+const prefixResolver = function (from, to, resolve = null) {
+    console.log(from);
+    console.log(to);
+    var toPath = to.fullPath;
+    var flag = false;
+    if (resolve !== null) {
+        let route = router.resolve(resolve);
+        toPath = route.href;
+        flag = true;
+    }
+    if (from.params.locale) {
+        const prefix = `/${from.params.locale}`;
+        let redir = prefix + toPath;
+        if (to.params.locale){
+            return undefined;
+        } else {
+            return {
+                path: redir
+            };
+        }
+    } else if (flag) {
+        const prefix = `/${to.params.locale}`;
+        let redir = to.params.locale? prefix + toPath: toPath;
+        return {
+            path: redir
+        };
+    }
+    return undefined;
+}
 
 // The logic in the method below is stupidly complex because the next() method
 // must be called EXACTLY ONE (1) time and if the method is called it DOESN'T 
@@ -218,14 +246,14 @@ router.beforeEach((to, from, next) => {
                 // Check if the USER have the right permission to enter into this route. If not, 
                 // redirects to 403.
                 if (Permissions.checkUserPermission(Store.state.user, to.meta.permission)) {
-                    next();
+                    next(prefixResolver(from, to));
                 } else {
-                    next({
+                    next(prefixResolver(from, to, {
                         name: "403"
-                    });
+                    }));
                 }
             } else {
-                next();
+                next(prefixResolver(from, to));
             }
         } else {
             // The USER ISN'T authenticated. He is going to be redirected to the login page.
@@ -237,10 +265,10 @@ router.beforeEach((to, from, next) => {
                 Store.state.isLoggedIn = false;
                 Store.state.user = null;
             }
-            next({
+            next(prefixResolver(from, to, {
                 name: 'login',
                 //query: { redirect: to.fullPath } This sould be fixed
-            });
+            }));
         }
     } else if (to.matched.some(record => record.meta.guest)) {
         // This route (↑) requires to be a GUEST.
@@ -248,16 +276,16 @@ router.beforeEach((to, from, next) => {
         // shouldn't be here.
         if (AuthExtra.isApparentlyLoggedIn()) {
             // Redirect to another, non-GUEST route.
-            next({
+            next(prefixResolver(from, to, {
                 name: 'me'
-            });
+            }));
         } else {
             // The user wasn't authenticated. Continue.
-            next();
+            next(prefixResolver(from, to));
         }
     } else {
         // The route doesn't have any matched meta tag. Continue.
-        next();
+        next(prefixResolver(from, to));
     }
 });
 export default router;
