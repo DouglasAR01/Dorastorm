@@ -2,7 +2,7 @@ import VueRouter from "vue-router";
 import Auth, * as AuthExtra from "./auth";
 import Store from "./store";
 import Permissions from "./role-permissions";
-import { getLocalesCodes } from "./multilang";
+import i18n, { getLocale, getLocalesCodes, loadLocale } from "./multilang";
 // Components
 import TheHome from "../components/TheHome";
 import TheLogin from "../components/auth/TheLogin";
@@ -15,7 +15,12 @@ import Error403 from "../components/errors/Error403";
 
 const CHILD_ROUTES = [
     {
-        path: '/forgot-password',
+        path: '',
+        component: TheHome,
+        name: 'home'
+    },
+    {
+        path: 'forgot-password',
         component: ForgotPassword,
         name: 'forgot-password',
         meta: {
@@ -23,7 +28,7 @@ const CHILD_ROUTES = [
         }
     },
     {
-        path: '/reset-password',
+        path: 'reset-password',
         component: () => import(/* webpackChunkName: "auth" */"../components/auth/ResetPassword"),
         name: 'reset-password',
         meta: {
@@ -31,7 +36,7 @@ const CHILD_ROUTES = [
         }
     },
     {
-        path: '/login',
+        path: 'login',
         component: TheLogin,
         name: 'login',
         meta: {
@@ -39,7 +44,7 @@ const CHILD_ROUTES = [
         }
     },
     {
-        path: '/me',
+        path: 'me',
         component: () => import(/* webpackChunkName: "users" */"../components/users/UserHome"),
         name: 'me',
         meta: {
@@ -47,7 +52,7 @@ const CHILD_ROUTES = [
         }
     },
     {
-        path: '/users',
+        path: 'users',
         component: () => import(/* webpackChunkName: "users" */"../components/users/UserIndex"),
         name: 'users-index',
         meta: {
@@ -56,7 +61,7 @@ const CHILD_ROUTES = [
         }
     },
     {
-        path: '/users/create',
+        path: 'users/create',
         component: () => import(/* webpackChunkName: "users" */"../components/users/UserCreate"),
         name: 'users-create',
         meta: {
@@ -65,7 +70,7 @@ const CHILD_ROUTES = [
         }
     },
     {
-        path: '/users/update/:userId',
+        path: 'users/update/:userId',
         component: () => import(/* webpackChunkName: "users" */"../components/users/UserUpdate"),
         name: 'users-update',
         props: true,
@@ -74,7 +79,7 @@ const CHILD_ROUTES = [
         }
     },
     {
-        path: '/roles',
+        path: 'roles',
         component: () => import(/* webpackChunkName: "roles" */"../components/roles/RoleIndex"),
         name: 'roles-index',
         meta: {
@@ -83,7 +88,7 @@ const CHILD_ROUTES = [
         }
     },
     {
-        path: '/roles/create',
+        path: 'roles/create',
         component: () => import(/* webpackChunkName: "roles" */"../components/roles/RoleCreate"),
         name: 'roles-create',
         meta: {
@@ -92,7 +97,7 @@ const CHILD_ROUTES = [
         }
     },
     {
-        path: '/roles/update/:roleId',
+        path: 'roles/update/:roleId',
         component: () => import(/* webpackChunkName: "roles" */"../components/roles/RoleUpdate"),
         name: 'roles-update',
         meta: {
@@ -102,7 +107,7 @@ const CHILD_ROUTES = [
     },
     ,
     {
-        path: '/posts/create',
+        path: 'posts/create',
         component: () => import(/* webpackChunkName: "posts" */"../components/posts/PostCreate"),
         name: 'posts-create',
         meta: {
@@ -111,12 +116,12 @@ const CHILD_ROUTES = [
         }
     },
     {
-        path: '/posts',
+        path: 'posts',
         component: PostIndex,
         name: 'posts-index'
     },
     {
-        path: '/private/posts',
+        path: 'private/posts',
         component: PostIndex,
         name: 'private-posts-index',
         props: {
@@ -129,7 +134,7 @@ const CHILD_ROUTES = [
         }
     },
     {
-        path: '/user/posts',
+        path: 'user/posts',
         component: PostIndex,
         name: 'user-posts',
         props: {
@@ -142,12 +147,12 @@ const CHILD_ROUTES = [
         }
     },
     {
-        path: '/posts/:slug',
+        path: 'posts/:slug',
         component: PostRead,
         name: 'posts-read'
     },
     {
-        path: '/posts/update/:postId',
+        path: 'posts/update/:postId',
         component: () => import(/* webpackChunkName: "posts" */"../components/posts/PostUpdate"),
         name: 'posts-update',
         meta: {
@@ -157,7 +162,7 @@ const CHILD_ROUTES = [
         }
     },
     {
-        path: '/quotes',
+        path: 'quotes',
         component: () => import(/* webpackChunkName: "quotes" */"../components/quotes/QuoteIndex"),
         name: 'quotes-index',
         meta: {
@@ -165,7 +170,7 @@ const CHILD_ROUTES = [
         }
     },
     {
-        path: '/403',
+        path: '403',
         component: Error403,
         name: '403'
     },
@@ -177,28 +182,41 @@ const CHILD_ROUTES = [
 ];
 const BASE_ROUTES = [{
     path: `/:locale${getLocalesCodes()}?`,
-    component: TheHome,
-    name: "home",
-    children: CHILD_ROUTES
+    component: {
+        template: "<router-view></router-view>"
+    },
+    children: CHILD_ROUTES,
+    beforeEnter(to, from, next) {
+        const locale = getLocale(to.params.locale).code;
+        if (locale != i18n.locale) {
+            loadLocale(locale).then(() => {
+                i18n.locale = locale;
+                Store.dispatch('changeLocale', locale);
+            });
+        }
+        next();
+    }
 }];
-
 
 const router = new VueRouter({
     mode: 'history',
-    routes: BASE_ROUTES,
+    routes: BASE_ROUTES
 });
+
 
 // The logic in the method below is stupidly complex because the next() method
 // must be called EXACTLY ONE (1) time and if the method is called it DOESN'T 
 // stop the function. DO NOT try to change the logic if you are not sure of 
 // what you are doing.
 router.beforeEach((to, from, next) => {
+    // Check if the ROUTE requires to be authenticated
     if (to.matched.some(record => record.meta.auth)) {
-        // this route requires auth, check if logged in
-        // if not, redirect to login page.
+        // Check if the USER is authenticated
         if (AuthExtra.isApparentlyLoggedIn() && AuthExtra.isUserHere()) {
-            // Check if the route have any permission tag, if not, continue.
+            // The USER is authenticated, now check if the route have any permission tag, if not, continue.
             if (to.meta.permission) {
+                // Check if the USER have the right permission to enter into this route. If not, 
+                // redirects to 403.
                 if (Permissions.checkUserPermission(Store.state.user, to.meta.permission)) {
                     next();
                 } else {
@@ -210,35 +228,36 @@ router.beforeEach((to, from, next) => {
                 next();
             }
         } else {
+            // The USER ISN'T authenticated. He is going to be redirected to the login page.
             // Ensure the user is going to be unauthenticated in order to prevent 
             // constant redirections in worst case scenario.
             if (Auth.logout()) {
-                // Dirty dispatch('logout'). This should be changed 
-                // if the context object is known.
+                // Dirty dispatch('logout'). This should be changed if the context object is known.
                 // Anyway, this could only happen if the user is hacking...
                 Store.state.isLoggedIn = false;
                 Store.state.user = null;
             }
             next({
-                name: 'home',
-                //query: { redirect: to.fullPath }
+                name: 'login',
+                //query: { redirect: to.fullPath } This sould be fixed
             });
         }
     } else if (to.matched.some(record => record.meta.guest)) {
-        // this route requires to be a guest, check if user is logged in
-        // if not, continue.
+        // This route (↑) requires to be a GUEST.
+        // Check if the user is authenticated. Since this route is for guest only, the USER
+        // shouldn't be here.
         if (AuthExtra.isApparentlyLoggedIn()) {
+            // Redirect to another, non-GUEST route.
             next({
-                name: 'me',
-                query: { redirect: to.fullPath }
+                name: 'me'
             });
         } else {
+            // The user wasn't authenticated. Continue.
             next();
         }
     } else {
+        // The route doesn't have any matched meta tag. Continue.
         next();
     }
 });
-
-//router.beforeEnter()
 export default router;

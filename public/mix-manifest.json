@@ -7,5 +7,6 @@
     "/js/roles.js": "/js/roles.js",
     "/js/users.js": "/js/users.js",
     "/js/vendors~posts.js": "/js/vendors~posts.js",
-    "/js/vendors~roles.js": "/js/vendors~roles.js"
+    "/js/vendors~roles.js": "/js/vendors~roles.js",
+    "/js/lang-[request].js": "/js/lang-[request].js"
 }

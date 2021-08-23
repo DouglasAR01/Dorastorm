@@ -1,19 +1,30 @@
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 
-//lang
-import en from "../../lang/en/en.json";
-import es from "../../lang/es/es.json";
-
-//General idea taken from: https://phrase.com/blog/posts/ultimate-guide-to-vue-localization-with-vue-i18n
-
 Vue.use(VueI18n);
+let LOADED_LANGS = {};
 
+/*
+    Change here your frontend default lang. Keep in mind this language will be always loaded
+    when your app start. You should choose the most used language of your users.
+    DEFAULT_LANG: Put the default lang import route.
+    DEFAULT_FALLBACK_LOCALE: The language code (langCode) of the default language. Ex: 'en' / 'es'
+*/
+import DEFAULT_LANG from "../lang/en.json";
 const DEFAULT_FALLBACK_LOCALE = "en";
-const LANGS = {
-    en: en,
-    es: es
-}
+
+// Put here every supported locale. The "code" key must be unique.
+const SUPPORTED_LOCALES = [
+    {
+        code: 'en',
+        name: 'English',
+    },
+    {
+        code: 'es',
+        name: 'Español',
+    }
+];
+LOADED_LANGS[DEFAULT_FALLBACK_LOCALE] = DEFAULT_LANG;
 
 export const getBrowserLocale = function (options = {}) {
     const defaultOptions = { countryCodeOnly: false }
@@ -35,33 +46,72 @@ export const getBrowserLocale = function (options = {}) {
 
     return trimmedLocale
 }
-
-export const supportedLocalesInclude = function (langKey) {
-    if (langKey in LANGS) {
-        return LANGS[langKey].lang_info.code;
-    }
-    return DEFAULT_FALLBACK_LOCALE;
+/*
+    Returns, if exist, the locale support info based on the langCode. If not exist, returns undefined.
+*/
+export const getLocale = function (langCode = DEFAULT_FALLBACK_LOCALE) {
+    return SUPPORTED_LOCALES.find(lang => lang.code === langCode);
 }
 
-export const getStartingLocale = function () {
-    const savedLocale = localStorage.getItem("lang");
-    if (!!savedLocale) {
-        return supportedLocalesInclude(savedLocale);
+/*
+    Checks if the locale lang is supported by DoraStorm. If it is, returns the locale's support info object.
+    If not, returns the default locale support info.
+*/
+export const supportedLocalesInclude = function (langCode) {
+    const check = getLocale(langCode);
+    if (check !== undefined) {
+        return check;
     }
-    const browserLocale = getBrowserLocale({ countryCodeOnly: true });
-    return supportedLocalesInclude(browserLocale);
+    return getLocale();
 }
+/*
 
-export const setLocale = function (context, langKey, persistent = true) {
-    const newLocale = supportedLocalesInclude(langKey);
+*/
+export const setLocale = function (context, langCode, persistent = true) {
+    const newLocale = supportedLocalesInclude(langCode);
     if (persistent) {
-        localStorage.setItem("lang", newLocale);
+        localStorage.setItem("lang", newLocale.code);
     }
-    context.locale = newLocale;
+    context.locale = newLocale.code;
+}
+/*
+    This function gets all DoraStorm supported langs and returns a n-tuple of its lang codes
+    ex: (en|es)
+*/
+export const getLocalesCodes = function () {
+    var codes = '';
+    SUPPORTED_LOCALES.forEach((lang, index) => {
+        codes += lang.code;
+        codes += (index !== SUPPORTED_LOCALES.length - 1) ? '|' : '';
+    });
+    return `(${codes})`;
+}
+/* 
+    Checks if the locale lang is loaded into i18n. Returns true/false.
+*/
+export const isLocaleLoaded = function (langCode) {
+    return Object.keys(LOADED_LANGS).includes(langCode);
+}
+/* 
+    Looks if there is a location code in the Local Storage. If there is, check if it is a valid
+    code. In worst case, the default lang is returned
+*/
+export const loadLocale = async function (localeCode) {
+    //const localeCode = localStorage.getItem("lang");
+    const locale = supportedLocalesInclude(localeCode);
+    if (locale.code != DEFAULT_FALLBACK_LOCALE && !isLocaleLoaded(localeCode)) {
+        try {
+            const loadedLocale = await import(/* webpackChunkName: "[request]" */ `../lang/${localeCode}.json`);
+            LOADED_LANGS[loadedLocale.lang_info.code] = loadedLocale;
+            return loadedLocale;
+        } catch {
+            console.log("Fatal")
+        }
+    }
 }
 
 export default new VueI18n({
-    locale: getStartingLocale(),
+    locale: 'en',
     fallbackLocale: DEFAULT_FALLBACK_LOCALE,
-    messages: LANGS
+    messages: LOADED_LANGS
 });

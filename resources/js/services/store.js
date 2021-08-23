@@ -2,7 +2,8 @@ import * as auth from "./auth";
 export default {
     state: {
         isLoggedIn: false,
-        user: null
+        user: null,
+        locale: null
     },
     mutations: {
         setLoggedIn(state, payload) {
@@ -10,6 +11,9 @@ export default {
         },
         setUser(state, payload) {
             state.user = payload;
+        },
+        setLocale(state, payload) {
+            state.locale = payload;
         }
     },
     actions: {
@@ -20,6 +24,9 @@ export default {
         login(context, payload) {
             context.commit('setLoggedIn', true);
             context.commit('setUser', payload);
+        },
+        changeLocale(contex, payload) {
+            contex.commit('setLocale', payload);
         },
         loadSavedData(context) {
             // Here comes all the commits that have to be made everytime the app initialize
@@ -51,6 +58,12 @@ export default {
         },
         getUserPermissions: state => {
             return (state.user) ? state.user.role.permissions : null;
+        },
+        getLocaleCode: state => {
+            return (state.locale) ? state.locale.code : null;
+        },
+        getLocaleBase: state => {
+            return (state.locale) ? "/" + state.locale.code : null;
         }
     }
 }
