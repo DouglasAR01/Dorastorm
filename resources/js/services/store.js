@@ -63,7 +63,7 @@ export default {
             return (state.locale) ? state.locale.code : null;
         },
         getLocaleBase: state => {
-            return (state.locale) ? "/" + state.locale.code : null;
+            return (state.locale) ? "/" + state.locale.code : '';
         }
     }
 }

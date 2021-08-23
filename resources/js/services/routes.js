@@ -187,11 +187,11 @@ const BASE_ROUTES = [{
     },
     children: CHILD_ROUTES,
     beforeEnter(to, from, next) {
-        const locale = getLocale(to.params.locale).code;
-        if (locale != i18n.locale) {
-            loadLocale(locale).then(() => {
-                i18n.locale = locale;
-                Store.dispatch('changeLocale', locale);
+        const locale = getLocale(to.params.locale);
+        if (locale.code != i18n.locale) {
+            loadLocale(locale.code).then(() => {
+                i18n.locale = locale.code;
+                Store.state.locale = locale;
             });
         }
         next();
