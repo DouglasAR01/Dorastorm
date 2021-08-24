@@ -25,8 +25,9 @@ export default {
         locale: langKey
       });
       await setLocale(this.$i18n, langKey);
-      this.$router.push({
-        path: `/${langKey}`
+      this.$router.replace({
+        name: this.$route.name,
+        params: { locale: langKey}
       });
     }
   }
