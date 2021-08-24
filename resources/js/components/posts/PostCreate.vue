@@ -129,6 +129,7 @@ export default {
           name: "posts-read",
           params: {
             slug: post.slug,
+            locale: this.$route.params.locale
           },
         });
       } catch (error) {

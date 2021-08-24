@@ -50,7 +50,7 @@
           />
         </form>
         <hr />
-        <router-link :to="{ name: 'forgot-password' }">{{
+        <router-link :to="{ name: 'forgot-password', params: {locale: $route.params.locale} }">{{
           $t("message.forgot_password")
         }}</router-link>
       </div>
@@ -88,7 +88,7 @@ export default {
           this.user.remember = !!this.user.remember == false ? null : true;
           const user = await Auth.login(this.user);
           this.$store.dispatch("login", user);
-          this.$router.push({ name: "me" });
+          this.$router.push({ name: "me", params: {locale: this.$route.params.locale} });
         } catch (error) {
           if (is422(error)) {
             this.errors = error.response.data.errors;

@@ -40,7 +40,7 @@
                   <router-link
                     :to="{
                       name: 'users-update',
-                      params: { userId: user.id },
+                      params: { locale: $route.params.locale, userId: user.id },
                     }"
                     v-tooltip="$t('modules.users.update')"
                     class="btn btn-link btn-sm"

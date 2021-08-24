@@ -142,6 +142,7 @@ export default {
     ) {
       this.$router.push({
         name: "403",
+        params: { locale: this.$route.params.locale },
       });
     }
   },
@@ -169,7 +170,7 @@ export default {
       this.loadingAvailableRoles = false;
     } catch (error) {
       this.$toasts.error($t("error.fatal"));
-    }        
+    }
   },
   methods: {
     changePassword() {

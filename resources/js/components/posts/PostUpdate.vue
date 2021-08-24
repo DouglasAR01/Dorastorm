@@ -162,10 +162,11 @@ export default {
       this.post = (
         await axios.get("/api/posts/" + this.$route.params.postId + "/edit")
       ).data.data;
-      if (!this._checkIfUpdatable()){
+      if (!this._checkIfUpdatable()) {
         this.$toasts.error(this.$t("error.403.default_title"));
         this.$router.push({
-          name: "posts-index"
+          name: "posts-index",
+          params: { locale: this.$route.params.locale },
         });
       }
     } catch (error) {
@@ -173,7 +174,7 @@ export default {
         this.$toasts.error(this.$t("error.404.specific.post"));
         this.$router.push({
           name: "404",
-          params: { 0: "/" },
+          params: { 0: "/", locale: this.$route.params.locale },
         });
       } else {
         this.$toasts.error(this.$t("error.fatal"));
@@ -205,6 +206,7 @@ export default {
           name: "posts-read",
           params: {
             slug: post.slug,
+            locale: this.$route.params.locale,
           },
         });
       } catch (error) {
@@ -228,14 +230,14 @@ export default {
       }
     },
 
-    _checkIfUpdatable(){
+    _checkIfUpdatable() {
       const user = this.loggedUser;
       // User is the owner
-      if (this.post.author && this.post.author.id === user.id){
+      if (this.post.author && this.post.author.id === user.id) {
         return true;
       }
       return this.checkUserPermission(user, this.corePms.UPDATE_ELSES_POSTS);
-    }
+    },
   },
 };
 </script>

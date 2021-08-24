@@ -85,7 +85,7 @@ export default {
         this.$toasts.error(this.$t("error.404.specific.post"));
         this.$router.push({
           name: "404",
-          params: { 0: "/" },
+          params: { 0: "/", locale: this.$route.params.locale },
         });
       } else {
         this.$toasts.error(this.$t("error.fatal"));

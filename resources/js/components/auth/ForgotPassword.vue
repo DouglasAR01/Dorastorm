@@ -52,6 +52,7 @@ export default {
           this.$toasts.success(msg);
           this.$router.push({
             name: "home",
+            params: {locale: this.$route.params.locale}
           });
         } catch (error) {
           if (is422(error)) {

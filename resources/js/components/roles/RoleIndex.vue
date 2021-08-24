@@ -35,7 +35,7 @@
                 <router-link
                 :to="{
                   name: 'roles-update',
-                  params: { roleId: role.id },
+                  params: { locale: $route.params.locale, roleId: role.id },
                 }"
                 v-tooltip="$t('modules.roles.update')"
                 class="btn btn-link btn-sm"

@@ -13,7 +13,7 @@
           </div>
           <div class="col-sm-8">
             <router-link
-              :to="{ name: 'users-update', params: { userId: user.id } }"
+              :to="{ name: 'users-update', params: { locale: $route.params.locale, userId: user.id } }"
               v-if="allowEdit"
             >
               <span class="user-data-cog">

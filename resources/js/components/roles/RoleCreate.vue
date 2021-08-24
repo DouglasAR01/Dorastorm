@@ -78,6 +78,7 @@ export default {
         this.$toasts.success(this.$t("modules.roles.created"));
         this.$router.push({
           name: "roles-index",
+          params: { locale: this.$route.params.locale },
         });
       } catch (error) {
         if (is422(error)) {

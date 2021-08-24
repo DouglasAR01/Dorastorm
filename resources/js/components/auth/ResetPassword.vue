@@ -85,6 +85,7 @@ export default {
           this.$toasts.success(this.$t("modules.users.password_changed"));
           this.$router.push({
             name: "login",
+            params: {locale: this.$route.params.locale}
           });
         } catch (error) {
           if (is422(error)) {

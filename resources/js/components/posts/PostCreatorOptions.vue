@@ -7,7 +7,10 @@
       <div class="col">
         <router-link
           class="btn btn-primary btn-block"
-          :to="{ name: 'posts-update', params: { postId: postId } }"
+          :to="{
+            name: 'posts-update',
+            params: { locale: $route.params.locale, postId: postId },
+          }"
           v-if="userCanUpdate"
         >
           <i class="fas fa-pen"></i>
@@ -15,7 +18,11 @@
         </router-link>
       </div>
       <div class="col">
-        <button class="btn btn-danger btn-block" v-if="userCanDelete" @click.prevent="deleteThis">
+        <button
+          class="btn btn-danger btn-block"
+          v-if="userCanDelete"
+          @click.prevent="deleteThis"
+        >
           <i class="fas fa-trash-alt"></i>
           {{ $t("modules.posts.delete") }}
         </button>
@@ -32,19 +39,19 @@ export default {
   props: {
     authorId: {
       type: Number,
-      required: true
+      required: true,
     },
     postId: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   components: {
-    ConfirmDialogueModal
+    ConfirmDialogueModal,
   },
-  data () {
+  data() {
     return {
-      deleting: false
+      deleting: false,
     };
   },
   computed: {
@@ -77,10 +84,9 @@ export default {
     async deleteThis() {
       const ok = await this.$refs.confirmDialogue.show({
         title: this.$t("modules.posts.delete"),
-        message:
-          this.$t("modules.posts.delete_warning"),
+        message: this.$t("modules.posts.delete_warning"),
         okButton: this.$t("message.delete"),
-        okButtonColor: "btn-danger"
+        okButtonColor: "btn-danger",
       });
       if (ok) {
         this.deleting = true;
@@ -88,7 +94,8 @@ export default {
           await axios.delete("/api/posts/" + this.postId);
           this.$toasts.success(this.$t("modules.posts.deleted"));
           this.$router.push({
-            name: "posts-index"
+            name: "posts-index",
+            params: {locale: this.$route.params.locale}
           });
         } catch (error) {
           if (is404(error)) {
@@ -99,7 +106,7 @@ export default {
         }
         this.deleting = false;
       }
-    }
-  }
+    },
+  },
 };
 </script>

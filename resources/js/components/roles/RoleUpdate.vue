@@ -122,6 +122,7 @@ export default {
         this.$toasts.success(this.$t("message.data_changed"));
         this.$router.push({
           name: "roles-index",
+          params: { locale: this.$route.params.locale },
         });
       } catch (error) {
         if (is404(error)) {

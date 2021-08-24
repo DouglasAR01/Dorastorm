@@ -61,11 +61,11 @@ window.axios.interceptors.response.use(
         if (error.response.status == 401) {
             await Auth.logout();
             store.dispatch('logout');
-            router.push({ name: 'login' });
+            router.push({ name: 'login', params: {locale: this.$route.params.locale} });
         }
         // 403 = Forbidden
         if (error.response.status == 403) {
-            router.push({ name: '403' });
+            router.push({ name: '403', params: {locale: this.$route.params.locale} });
         }
         return Promise.reject(error);
     }
