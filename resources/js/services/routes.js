@@ -201,48 +201,18 @@ const router = new VueRouter({
     mode: 'history',
     routes: BASE_ROUTES
 });
-/*
-    This function allows DoraStorm to use named routes at router-links instead of using the Datastore + path hrefs.
-    It cost double beforeEach tags verification for languages different than the default one because what this function
-    does is to redirect every single path to another with the locate prefix.
-    The 3rd arg is used only when you are going to redirect to an specific route.
-    This function returns an object with the fixed path (prefix + original path) if the route doesn't include it
-    by itself. If the route is fixed, it returns undefined, which is necessary in order to prevent an infinite 
-    loop of redirections.
-*/
-const prefixResolver = function (from, to, resolve = null) {
-    var toPath = to.fullPath;
-    var flag = false;
-    if (resolve !== null) {
-        let route = router.resolve(resolve);
-        toPath = route.href;
-        flag = true;
-    }
-    if (from.params.locale) {
-        const prefix = `/${from.params.locale}`;
-        let redir = prefix + toPath;
-        if (to.params.locale){
-            return undefined;
-        } else {
-            return {
-                path: redir
-            };
-        }
-    } else if (flag) {
-        const prefix = `/${to.params.locale}`;
-        let redir = to.params.locale? prefix + toPath: toPath;
-        return {
-            path: redir
-        };
-    }
-    return undefined;
-}
 
 // The logic in the method below is stupidly complex because the next() method
 // must be called EXACTLY ONE (1) time and if the method is called it DOESN'T 
 // stop the function. DO NOT try to change the logic if you are not sure of 
 // what you are doing.
 router.beforeEach((to, from, next) => {
+    // let localeFrom = from.params.locale;
+    // let localeTo = to.params.locale;
+    // if (localeFrom && !localeTo){
+    //     console.log("sí");
+    //     to.params.locale = localeFrom;
+    // }
     // Check if the ROUTE requires to be authenticated
     if (to.matched.some(record => record.meta.auth)) {
         // Check if the USER is authenticated
@@ -252,14 +222,12 @@ router.beforeEach((to, from, next) => {
                 // Check if the USER have the right permission to enter into this route. If not, 
                 // redirects to 403.
                 if (Permissions.checkUserPermission(Store.state.user, to.meta.permission)) {
-                    next(prefixResolver(from, to));
+                    next();
                 } else {
-                    next(prefixResolver(from, to, {
-                        name: "403"
-                    }));
+                    next();
                 }
             } else {
-                next(prefixResolver(from, to));
+                next();
             }
         } else {
             // The USER ISN'T authenticated. He is going to be redirected to the login page.
@@ -271,10 +239,7 @@ router.beforeEach((to, from, next) => {
                 Store.state.isLoggedIn = false;
                 Store.state.user = null;
             }
-            next(prefixResolver(from, to, {
-                name: 'login',
-                //query: { redirect: to.fullPath } This sould be fixed
-            }));
+            next();
         }
     } else if (to.matched.some(record => record.meta.guest)) {
         // This route (↑) requires to be a GUEST.
@@ -282,16 +247,14 @@ router.beforeEach((to, from, next) => {
         // shouldn't be here.
         if (AuthExtra.isApparentlyLoggedIn()) {
             // Redirect to another, non-GUEST route.
-            next(prefixResolver(from, to, {
-                name: 'me'
-            }));
+            next();
         } else {
             // The user wasn't authenticated. Continue.
-            next(prefixResolver(from, to));
+            next();
         }
     } else {
         // The route doesn't have any matched meta tag. Continue.
-        next(prefixResolver(from, to));
+        next();
     }
 });
 export default router;
