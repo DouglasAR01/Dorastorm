@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/{any?}', function () {
-    return view('index');
+    return view('index', [
+        'locales' => config('app.supported_locales')
+    ]);
 })->where('any', '^(?!api\/)[\/\w\.\,-]*');
 
 Route::post('/locale', 'TranslationController')->name('localization.set');
