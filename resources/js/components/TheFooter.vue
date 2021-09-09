@@ -19,14 +19,18 @@
       </div>
       <div class="col-auto"></div>
     </div>
-    <div class="row justify-content-center">
-      <the-lang-switcher></the-lang-switcher>
-    </div>
     <hr class="w-75">
-    <div class="row justify-content-center">{{$t("message.powered")}}</div>
-    <div class="row justify-content-center">
-      <p>©Copyright {{ year }}</p>
-    </div>
+    <div class="row">
+        <div class="col-sm-6 d-flex  justify-content-center justify-content-sm-end">
+          <div class="align-self-center">{{ $t("message.powered") }}</div>
+        </div>
+        <div class="col-sm-6 d-flex  justify-content-center justify-content-sm-start">
+          <the-lang-switcher></the-lang-switcher>
+        </div>
+      </div>
+      <div class="text-center">
+        <p>© Copyright {{ year }}</p>
+      </div>
   </div>
 </template>
 <script>
