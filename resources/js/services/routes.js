@@ -3,6 +3,7 @@ import Auth, * as AuthExtra from "./auth";
 import Store from "./store";
 import Permissions from "./role-permissions";
 import i18n, { getLocale, getLocalesCodes, loadLocale } from "./multilang";
+import Config from "../app.config";
 // Components
 import TheHome from "../components/TheHome";
 import TheLogin from "../components/auth/TheLogin";
@@ -12,6 +13,8 @@ import PostRead from "../components/posts/PostRead";
 import PostIndex from "../components/posts/PostIndex";
 import Error404 from "../components/errors/Error404";
 import Error403 from "../components/errors/Error403";
+// Testing
+import TheTester from "../components/TheTester";
 
 const CHILD_ROUTES = [
     {
@@ -180,22 +183,33 @@ const CHILD_ROUTES = [
         name: '404'
     }
 ];
-const BASE_ROUTES = [{
-    path: `/:locale${getLocalesCodes()}?`,
-    component: {
-        template: "<router-view></router-view>"
-    },
-    children: CHILD_ROUTES,
-    beforeEnter(to, from, next) {
-        const locale = getLocale(to.params.locale).code;
-        if (locale != i18n.locale) {
-            loadLocale(locale).then(() => {
-                i18n.locale = locale;
-            });
+var BASE_ROUTES = [
+    {
+        path: `/:locale${getLocalesCodes()}?`,
+        component: {
+            template: "<router-view></router-view>"
+        },
+        children: CHILD_ROUTES,
+        beforeEnter(to, from, next) {
+            const locale = getLocale(to.params.locale).code;
+            if (locale != i18n.locale) {
+                loadLocale(locale).then(() => {
+                    i18n.locale = locale;
+                });
+            }
+            next();
         }
-        next();
     }
-}];
+];
+
+if (Config.DEBUG) {
+    BASE_ROUTES.splice(0, 0,
+        {
+            path: '/component-test',
+            component: TheTester,
+            name: 'test-path'
+        });
+}
 
 const router = new VueRouter({
     mode: 'history',
