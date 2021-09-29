@@ -7,11 +7,13 @@ let LOADED_LANGS = {};
 /*
     Change here your frontend default lang. Keep in mind this language will be always loaded
     when your app start. You should choose the most used language of your users.
-    DEFAULT_LANG: Put the default lang import route.
-    DEFAULT_FALLBACK_LOCALE: The language code (langCode) of the default language. Ex: 'en' / 'es'
+    DEFAULT_LANG: The language code (langCode) of the default language. Ex: 'en' / 'es'
+    DEF_LANG_IMPORT: Put the default lang import route.
+
+    The DEF_LANG_IMPORT must be the same lang as DEFAULT_LANG. Ex: ../lang/en.json if DEFAULT_LANG = en
 */
-import DEFAULT_LANG from "../lang/en.json";
-const DEFAULT_FALLBACK_LOCALE = "en";
+const DEFAULT_LANG = "en";
+import DEF_LANG_IMPORT from "../lang/en.json";
 
 // Put here every supported locale. The "code" key must be unique.
 const SUPPORTED_LOCALES = [
@@ -24,7 +26,7 @@ const SUPPORTED_LOCALES = [
         name: 'Español',
     }
 ];
-LOADED_LANGS[DEFAULT_FALLBACK_LOCALE] = DEFAULT_LANG;
+LOADED_LANGS[DEFAULT_LANG] = DEF_LANG_IMPORT;
 
 export const getBrowserLocale = function (options = {}) {
     const defaultOptions = { countryCodeOnly: false }
@@ -53,7 +55,7 @@ export const getSupportedLocales = function () {
 /*
     Returns, if exist, the locale support info based on the langCode. If not exist, returns undefined.
 */
-export const getLocale = function (langCode = DEFAULT_FALLBACK_LOCALE) {
+export const getLocale = function (langCode = DEFAULT_LANG) {
     return SUPPORTED_LOCALES.find(lang => lang.code === langCode);
 }
 
@@ -101,7 +103,7 @@ export const isLocaleLoaded = function (langCode) {
 export const loadLocale = async function (localeCode) {
     //const localeCode = localStorage.getItem("lang");
     const locale = supportedLocalesInclude(localeCode);
-    if (locale.code != DEFAULT_FALLBACK_LOCALE && !isLocaleLoaded(localeCode)) {
+    if (locale.code != DEFAULT_LANG && !isLocaleLoaded(localeCode)) {
         try {
             const loadedLocale = await import(/* webpackChunkName: "[request]" */ `../lang/${localeCode}.json`);
             LOADED_LANGS[loadedLocale.lang_info.code] = loadedLocale;
@@ -113,7 +115,7 @@ export const loadLocale = async function (localeCode) {
 }
 
 export default new VueI18n({
-    locale: 'en',
-    fallbackLocale: DEFAULT_FALLBACK_LOCALE,
+    locale: DEFAULT_LANG,
+    fallbackLocale: DEFAULT_LANG,
     messages: LOADED_LANGS
 });
