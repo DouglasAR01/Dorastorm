@@ -66,11 +66,11 @@
   </div>
 </template>
 <script>
-import QuoteTableItemData from "./QuoteTableItemData";
-import ConfirmDialogueModal from "../../shared/components/modals/ConfirmDialogueModal";
+import QuoteTableItemData from "../../components/quotes/QuoteTableItemData";
+import ConfirmDialogueModal from "../../components/modals/ConfirmDialogueModal";
 import { is404 } from "../../shared/utils/responses";
 import Permissions from "../../services/role-permissions";
-import SimplePagination from "../../shared/components/SimplePagination";
+import SimplePagination from "../../components/SimplePagination";
 import IndexPaginationTraits from "../../shared/mixins/index-pagination-traits";
 export default {
   components: {

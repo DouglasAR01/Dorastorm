@@ -61,7 +61,7 @@
 </template>
 <script>
 import { is422 } from "../../shared/utils/responses";
-import ValidationError from "../../shared/components/ValidationError";
+import ValidationError from "../../components/ValidationError";
 import Auth from "../../services/auth";
 export default {
   components: {

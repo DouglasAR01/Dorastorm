@@ -107,7 +107,7 @@
 <script>
 import { is422 } from "../../shared/utils/responses";
 import FormTraits from "../../shared/mixins/form-traits";
-import ValidationError from "../../shared/components/ValidationError";
+import ValidationError from "../../components/ValidationError";
 import Obj from "../../shared/utils/object-utils";
 import Auth from "../../services/auth";
 export default {

@@ -6,15 +6,15 @@ import i18n, { getLocale, getLocalesCodes, loadLocale } from "./multilang";
 import Config from "../app.config";
 // Components
 import TheHome from "../components/TheHome";
-import TheLogin from "../components/auth/TheLogin";
+import Login from "../pages/auth/Login";
 // Static (not splitted) components
-import ForgotPassword from "../components/auth/ForgotPassword";
-import PostRead from "../components/posts/PostRead";
-import PostIndex from "../components/posts/PostIndex";
-import Error404 from "../components/errors/Error404";
-import Error403 from "../components/errors/Error403";
+import ForgotPassword from "../pages/auth/ForgotPassword";
+import PostRead from "../pages/posts/PostRead";
+import PostIndex from "../pages/posts/PostIndex";
+import Error404 from "../pages/errors/Error404";
+import Error403 from "../pages/errors/Error403";
 // Testing
-import TheTester from "../components/TheTester";
+import Test from "../pages/Test";
 
 const CHILD_ROUTES = [
     {
@@ -32,7 +32,7 @@ const CHILD_ROUTES = [
     },
     {
         path: 'reset-password',
-        component: () => import(/* webpackChunkName: "auth" */"../components/auth/ResetPassword"),
+        component: () => import(/* webpackChunkName: "auth" */"../pages/auth/ResetPassword"),
         name: 'reset-password',
         meta: {
             guest: true
@@ -40,7 +40,7 @@ const CHILD_ROUTES = [
     },
     {
         path: 'login',
-        component: TheLogin,
+        component: Login,
         name: 'login',
         meta: {
             guest: true
@@ -48,7 +48,7 @@ const CHILD_ROUTES = [
     },
     {
         path: 'me',
-        component: () => import(/* webpackChunkName: "users" */"../components/users/UserHome"),
+        component: () => import(/* webpackChunkName: "users" */"../pages/users/UserHome"),
         name: 'me',
         meta: {
             auth: true
@@ -56,7 +56,7 @@ const CHILD_ROUTES = [
     },
     {
         path: 'users',
-        component: () => import(/* webpackChunkName: "users" */"../components/users/UserIndex"),
+        component: () => import(/* webpackChunkName: "users" */"../pages/users/UserIndex"),
         name: 'users-index',
         meta: {
             auth: true,
@@ -65,7 +65,7 @@ const CHILD_ROUTES = [
     },
     {
         path: 'users/create',
-        component: () => import(/* webpackChunkName: "users" */"../components/users/UserCreate"),
+        component: () => import(/* webpackChunkName: "users" */"../pages/users/UserCreate"),
         name: 'users-create',
         meta: {
             auth: true,
@@ -74,7 +74,7 @@ const CHILD_ROUTES = [
     },
     {
         path: 'users/update/:userId',
-        component: () => import(/* webpackChunkName: "users" */"../components/users/UserUpdate"),
+        component: () => import(/* webpackChunkName: "users" */"../pages/users/UserUpdate"),
         name: 'users-update',
         props: true,
         meta: {
@@ -83,7 +83,7 @@ const CHILD_ROUTES = [
     },
     {
         path: 'roles',
-        component: () => import(/* webpackChunkName: "roles" */"../components/roles/RoleIndex"),
+        component: () => import(/* webpackChunkName: "roles" */"../pages/roles/RoleIndex"),
         name: 'roles-index',
         meta: {
             auth: true,
@@ -92,7 +92,7 @@ const CHILD_ROUTES = [
     },
     {
         path: 'roles/create',
-        component: () => import(/* webpackChunkName: "roles" */"../components/roles/RoleCreate"),
+        component: () => import(/* webpackChunkName: "roles" */"../pages/roles/RoleCreate"),
         name: 'roles-create',
         meta: {
             auth: true,
@@ -101,7 +101,7 @@ const CHILD_ROUTES = [
     },
     {
         path: 'roles/update/:roleId',
-        component: () => import(/* webpackChunkName: "roles" */"../components/roles/RoleUpdate"),
+        component: () => import(/* webpackChunkName: "roles" */"../pages/roles/RoleUpdate"),
         name: 'roles-update',
         meta: {
             auth: true,
@@ -111,7 +111,7 @@ const CHILD_ROUTES = [
     ,
     {
         path: 'posts/create',
-        component: () => import(/* webpackChunkName: "posts" */"../components/posts/PostCreate"),
+        component: () => import(/* webpackChunkName: "posts" */"../pages/posts/PostCreate"),
         name: 'posts-create',
         meta: {
             auth: true,
@@ -156,7 +156,7 @@ const CHILD_ROUTES = [
     },
     {
         path: 'posts/update/:postId',
-        component: () => import(/* webpackChunkName: "posts" */"../components/posts/PostUpdate"),
+        component: () => import(/* webpackChunkName: "posts" */"../pages/posts/PostUpdate"),
         name: 'posts-update',
         meta: {
             auth: true
@@ -166,7 +166,7 @@ const CHILD_ROUTES = [
     },
     {
         path: 'quotes',
-        component: () => import(/* webpackChunkName: "quotes" */"../components/quotes/QuoteIndex"),
+        component: () => import(/* webpackChunkName: "quotes" */"../pages/contact/QuoteIndex"),
         name: 'quotes-index',
         meta: {
             auth: true
@@ -206,7 +206,7 @@ if (Config.DEBUG) {
     BASE_ROUTES.splice(0, 0,
         {
             path: '/component-test',
-            component: TheTester,
+            component: Test,
             name: 'test-path'
         });
 }

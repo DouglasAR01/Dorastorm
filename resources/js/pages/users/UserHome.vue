@@ -9,7 +9,7 @@
   </div>
 </template>
 <script>
-import UserDataCard from "./UserDataCard";
+import UserDataCard from "../../components/users/UserDataCard";
 export default {
   components: {
     UserDataCard

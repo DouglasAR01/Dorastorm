@@ -95,9 +95,9 @@
   </div>
 </template>
 <script>
-import TextEditor from "../../shared/components/text-editor/RichTextEditor";
-import ValidationError from "../../shared/components/ValidationError";
-import SingleFileUpload from "../../shared/components/SingleFileUpload";
+import TextEditor from "../../components/text-editor/RichTextEditor";
+import ValidationError from "../../components/ValidationError";
+import SingleFileUpload from "../../components/SingleFileUpload";
 import { is422 } from "../../shared/utils/responses";
 export default {
   components: {

@@ -54,10 +54,9 @@
 </template>
 <script>
 import { is404, is422 } from "../../shared/utils/responses";
-import Obj from "../../shared/utils/object-utils";
-import RolePermissionSelector from "./RolePermissionSelector";
-import RoleHierarchySelector from "./RoleHierarchySelector";
-import ValidationError from "../../shared/components/ValidationError";
+import RolePermissionSelector from "../../components/roles/RolePermissionSelector";
+import RoleHierarchySelector from "../../components/roles/RoleHierarchySelector";
+import ValidationError from "../../components/ValidationError";
 export default {
   components: {
     RolePermissionSelector,

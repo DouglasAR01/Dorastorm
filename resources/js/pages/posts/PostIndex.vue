@@ -25,11 +25,11 @@
   </div>
 </template>
 <script>
-import PostList from "./PostList";
-import SimplePagination from "../../shared/components/SimplePagination";
-import SearchInput from "../../shared/components/SearchInput";
+import PostList from "../../components/posts/PostList";
+import SimplePagination from "../../components/SimplePagination";
+import SearchInput from "../../components/SearchInput";
 import IndexPaginationTraits from "../../shared/mixins/index-pagination-traits";
-import PostsLoading from "../../shared/components/loading/PostsAnimation";
+import PostsLoading from "../../components/loading/PostsAnimation";
 export default {
   components: {
     PostList,

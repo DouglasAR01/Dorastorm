@@ -69,10 +69,10 @@
   </div>
 </template>
 <script>
-import ConfirmDialogueModal from "../../shared/components/modals/ConfirmDialogueModal";
+import ConfirmDialogueModal from "../../components/modals/ConfirmDialogueModal";
 import { is404 } from "../../shared/utils/responses";
 import Permissions from "../../services/role-permissions";
-import RoleDataCard from "./RoleDataCard";
+import RoleDataCard from "../../components/roles/RoleDataCard";
 export default {
   components: {
     ConfirmDialogueModal,

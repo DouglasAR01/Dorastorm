@@ -8,8 +8,8 @@
   </div>
 </template>
 <script>
-import TheNavbar from "./components/TheNavbar";
-import TheFooter from "./components/TheFooter";
+import TheNavbar from "../components/TheNavbar";
+import TheFooter from "../components/TheFooter";
 export default {
   components: { TheNavbar, TheFooter },
 };

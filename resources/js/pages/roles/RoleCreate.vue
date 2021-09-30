@@ -48,9 +48,9 @@
   </div>
 </template>
 <script>
-import RolePermissionSelector from "./RolePermissionSelector";
-import RoleHierarchySelector from "./RoleHierarchySelector";
-import ValidationError from "../../shared/components/ValidationError";
+import RolePermissionSelector from "../../components/roles/RolePermissionSelector";
+import RoleHierarchySelector from "../../components/roles/RoleHierarchySelector";
+import ValidationError from "../../components/ValidationError";
 import { is422 } from "../../shared/utils/responses";
 export default {
   components: {
