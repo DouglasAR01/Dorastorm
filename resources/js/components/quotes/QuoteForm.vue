@@ -79,7 +79,7 @@
   </form>
 </template>
 <script>
-import ValidationError from "../../shared/components/ValidationError.vue";
+import ValidationError from "../ValidationError.vue";
 import { is422 } from "../../shared/utils/responses";
 export default {
   components: {

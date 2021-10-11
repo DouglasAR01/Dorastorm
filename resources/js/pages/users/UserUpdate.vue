@@ -101,10 +101,10 @@
 import * as Responses from "../../shared/utils/responses";
 import Obj from "../../shared/utils/object-utils";
 import FormTraits from "../../shared/mixins/form-traits";
-import ValidationError from "../../shared/components/ValidationError";
+import ValidationError from "../../components/ValidationError";
 import PermissionsHandling from "../../shared/mixins/permissions-handling";
 import Auth from "../../services/auth";
-import UserPasswordUpdate from "./UserPasswordUpdate";
+import UserPasswordUpdate from "../../components/users/UserPasswordUpdate";
 export default {
   mixins: [FormTraits, PermissionsHandling],
   components: {

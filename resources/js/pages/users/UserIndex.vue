@@ -83,11 +83,11 @@
   </div>
 </template>
 <script>
-import ConfirmDialogueModal from "../../shared/components/modals/ConfirmDialogueModal";
+import ConfirmDialogueModal from "../../components/modals/ConfirmDialogueModal";
 import { is404, is409 } from "../../shared/utils/responses";
 import Permissions from "../../services/role-permissions";
-import UserDataCard from "./UserDataCard";
-import SimplePagination from "../../shared/components/SimplePagination";
+import UserDataCard from "../../components/users/UserDataCard";
+import SimplePagination from "../../components/SimplePagination";
 import IndexPaginationTraits from "../../shared/mixins/index-pagination-traits";
 export default {
   components: {

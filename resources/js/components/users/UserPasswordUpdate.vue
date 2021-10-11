@@ -67,7 +67,7 @@
 <script>
 import * as Responses from "../../shared/utils/responses";
 import FormTraits from "../../shared/mixins/form-traits";
-import ValidationError from "../../shared/components/ValidationError";
+import ValidationError from "../ValidationError";
 export default {
   mixins: [FormTraits],
   components: {

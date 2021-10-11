@@ -35,8 +35,8 @@
 </template>
 <script>
 import { is404 } from "../../shared/utils/responses";
-import PostCreatorOptions from "./PostCreatorOptions";
-import PostLoading from "../../shared/components/loading/PostAnimation";
+import PostCreatorOptions from "../../components/posts/PostCreatorOptions";
+import PostLoading from "../../components/loading/PostAnimation";
 export default {
   components: {
     PostCreatorOptions,

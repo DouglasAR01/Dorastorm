@@ -126,12 +126,12 @@
 </template>
 <script>
 import { is404, is422 } from "../../shared/utils/responses";
-import TextEditor from "../../shared/components/text-editor/RichTextEditor";
-import ValidationError from "../../shared/components/ValidationError";
-import ImageHoverOptions from "../../shared/components/ImageHoverOptions";
-import ImageModal from "../../shared/components/modals/ImageModal";
-import ConfirmDialogueModal from "../../shared/components/modals/ConfirmDialogueModal";
-import SingleFileUpload from "../../shared/components/SingleFileUpload";
+import TextEditor from "../../components/text-editor/RichTextEditor";
+import ValidationError from "../../components/ValidationError";
+import ImageHoverOptions from "../../components/ImageHoverOptions";
+import ImageModal from "../../components/modals/ImageModal";
+import ConfirmDialogueModal from "../../components/modals/ConfirmDialogueModal";
+import SingleFileUpload from "../../components/SingleFileUpload";
 import PermissionsHandling from "../../shared/mixins/permissions-handling";
 export default {
   components: {

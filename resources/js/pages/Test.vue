@@ -5,7 +5,7 @@
   </div>
 </template>
 <script>
-import BaseCarousel from "../shared/components/carousel/Carousel.vue";
+import BaseCarousel from "../components/carousel/Carousel.vue";
 export default {
   components: {
     BaseCarousel,

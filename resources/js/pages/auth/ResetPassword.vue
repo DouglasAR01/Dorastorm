@@ -55,7 +55,7 @@
   </div>
 </template>
 <script>
-import ValidationError from "../../shared/components/ValidationError";
+import ValidationError from "../../components/ValidationError";
 import Auth from "../../services/auth";
 import { is422 } from "../../shared/utils/responses";
 export default {

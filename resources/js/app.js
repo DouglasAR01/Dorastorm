@@ -10,7 +10,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Vuex from "vuex";
 import VueMeta from "vue-meta";
-import TheIndex from "./TheIndex";
+import Index from "./pages/Index";
 
 // Dayjs common use set up
 import dayjs from "dayjs";
@@ -77,7 +77,7 @@ const app = new Vue({
     store,
     i18n,
     components: {
-        TheIndex
+        TheIndex: Index
     },
     metaInfo: {
         title: "Default title",

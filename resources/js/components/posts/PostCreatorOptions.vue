@@ -33,7 +33,7 @@
 </template>
 <script>
 import PermissionsHandling from "../../shared/mixins/permissions-handling";
-import ConfirmDialogueModal from "../../shared/components/modals/ConfirmDialogueModal";
+import ConfirmDialogueModal from "../modals/ConfirmDialogueModal";
 export default {
   mixins: [PermissionsHandling],
   props: {

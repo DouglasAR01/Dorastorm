@@ -15,8 +15,8 @@
   </div>
 </template>
 <script>
-import SortableList from "../../shared/components/SortableList";
-import SortableListElement from "../../shared/components/SortableListElement";
+import SortableList from "../SortableList";
+import SortableListElement from "../SortableListElement";
 export default {
   components: {
     SortableList,
