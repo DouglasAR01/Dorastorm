@@ -8,25 +8,36 @@
         class="wp bg-light mt-0"
       ></post-creator-options>
       <div class="wp bg-light">
-        <img :src="post.banner" class="img-fluid mb-2 mx-auto d-block rounded post-banner">
-        <h1>{{ post.title }}</h1>
-        <div class="editor__content" v-html="post.content"></div>
-        <hr />
         <div class="row">
-          <div class="col-6">
-            <span>
-              <b>{{ $t("modules.posts.author") }}</b> {{ post.author.name }}
-            </span>
+          <div class="col-md-8">
+            <img
+              :src="post.banner"
+              class="img-fluid mb-2 mx-auto d-block rounded post-banner"
+            />
+            <h1>{{ post.title }}</h1>
+            <div class="editor__content" v-html="post.content"></div>
+            <hr />
+            <div class="row">
+              <div class="col-6">
+                <span>
+                  <b>{{ $t("modules.posts.author") }}</b> {{ post.author.name }}
+                </span>
+              </div>
+              <div class="col-6">
+                <span class="d-block">
+                  <b>{{ $t("message.created_at") }}</b>
+                  {{ post.created | humanDate }}
+                </span>
+                <span class="d-block text-muted">
+                  <b>{{ $t("message.updated_at") }}</b>
+                  {{ post.modified | humanDate }}
+                </span>
+              </div>
+            </div>
           </div>
-          <div class="col-6">
-            <span class="d-block">
-              <b>{{ $t("message.created_at") }}</b>
-              {{ post.created | humanDate }}
-            </span>
-            <span class="d-block text-muted">
-              <b>{{ $t("message.updated_at") }}</b>
-              {{ post.modified | humanDate }}
-            </span>
+          <div class="col-md-4">
+            <h3>Te recomendamos leer:</h3>
+            
           </div>
         </div>
       </div>
@@ -42,7 +53,7 @@ export default {
     PostCreatorOptions,
     PostLoading,
   },
-  metaInfo(){
+  metaInfo() {
     return {
       meta: [
         {
@@ -51,7 +62,7 @@ export default {
         },
       ],
       title: this.metaTitle,
-    }
+    };
   },
   data() {
     return {
@@ -61,17 +72,17 @@ export default {
   },
   computed: {
     metaTitle() {
-      if (this.post){
+      if (this.post) {
         return this.post.title;
       }
       return this.$t("message.loading");
     },
     metaDescription() {
-      if (this.post){
+      if (this.post) {
         return this.post.description;
       }
       return this.$t("message.loading");
-    }
+    },
   },
   async created() {
     this.loading = true;

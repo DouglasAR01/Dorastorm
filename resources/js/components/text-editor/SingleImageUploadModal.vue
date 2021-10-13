@@ -1,8 +1,13 @@
 <template>
   <base-modal ref="base">
     <div class="modal-header">
-      <h5 class="modal-title">{{$t("message.upload_image")}}</h5>
-      <button type="button" class="close" aria-label="Close" @click="$_SingleImageUploadModal_cancel">
+      <h5 class="modal-title">{{ $t("message.upload_image") }}</h5>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        @click="$_SingleImageUploadModal_cancel"
+      >
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -14,8 +19,11 @@
       ></single-file-upload>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-outline-secondary" @click.prevent="$_SingleImageUploadModal_cancel">
-        {{$t("message.cancel")}}
+      <button
+        class="btn btn-outline-secondary"
+        @click.prevent="$_SingleImageUploadModal_cancel"
+      >
+        {{ $t("message.cancel") }}
       </button>
     </div>
   </base-modal>
@@ -42,29 +50,24 @@ export default {
       return null;
     },
     disabled() {
-      if (this.url){
+      if (this.url) {
         return false;
       }
       return true;
-    }
+    },
   },
   methods: {
-    show(command) {
-      this.command = command;
+    show() {
       this.$refs.base.open();
     },
     reset() {
       this.url = null;
-      this.command = null;
     },
     $_SingleImageUploadModal_confirm(data) {
       this.url = data;
       const payload = {
-        command: this.command,
-        data: {
-          src: this.imageURL,
-          alt: "image",
-        },
+        src: this.imageURL,
+        alt: "image",
       };
       this.$emit("confirmed", payload);
       this.$refs.base.close();
