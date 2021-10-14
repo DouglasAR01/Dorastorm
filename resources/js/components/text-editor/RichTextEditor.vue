@@ -3,7 +3,26 @@
     <single-image-upload-modal ref="imgup" @confirmed="addImage" />
     <div class="menubar border-bottom mb-0" v-if="editor">
       <div class="btn-toolbar">
-        <div class="btn-group mr-1" role="group" aria-label="Group 1">
+        <div class="btn-group" role="group" aria-label="Group 0">
+          <button
+            class="btn menubar__button"
+            @click="editor.chain().focus().undo().run()"
+          >
+            <i class="fas fa-undo"></i>
+          </button>
+
+          <button
+            class="btn menubar__button"
+            @click="editor.chain().focus().redo().run()"
+          >
+            <i class="fas fa-redo"></i>
+          </button>
+        </div>
+        <div
+          class="btn-group mr-1 border-right"
+          role="group"
+          aria-label="Group 1"
+        >
           <button
             class="btn menubar__button"
             :class="{ 'is-active': editor.isActive('bold') }"
@@ -33,8 +52,19 @@
           >
             <i class="fas fa-underline"></i>
           </button>
+
+          <input
+            type="color"
+            class="btn menubar__button h-100"
+            @input="editor.chain().focus().setColor($event.target.value).run()"
+            :value="selectedTextColor"
+          />
         </div>
-        <div class="btn-group mr-1" role="group" aria-label="Group 2">
+        <div
+          class="btn-group mr-1 border-right"
+          role="group"
+          aria-label="Group 2"
+        >
           <button
             class="btn menubar__button"
             :class="{ 'is-active': editor.isActive('paragraph') }"
@@ -67,7 +97,45 @@
             H4
           </button>
         </div>
-        <div class="btn-group mr-1" role="group" aria-label="Group 3">
+        <div
+          class="btn-group mr-1 border-right"
+          role="group"
+          aria-label="Group 3"
+        >
+          <button
+            class="btn menubar__button"
+            :class="{ 'is-active': editor.isActive({ textAlign: 'left' }) }"
+            @click="editor.chain().focus().setTextAlign('left').run()"
+          >
+            <i class="fas fa-align-left"></i>
+          </button>
+          <button
+            class="btn menubar__button"
+            :class="{ 'is-active': editor.isActive({ textAlign: 'center' }) }"
+            @click="editor.chain().focus().setTextAlign('center').run()"
+          >
+            <i class="fas fa-align-center"></i>
+          </button>
+          <button
+            class="btn menubar__button"
+            :class="{ 'is-active': editor.isActive({ textAlign: 'right' }) }"
+            @click="editor.chain().focus().setTextAlign('right').run()"
+          >
+            <i class="fas fa-align-right"></i>
+          </button>
+          <button
+            class="btn menubar__button"
+            :class="{ 'is-active': editor.isActive({ textAlign: 'justify' }) }"
+            @click="editor.chain().focus().setTextAlign('justify').run()"
+          >
+            <i class="fas fa-align-justify"></i>
+          </button>
+        </div>
+        <div
+          class="btn-group mr-1 border-right"
+          role="group"
+          aria-label="Group 4"
+        >
           <button
             class="btn menubar__button"
             :class="{ 'is-active': editor.isActive('bulletList') }"
@@ -87,18 +155,19 @@
             class="btn menubar__button"
             @click="editor.chain().focus().setHorizontalRule().run()"
           >
-            <i class="fas fa-grip-lines"></i>
+            <i class="fas fa-minus"></i>
           </button>
         </div>
-        <div class="btn-group mr-1">
-          <button
-            class="btn menubar__button"
-            @click="tryImageUpload()"
-          >
+        <div class="btn-group mr-1 border-right">
+          <button class="btn menubar__button" @click="tryImageUpload()">
             <i class="far fa-image"></i>
           </button>
         </div>
-        <div class="btn-group mr-1" role="group" aria-label="Group 4">
+        <div
+          class="btn-group mr-1 border-right"
+          role="group"
+          aria-label="Group 5"
+        >
           <button
             class="btn menubar__button"
             :class="{ 'is-active': editor.isActive('blockquote') }"
@@ -122,20 +191,76 @@
           >
             <i class="fas fa-code"></i>
           </button>
-        </div>
-        <div class="btn-group" role="group" aria-label="Group 5">
-          <button
-            class="btn menubar__button"
-            @click="editor.chain().focus().undo().run()"
-          >
-            <i class="fas fa-undo"></i>
-          </button>
 
           <button
             class="btn menubar__button"
-            @click="editor.chain().focus().redo().run()"
+            :class="{ 'is-active': editor.isActive('highlight') }"
+            @click="editor.chain().focus().toggleHighlight().run()"
           >
-            <i class="fas fa-redo"></i>
+            <i class="fas fa-highlighter"></i>
+          </button>
+        </div>
+        <div class="btn-group">
+          <div class="border rounded">
+            <button
+              class="btn menubar__button h-100"
+              @click="
+                editor
+                  .chain()
+                  .focus()
+                  .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
+                  .run()
+              "
+            >
+              <i class="fas fa-table"></i>
+            </button>
+            <button
+              class="btn menubar__button h-100"
+              @click="editor.chain().focus().deleteTable().run()"
+            >
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+          <div class="border rounded">
+            <button
+              class="btn menubar__button h-100"
+              @click="editor.chain().focus().addColumnAfter().run()"
+            >
+              <i class="fas fa-grip-lines-vertical"></i>
+            </button>
+            <button
+              class="btn menubar__button h-100"
+              @click="editor.chain().focus().deleteColumn().run()"
+            >
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+          <div class="border rounded">
+            <button
+              class="btn menubar__button"
+              @click="editor.chain().focus().addRowAfter().run()"
+            >
+              <i class="fas fa-grip-lines"></i>
+            </button>
+            <button
+              class="btn menubar__button"
+              @click="editor.chain().focus().deleteRow().run()"
+            >
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+          <button
+            class="btn menubar__button"
+            @click="editor.chain().focus().mergeOrSplit().run()"
+          >
+            <i class="far fa-square"></i>
+            <i class="far fa-square"></i>
+          </button>
+          <button
+            class="btn menubar__button"
+            @click="editor.chain().focus().toggleHeaderCell().run()"
+          >
+            <i class="fas fa-th-large"></i>
           </button>
         </div>
       </div>
@@ -150,6 +275,14 @@
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import Image from "@tiptap/extension-image";
+import TextAlign from "@tiptap/extension-text-align";
+import { Color } from "@tiptap/extension-color";
+import TextStyle from "@tiptap/extension-text-style";
+import Highlight from "@tiptap/extension-highlight";
+import Table from "@tiptap/extension-table";
+import TableRow from "@tiptap/extension-table-row";
+import TableCell from "@tiptap/extension-table-cell";
+import TableHeader from "@tiptap/extension-table-header";
 import { Editor, EditorContent } from "@tiptap/vue-2";
 import SingleImageUploadModal from "./SingleImageUploadModal.vue";
 export default {
@@ -177,6 +310,18 @@ export default {
         }),
         Underline,
         Image,
+        TextAlign.configure({
+          types: ["heading", "paragraph"],
+        }),
+        TextStyle,
+        Color,
+        Highlight,
+        Table.configure({
+          resizable: true,
+        }),
+        TableRow,
+        TableHeader,
+        TableCell,
       ],
       content: this.value,
       onUpdate: ({ editor }) => {
@@ -194,6 +339,12 @@ export default {
     },
     addImage(payload) {
       this.editor.chain().focus().setImage(payload).run();
+    },
+  },
+  computed: {
+    selectedTextColor() {
+      var color = this.editor.getAttributes("textStyle").color;
+      return color ? color : "#000000";
     },
   },
 };
