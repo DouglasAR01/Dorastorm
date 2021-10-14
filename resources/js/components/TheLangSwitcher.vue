@@ -24,7 +24,8 @@ export default {
       axios.post("/locale", {
         locale: langKey
       });
-      await setLocale(this.$i18n, langKey);
+      const locale = await setLocale(this.$i18n, langKey);
+      this.$store.dispatch('setLocale', locale);
       this.$router.replace({
         name: this.$route.name,
         params: { locale: langKey}

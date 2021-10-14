@@ -1,12 +1,12 @@
 export const isApparentlyLoggedIn = function () {
     return !!localStorage.getItem('happy');
 }
-export const isLoggedIn = async function (){
+export const isLoggedIn = async function () {
     try {
         return (await axios.get("/api/session")).data.result;
     } catch (error) {
         return false;
-    }    
+    }
 }
 export const isUserHere = function () {
     return !!localStorage.getItem('user');
@@ -16,6 +16,11 @@ export const saveUser = function (user) {
 }
 export const loadSavedUser = function () {
     return JSON.parse(localStorage.getItem('user'));
+}
+
+export const removeSavedUser = function () {
+    localStorage.removeItem('happy');
+    localStorage.removeItem('user');
 }
 
 export default {
@@ -44,8 +49,7 @@ export default {
     async logout() {
         try {
             await axios.post("/api/logout");
-            localStorage.removeItem('happy');
-            localStorage.removeItem('user');
+            removeSavedUser();
             return true;
         } catch (error) {
             // No internet connection

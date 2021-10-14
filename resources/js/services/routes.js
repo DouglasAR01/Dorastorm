@@ -241,7 +241,7 @@ router.beforeEach((to, from, next) => {
                 } else {
                     next({
                         name: '403',
-                        params: { locale: from.params.locale }
+                        params: { locale: Store.state.locale.code }
                     });
                 }
             } else {
@@ -259,7 +259,7 @@ router.beforeEach((to, from, next) => {
             }
             next({
                 name: 'login',
-                params: { locale: from.params.locale }
+                params: { locale: Store.state.locale.code }
             });
         }
     } else if (to.matched.some(record => record.meta.guest)) {
@@ -270,7 +270,7 @@ router.beforeEach((to, from, next) => {
             // Redirect to another, non-GUEST route.
             next({
                 name: 'me',
-                params: { locale: from.params.locale }
+                params: { locale: Store.state.locale.code }
             });
         } else {
             // The user wasn't authenticated. Continue.

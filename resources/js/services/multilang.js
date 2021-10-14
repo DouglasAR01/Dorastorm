@@ -74,9 +74,10 @@ export const supportedLocalesInclude = function (langCode) {
     Check and set the locale to i18n.
 */
 export const setLocale = async function (context, langCode) {
-    const code = supportedLocalesInclude(langCode).code;
-    await loadLocale(code);
-    context.locale = code;    
+    const locale = supportedLocalesInclude(langCode);
+    await loadLocale(locale.code);
+    context.locale = locale.code;
+    return locale;    
 }
 /*
     This function gets all DoraStorm supported langs and returns a n-tuple of its lang codes

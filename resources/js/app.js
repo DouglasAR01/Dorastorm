@@ -61,26 +61,58 @@ window.axios.interceptors.response.use(
         if (error.response.status == 401) {
             await Auth.logout();
             store.dispatch('logout');
-            router.push({ name: 'login', params: {locale: this.$route.params.locale} });
+            router.push({ name: 'login', params: { locale: store.getters.getLocaleCode } });
         }
         // 403 = Forbidden
         if (error.response.status == 403) {
-            router.push({ name: '403', params: {locale: this.$route.params.locale} });
+            router.push({ name: '403', params: { locale: store.getters.getLocaleCode } });
         }
         return Promise.reject(error);
     }
 );
-store.dispatch('loadSavedData');
-const app = new Vue({
-    el: '#app',
-    router,
-    store,
-    i18n,
-    components: {
-        TheIndex: Index
-    },
-    metaInfo: {
-        title: "Default title",
-        titleTemplate: "%s | Dorastorm"
-    }
-});
+
+function showApp() {
+    return new Vue({
+        el: '#app',
+        router,
+        store,
+        i18n,
+        components: {
+            TheIndex: Index
+        },
+        metaInfo: {
+            title: "Default title",
+            titleTemplate: "%s | Dorastorm"
+        }
+    });
+}
+import { getLocale } from "./services/multilang";
+// App booting
+console.log("Iniciando...");
+// Check if the URL has a locale
+const loc = window.location.pathname.split("/", 2);
+const lang = (loc[1] != '') ? getLocale(loc[1]) : getLocale();
+const payload = (lang) ? lang : getLocale();
+store.dispatch('setLocale', payload);
+// Check if the user is apparently logged in
+if (!!localStorage.getItem('happy')) {
+    console.log("Verificando...");
+    window.axios.get("/api/session").then((response) => {
+        // If the user isn't signed in server side flush the session data
+        if (!response.data.result) {
+            console.log("Borrando...");
+            store.dispatch('logout');
+        } else {
+            // If the users is signed in server sided, load the data
+            console.log("Cargando");
+            store.dispatch('loadSavedData');
+        }
+    }).then(() => {
+        console.log("Ejecutando...");
+        showApp();
+    });
+
+} else {
+    console.log("Ejecutando guest...");
+    showApp();
+}
