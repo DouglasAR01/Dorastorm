@@ -19,9 +19,9 @@ dayjs.extend(relativeTime);
 
 // Services
 import DataStore from "./services/store";
-import Auth from "./services/auth";
+import Auth, {isApparentlyLoggedIn, checkLoggedIn, isUserHere} from "./services/auth";
 import router from "./services/routes";
-import i18n from "./services/multilang";
+import i18n, { getLocale } from "./services/multilang";
 
 
 // Toast notifications
@@ -86,33 +86,35 @@ function showApp() {
         }
     });
 }
-import { getLocale } from "./services/multilang";
 // App booting
-console.log("Iniciando...");
+//console.log("Iniciando...");
 // Check if the URL has a locale
 const loc = window.location.pathname.split("/", 2);
 const lang = (loc[1] != '') ? getLocale(loc[1]) : getLocale();
 const payload = (lang) ? lang : getLocale();
 store.dispatch('setLocale', payload);
 // Check if the user is apparently logged in
-if (!!localStorage.getItem('happy')) {
-    console.log("Verificando...");
-    window.axios.get("/api/session").then((response) => {
+if (isApparentlyLoggedIn()) {
+    //console.log("Verificando...");
+    checkLoggedIn().then((response) => {
         // If the user isn't signed in server side flush the session data
         if (!response.data.result) {
-            console.log("Borrando...");
+            //console.log("Borrando...");
             store.dispatch('logout');
         } else {
             // If the users is signed in server sided, load the data
-            console.log("Cargando");
-            store.dispatch('loadSavedData');
+            //console.log("Comprobando usuario...");
+            if (isUserHere()){
+                //console.log("Cargando...");
+                store.dispatch('loadSavedData');
+            }
         }
     }).then(() => {
-        console.log("Ejecutando...");
+        //console.log("Ejecutando...");
         showApp();
     });
 
 } else {
-    console.log("Ejecutando guest...");
+    //console.log("Ejecutando guest...");
     showApp();
 }

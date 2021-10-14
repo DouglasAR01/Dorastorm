@@ -31,28 +31,6 @@ export default {
         },
         loadSavedData(context) {
             // Here comes all the commits that have to be made everytime the app initialize
-
-            // LoggedIn logic should be the last in the execution list
-            // let isApparentlyLoggedIn = auth.isApparentlyLoggedIn();
-            // // Check if the logged in token exists
-            // console.log("0");
-            // if (!isApparentlyLoggedIn) {
-            //     console.log("No está APARENTEMENTE logeado");
-            //     context.dispatch('logout');
-            //     return;
-            // }
-            // // Check if the users is truly logged in making a call to the API
-            // if (!(auth.isLoggedIn())) {
-            //     console.log("limpa");
-            //     context.dispatch('logout');
-            //     return;
-            // }
-            // console.log("2");
-            // // Check if the user info is loaded
-            // if (!auth.isUserHere()) {
-            //     context.dispatch('logout');
-            //     return;
-            // }
             context.commit('setLoggedIn', auth.isApparentlyLoggedIn());
             context.commit('setUser', auth.loadSavedUser());
         },
