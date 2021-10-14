@@ -187,6 +187,7 @@ var BASE_ROUTES = [
     {
         path: `/:locale${getLocalesCodes()}?`,
         component: {
+            name: "BaseContent",
             template: "<router-view></router-view>"
         },
         children: CHILD_ROUTES,
@@ -238,7 +239,10 @@ router.beforeEach((to, from, next) => {
                 if (Permissions.checkUserPermission(Store.state.user, to.meta.permission)) {
                     next();
                 } else {
-                    next();
+                    next({
+                        name: '403',
+                        params: { locale: from.params.locale }
+                    });
                 }
             } else {
                 next();
@@ -253,7 +257,10 @@ router.beforeEach((to, from, next) => {
                 Store.state.isLoggedIn = false;
                 Store.state.user = null;
             }
-            next();
+            next({
+                name: 'login',
+                params: { locale: from.params.locale }
+            });
         }
     } else if (to.matched.some(record => record.meta.guest)) {
         // This route (↑) requires to be a GUEST.
@@ -261,7 +268,10 @@ router.beforeEach((to, from, next) => {
         // shouldn't be here.
         if (AuthExtra.isApparentlyLoggedIn()) {
             // Redirect to another, non-GUEST route.
-            next();
+            next({
+                name: 'me',
+                params: { locale: from.params.locale }
+            });
         } else {
             // The user wasn't authenticated. Continue.
             next();
