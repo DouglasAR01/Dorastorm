@@ -90,7 +90,7 @@ export default {
     try {
       this.roles = (await axios.get("/api/roles")).data.data;
     } catch (error) {
-      this.$toast.error(this.$t("error.fatal"));
+      this.$toasts.error(this.$t("error.fatal"));
     }
     this.loading = false;
   },
