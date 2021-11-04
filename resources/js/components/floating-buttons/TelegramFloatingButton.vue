@@ -1,6 +1,6 @@
 <template>
   <base-floating-button
-    target="https://telegram.me/nuwebsco"
+    :target="`https://telegram.me/${tUser}`"
     class="brand-colors"
     :yb="120"
   >
@@ -13,6 +13,12 @@ export default {
   components: {
     BaseFloatingButton,
   },
+  props: {
+    tUser: {
+      type: String,
+      required: true
+    }
+  }
 };
 </script>
 <style scoped>

@@ -1,14 +1,19 @@
 <template>
   <div class="container-fluid">
     <base-carousel :content="images" class="test"/>
-    
-  </div>
+    <whatsapp-floating-button number="573184301032" text="ola"/>
+    <telegram-button t-user="nuwebsco"></telegram-button>
+  </div>  
 </template>
 <script>
 import BaseCarousel from "../components/carousel/Carousel.vue";
+import WhatsappFloatingButton from "../components/floating-buttons/WhatsappFloatingButton";
+import TelegramButton from "../components/floating-buttons/TelegramFloatingButton";
 export default {
   components: {
     BaseCarousel,
+    WhatsappFloatingButton,
+    TelegramButton
   },
   data() {
     return {
