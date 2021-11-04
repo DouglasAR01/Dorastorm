@@ -214,7 +214,19 @@ if (Config.DEBUG) {
 
 const router = new VueRouter({
     mode: 'history',
-    routes: BASE_ROUTES
+    routes: BASE_ROUTES,
+    scrollBehavior(to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition
+        }
+        if (to.hash) {
+            return {
+                selector: to.hash,
+                behavior: 'smooth'
+            }
+        }
+        return { x: 0, y: 0 }
+    }
 });
 
 // The logic in the method below is stupidly complex because the next() method
