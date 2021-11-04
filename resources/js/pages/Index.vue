@@ -8,7 +8,7 @@
   </div>
 </template>
 <script>
-import TheNavbar from "../components/TheNavbar";
+import TheNavbar from "../components/navbar/TheNavbar";
 import TheFooter from "../components/TheFooter";
 export default {
   components: { TheNavbar, TheFooter },

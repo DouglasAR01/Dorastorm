@@ -1,6 +1,6 @@
 <template>
   <div class="collapse navbar-collapse" :id="cid">
-    <ul class="navbar-nav ml-auto">
+    <ul class="ml-auto">
       <slot></slot>
     </ul>
   </div>
