@@ -5,7 +5,7 @@ import Permissions from "./role-permissions";
 import i18n, { getLocale, getLocalesCodes, loadLocale } from "./multilang";
 import Config from "../app.config";
 // Components
-import TheHome from "../components/TheHome";
+import Home from "../pages/Home";
 import Login from "../pages/auth/Login";
 // Static (not splitted) components
 import ForgotPassword from "../pages/auth/ForgotPassword";
@@ -19,7 +19,7 @@ import Test from "../pages/Test";
 const CHILD_ROUTES = [
     {
         path: '',
-        component: TheHome,
+        component: Home,
         name: 'home'
     },
     {

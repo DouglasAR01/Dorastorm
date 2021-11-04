@@ -11,7 +11,7 @@
   </div>
 </template>
 <script>
-import QuoteForm from "./quotes/QuoteForm.vue";
+import QuoteForm from "../components/quotes/QuoteForm.vue";
 export default {
   components: {
     QuoteForm
