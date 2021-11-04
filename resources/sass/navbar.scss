@@ -1,0 +1,16 @@
+.navbar-dark .navbar-nav .nav-link {
+    color: $white;
+
+    &:hover {
+        color: theme-color("light");
+        background-color: lighten(theme-color("dark"), 25%);
+    }
+}
+.navbar-light .navbar-nav .nav-link {
+    color: theme-color("info");
+
+    &:hover {
+        color: darken(theme-color("info"), 20%);
+        background-color: theme-color("success");
+    }
+}
