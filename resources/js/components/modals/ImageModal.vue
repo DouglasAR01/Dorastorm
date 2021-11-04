@@ -1,6 +1,6 @@
 <template>
   <base-modal ref="base" overlay-classes="modal-image-overlay" dialog-classes="m-auto" content-classes="modal-image-dialog">
-    <template v-slot:top-right-close>
+    <template #top-right-close>
       <span class="modal-image-close" @click="$_ImageModal_hide()">&times;</span>
     </template>
     <div class="modal-image-content">
