@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('/config-cache', function() {
+    Artisan::call('config:cache');
+});
 Route::get('/posts','PostController@index')->name('posts.index');
 Route::get('/posts/{post_slug}','PostController@show')->name('posts.show');
 Route::get('/session', 'SessionController@check')->name('session.check');
