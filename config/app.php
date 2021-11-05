@@ -1,5 +1,7 @@
 <?php
 
+use App\Providers\Features;
+
 return [
 
     /*
@@ -40,6 +42,24 @@ return [
     */
 
     'debug' => (bool) env('APP_DEBUG', false),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Features
+    |--------------------------------------------------------------------------
+    |
+    | Some of the Dorastorm features are optional. You may disable the features
+    | by removing them from this array. You're free to only remove some of
+    | these features or you can even remove all of these if you need to.
+    |
+    */
+
+    'features' => [
+        Features::auth(),
+        Features::userManagement(),
+        Features::posts(),
+        Features::quotes()
+    ],
 
     /*
     |--------------------------------------------------------------------------
