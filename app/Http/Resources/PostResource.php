@@ -4,8 +4,6 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-use function PHPUnit\Framework\isEmpty;
-
 class PostResource extends JsonResource
 {
     /**
@@ -31,6 +29,7 @@ class PostResource extends JsonResource
                 'id' => $author->id,
                 'name' => $author->name
             ],
+            'tags' => $this->tagNames,
             'created' => $this->created_at,
             'modified' => $this->updated_at,
         ];

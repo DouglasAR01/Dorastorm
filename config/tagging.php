@@ -24,7 +24,7 @@ return [
 	'tag_model'=>'\Conner\Tagging\Model\Tag',
 
 	// Delimiter used within tags
-	'delimiter' => '-',
+	'delimiter' => ',',
 
     'tag_model' => '\Conner\Tagging\Model\Tag',
 

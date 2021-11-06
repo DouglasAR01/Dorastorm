@@ -33,6 +33,7 @@ if (Features::enabled(Features::auth())) {
 
     if (Features::enabled(Features::posts())) {
         Route::get('/posts', 'PostController@index')->name('posts.index');
+        Route::get('/tags/posts', 'PostController@getAllTags')->name('posts.tags');
         Route::get('/posts/{post_slug}', 'PostController@show')->name('posts.show');
     }
 

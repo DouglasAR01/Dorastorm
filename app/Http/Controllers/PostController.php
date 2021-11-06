@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\PostResource;
+use App\Http\Resources\PostsTags;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +15,7 @@ class PostController extends Controller
         'description' => 'required|string|min:5|max:300',
         'content' => 'required|string',
         'banner' => 'nullable|string|max:191',
+        'tags' => 'nullable|string',
         'visible' => 'boolean',
         'private' => 'boolean'
     ];
@@ -65,6 +67,10 @@ class PostController extends Controller
         $newPost->private = $data['private'] ?? false;
         $newPost->user_id = $request->user()->id;
         $newPost->save();
+        if ($request->filled('tags')){
+            $tags = explode(',', $data['tags']);
+            $newPost->tag($tags);
+        }
         return new PostResource($newPost);
     }
 
@@ -133,10 +139,14 @@ class PostController extends Controller
         if (!empty($post->banner)) {
             $url .= $post->banner;
         }
-        if ($data['banner'] != $url) {
+        if (!empty($data['banner']) && $data['banner'] != $url) {
             $post->banner = $data['banner'];
         }
         $post->save();
+        if ($request->filled('tags')){
+            $tags = explode(',', $data['tags']);
+            $post->retag($tags);
+        }
         return new PostResource($post);
     }
 
@@ -153,6 +163,11 @@ class PostController extends Controller
             abort(403);
         }
         $post->delete();
+    }
+
+    public function getAllTags()
+    {
+        return PostsTags::collection(Post::existingTags());
     }
 
     private function executeIndexQuery(Request $request, $query)

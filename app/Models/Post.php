@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use Conner\Tagging\Taggable;
 
 class Post extends Model
 {
     use HasFactory;
+    use Taggable;
 
     protected $guarded = [
         'private'
