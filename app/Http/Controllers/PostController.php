@@ -27,11 +27,11 @@ class PostController extends Controller
     public function index(Request $request)
     {
         // Check if the user is trying to get their own posts
-        if ($request->filled('mine')){
-            if (!Auth::check()){
+        if ($request->filled('mine')) {
+            if (!Auth::check()) {
                 abort(401);
             }
-            if ($request->user()->cannot('create', Post::class)){
+            if ($request->user()->cannot('create', Post::class)) {
                 abort(403);
             }
             $query = Post::where('user_id', $request->user()->id);
@@ -41,8 +41,8 @@ class PostController extends Controller
         $query = Post::where('visible', 1);
         // If the request has the p field filled, the index will only show visible and private posts
         $private = 0;
-        if ($request->filled('p')){
-            if (!Auth::check()){
+        if ($request->filled('p')) {
+            if (!Auth::check()) {
                 abort(401);
             }
             $private = 1;
@@ -67,7 +67,7 @@ class PostController extends Controller
         $newPost->private = $data['private'] ?? false;
         $newPost->user_id = $request->user()->id;
         $newPost->save();
-        if ($request->filled('tags')){
+        if ($request->filled('tags')) {
             $tags = explode(',', $data['tags']);
             $newPost->tag($tags);
         }
@@ -143,7 +143,7 @@ class PostController extends Controller
             $post->banner = $data['banner'];
         }
         $post->save();
-        if ($request->filled('tags')){
+        if ($request->filled('tags')) {
             $tags = explode(',', $data['tags']);
             $post->retag($tags);
         }
@@ -165,11 +165,21 @@ class PostController extends Controller
         $post->delete();
     }
 
+    /**
+     * Returns all posts related tags
+     * 
+     * @return App\Http\Resource\PostsTags
+     */
     public function getAllTags()
     {
         return PostsTags::collection(Post::existingTags());
     }
 
+    /**
+     * Performs the posts query with eager loading
+     * 
+     * @return App\Http\Resource\PostResource
+     */
     private function executeIndexQuery(Request $request, $query)
     {
         if ($request->filled('q')) {
@@ -179,6 +189,6 @@ class PostController extends Controller
                     ->orWhere('content', 'LIKE', "%$q%");
             });
         }
-        return PostResource::collection($query->orderBy('created_at', 'desc')->paginate(15));
+        return PostResource::collection($query->orderBy('created_at', 'desc')->with(['user', 'tagged'])->paginate(15));
     }
 }
