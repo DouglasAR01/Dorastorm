@@ -100,7 +100,8 @@
             "tags": {
                 "discard": "Descartar búsqueda",
                 "placeholder": "Agrega una etiqueta y oprime enter",
-                "tags": "Etiquetas:"
+                "tags": "Etiquetas:",
+                "no_tags": "Esta publicación no tiene ningua etiqueta"
             }
         },
         "quotes": {
@@ -142,7 +143,7 @@
     },
 
     "message": {
-        "powered": "Impulsado por Nuwebs usando Dorastorm™",
+        "powered": "Impulsado por <a href='https://nuwebs.co/' target='_blank'>Nuwebs</a> usando Dorastorm™",
         "email": "Correo electrónico:",
         "password": "Contraseña:",
         "remember_me": "Recuérdame",

@@ -12,7 +12,7 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-9 pl-md-4">
-            <div class="bg-light p-4">
+            <div class="bg-light p-4 rounded">
               <h1>{{ post.title }}</h1>
               <img
                 :src="post.banner"
@@ -39,23 +39,28 @@
                 </div>
                 <div class="col-md-4">
                   <b>Tags:</b>
-                  <span
-                    class="badge badge-secondary ml-1"
-                    v-for="(tag, index) in post.tags"
-                    :key="index"
-                  >
-                    {{ tag }}
+                  <div v-if="post.tags.lenght > 0" key="iftags">
+                    <span
+                      class="badge badge-secondary ml-1"
+                      v-for="(tag, index) in post.tags"
+                      :key="index"
+                    >
+                      {{ tag }}
+                    </span>
+                  </div>
+                  <span v-else>
+                    {{$t("modules.posts.tags.no_tags")}}
                   </span>
                 </div>
               </div>
             </div>
           </div>
           <div class="col-md-3">
-            <div class="bg-light p-4">
+            <div class="bg-light p-4 rounded">
               <h3>
-                {{$t("modules.posts.recommended")}}
+                {{ $t("modules.posts.recommended") }}
               </h3>
-            </div>            
+            </div>
           </div>
         </div>
       </div>

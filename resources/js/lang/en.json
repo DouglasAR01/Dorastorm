@@ -99,7 +99,8 @@
             "tags": {
                 "discard": "Discard search",
                 "placeholder": "Add a tag and press enter",
-                "tags": "Tags:"
+                "tags": "Tags:",
+                "no_tags": "This post doesn't have any tag"
             }
         },
         "quotes": {
@@ -140,7 +141,7 @@
         "logout": "Log out"
     },
     "message": {
-        "powered": "Powered by Nuwebs using Dorastorm™",
+        "powered": "Powered by <a href='https://nuwebs.co/en' target='_blank'>Nuwebs</a> using Dorastorm™",
         "email": "E-mail:",
         "password": "Password:",
         "remember_me": "Remember me?",
