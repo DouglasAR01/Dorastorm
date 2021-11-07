@@ -74,7 +74,7 @@
             "deleted": "La publicación ha sido eliminada.",
             "delete_warning": "¿Estás seguro de querer eliminar esta publicación? esta acción no se puede deshacer.",
             "title": "Título de la publicación:",
-            "description": "Breve descripción de la publicación",
+            "description": "Breve descripción de la publicación:",
             "content": "Contenido:",
             "options": "Opciones de visibilidad:",
             "visible": "Esta publicación es visible",
@@ -95,7 +95,13 @@
             "tag_private": "Privado",
             "posts": "Publicaciones",
             "private_index": "Publicaciones para el personal",
-            "my_posts": "Mis publicaciones"
+            "my_posts": "Mis publicaciones",
+            "recommended": "Te recomendamos leer:",
+            "tags": {
+                "discard": "Descartar búsqueda",
+                "placeholder": "Agrega una etiqueta y oprime enter",
+                "tags": "Etiquetas:"
+            }
         },
         "quotes": {
             "index": "Ver cotizaciones",

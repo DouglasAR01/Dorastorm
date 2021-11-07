@@ -85,6 +85,21 @@
         ></text-editor>
       </validation-error>
     </div>
+    <div class="form-group" v-if="!loading">
+      <label for="tags">{{ $t("modules.posts.tags.tags") }}</label>
+      <tags-input
+        name="tags"
+        v-model="selectedTags"
+        :existing-tags="existingTags"
+        :typeahead="true"
+        :typeahead-max-results="15"
+        :id-field="cKey"
+        :text-field="cValue"
+        :add-tags-on-comma="true"
+        :discard-search-text="$t('modules.posts.tags.discard')"
+        :placeholder="$t('modules.posts.tags.placeholder')"
+      />
+    </div>
     <button
       class="btn btn-primary btn-block"
       :disabled="submitting"
@@ -99,16 +114,21 @@ import TextEditor from "../../components/text-editor/RichTextEditor";
 import ValidationError from "../../components/ValidationError";
 import SingleFileUpload from "../../components/SingleFileUpload";
 import { is422 } from "../../shared/utils/responses";
+import TagsInput from "@voerro/vue-tagsinput";
+import TagsMixin from "../../shared/mixins/tags";
 export default {
   components: {
     TextEditor,
     ValidationError,
     SingleFileUpload,
+    TagsInput,
   },
+  mixins: [TagsMixin],
   data() {
     return {
       submitting: false,
       errors: null,
+      loading: false,
       newPost: {
         title: null,
         description: null,
@@ -119,20 +139,31 @@ export default {
       },
     };
   },
+  async mounted() {
+    this.loading = true;
+    try {
+      this.existingTags = (await axios.get("/api/tags/posts")).data.data;
+      this.loading = false;
+    } catch (error) {
+      this.$toasts.error(this.$t("error.fatal"));
+    }
+  },
   methods: {
     async submit() {
       this.submitting = true;
       try {
+        this.newPost.tags = this.tagsToString();
         const post = (await axios.post("/api/posts", this.newPost)).data.data;
         this.$toasts.success(this.$t("modules.posts.created"));
         this.$router.push({
           name: "posts-read",
           params: {
             slug: post.slug,
-            locale: this.$route.params.locale
+            locale: this.$route.params.locale,
           },
         });
       } catch (error) {
+        console.log(error);
         if (is422(error)) {
           this.errors = error.response.data.errors;
         } else {

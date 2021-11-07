@@ -12,5 +12,14 @@ export default {
         USERS_MANAGEMENT: true, //Requires AUTH
         POSTS: true, //Requires AUTH
         QUOTES: true //Requires AUTH
+    },
+
+    /**
+     * Tag system:
+     * Change the key and value params to fit your backend existing tags attributes.
+     */
+    tags: {
+        KEY_NAME: "slug",
+        VALUE_NAME: "name"
     }
 }

@@ -114,6 +114,21 @@
           ></text-editor>
         </validation-error>
       </div>
+      <div class="form-group" v-if="!loading">
+        <label for="tags">{{ $t("modules.posts.tags.tags") }}</label>
+        <tags-input
+          name="tags"
+          v-model="selectedTags"
+          :existing-tags="existingTags"
+          :typeahead="true"
+          :typeahead-max-results="15"
+          :id-field="cKey"
+          :text-field="cValue"
+          :add-tags-on-comma="true"
+          :discard-search-text="$t('modules.posts.tags.discard')"
+          :placeholder="$t('modules.posts.tags.placeholder')"
+        />
+      </div>
       <button
         class="btn btn-primary btn-block"
         :disabled="submitting"
@@ -133,6 +148,8 @@ import ImageModal from "../../components/modals/ImageModal";
 import ConfirmDialogueModal from "../../components/modals/ConfirmDialogueModal";
 import SingleFileUpload from "../../components/SingleFileUpload";
 import PermissionsHandling from "../../shared/mixins/permissions-handling";
+import TagsInput from "@voerro/vue-tagsinput";
+import TagsMixin from "../../shared/mixins/tags";
 export default {
   components: {
     ValidationError,
@@ -141,8 +158,9 @@ export default {
     ImageModal,
     SingleFileUpload,
     ConfirmDialogueModal,
+    TagsInput,
   },
-  mixins: [PermissionsHandling],
+  mixins: [PermissionsHandling, TagsMixin],
   data() {
     return {
       loading: false,
@@ -162,6 +180,7 @@ export default {
       this.post = (
         await axios.get("/api/posts/" + this.$route.params.postId + "/edit")
       ).data.data;
+      this.selectedTags = this.arrayToTagsArray(this.post.tags);
       if (!this._checkIfUpdatable()) {
         this.$toasts.error(this.$t("error.403.default_title"));
         this.$router.push({
@@ -169,6 +188,7 @@ export default {
           params: { locale: this.$route.params.locale },
         });
       }
+      this.existingTags = (await axios.get("/api/tags/posts")).data.data;
     } catch (error) {
       if (is404(error)) {
         this.$toasts.error(this.$t("error.404.specific.post"));
@@ -198,6 +218,7 @@ export default {
     async submit() {
       this.submitting = true;
       try {
+        this.post.tags = this.tagsToString();
         const post = (
           await axios.patch("/api/posts/" + this.post.id, this.post)
         ).data.data;
