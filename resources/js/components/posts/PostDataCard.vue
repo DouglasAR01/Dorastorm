@@ -63,6 +63,7 @@ export default {
         name: "posts-read",
         params: {
           slug: this.post.slug,
+          locale: this.$route.params.locale
         },
       };
     },
