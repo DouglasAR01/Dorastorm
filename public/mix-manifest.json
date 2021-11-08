@@ -1,12 +1,12 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
-    "/js/auth.js": "/js/auth.js",
-    "/js/es-json.js": "/js/es-json.js",
-    "/js/posts.js": "/js/posts.js",
-    "/js/quotes.js": "/js/quotes.js",
-    "/js/roles.js": "/js/roles.js",
-    "/js/users.js": "/js/users.js",
-    "/js/vendors~posts.js": "/js/vendors~posts.js",
-    "/js/vendors~roles.js": "/js/vendors~roles.js"
+    "/js/app.js": "/js/app.js?id=1035829482d2df46696b",
+    "/css/app.css": "/css/app.css?id=d6ff0d3e0a9d209d497d",
+    "/js/auth.js": "/js/auth.js?id=bd929d5cb75c958dc45f",
+    "/js/es-json.js": "/js/es-json.js?id=0678cc11418fe74183b4",
+    "/js/posts.js": "/js/posts.js?id=9d7d8318f673bbfdcddf",
+    "/js/quotes.js": "/js/quotes.js?id=6464aecfd24c731ae417",
+    "/js/roles.js": "/js/roles.js?id=c3d277ecdb76977acb0b",
+    "/js/users.js": "/js/users.js?id=535cb518d8075a606851",
+    "/js/vendors~posts.js": "/js/vendors~posts.js?id=bd18103590228af4ce3d",
+    "/js/vendors~roles.js": "/js/vendors~roles.js?id=42d45ad9fc9a2a27346b"
 }
