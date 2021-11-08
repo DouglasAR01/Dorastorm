@@ -189,6 +189,23 @@ class PostController extends Controller
                     ->orWhere('content', 'LIKE', "%$q%");
             });
         }
+        if ($request->filled('t')) {
+            $t = $request->input('t');
+            if (strlen($t) > 0) {
+                $tags = explode(',', $t);
+                $query->withAnyTag($tags);
+            }
+        }
+        if ($request->filled('e')) {
+            $e = $request->input('e');
+            if (strlen($e) > 0) {
+                $exclude = str_replace(',', '|', $e);
+                $query->where(function ($query) use ($exclude) {
+                    $query->where('title', 'NOT RLIKE', "$exclude")
+                        ->where('content', 'NOT RLIKE', "$exclude");
+                });
+            }
+        }
         return PostResource::collection($query->orderBy('created_at', 'desc')->with(['user', 'tagged'])->paginate(15));
     }
 }
