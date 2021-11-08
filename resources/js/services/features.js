@@ -148,7 +148,8 @@ if (CONFIG.features.AUTH && CONFIG.features.POSTS) {
         {
             path: 'posts/:slug',
             component: PostRead,
-            name: 'posts-read'
+            name: 'posts-read',
+            props: true
         },
         {
             path: 'posts/update/:postId',

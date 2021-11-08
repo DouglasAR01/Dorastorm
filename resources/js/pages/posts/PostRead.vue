@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-md-4">
                   <b>Tags:</b>
-                  <div v-if="post.tags.lenght > 0" key="iftags">
+                  <div v-if="post.tags.length > 0" key="iftags">
                     <span
                       class="badge badge-secondary ml-1"
                       v-for="(tag, index) in post.tags"
@@ -49,7 +49,7 @@
                     </span>
                   </div>
                   <span v-else>
-                    {{$t("modules.posts.tags.no_tags")}}
+                    {{ $t("modules.posts.tags.no_tags") }}
                   </span>
                 </div>
               </div>
@@ -60,6 +60,9 @@
               <h3>
                 {{ $t("modules.posts.recommended") }}
               </h3>
+              <post-suggestions
+                :related-posts="related.slice(0, 3)"
+              />
             </div>
           </div>
         </div>
@@ -71,10 +74,18 @@
 import { is404 } from "../../shared/utils/responses";
 import PostCreatorOptions from "../../components/posts/PostCreatorOptions";
 import PostLoading from "../../components/loading/PostAnimation";
+import PostSuggestions from "../../components/posts/PostSuggestions";
 export default {
   components: {
     PostCreatorOptions,
     PostLoading,
+    PostSuggestions,
+  },
+  props: {
+    slug: {
+      type: String,
+      required: true
+    }
   },
   metaInfo() {
     return {
@@ -91,6 +102,7 @@ export default {
     return {
       loading: false,
       post: null,
+      related: null,
     };
   },
   computed: {
@@ -107,25 +119,44 @@ export default {
       return this.$t("message.loading");
     },
   },
-  async created() {
-    this.loading = true;
-    try {
-      this.post = (
-        await axios.get("/api/posts/" + this.$route.params.slug)
-      ).data.data;
-      this.loading = false;
-    } catch (error) {
-      if (is404(error)) {
-        this.$toasts.error(this.$t("error.404.specific.post"));
-        this.$router.push({
-          name: "404",
-          params: { 0: "/", locale: this.$route.params.locale },
-        });
-      } else {
-        this.$toasts.error(this.$t("error.fatal"));
+  methods: {
+    async load(slug) {
+      this.loading = true;
+      try {
+        this.post = (
+          await axios.get("/api/posts/" + slug)
+        ).data.data;
+        var tags = this.post.tags.join();
+        var exclude = encodeURI(this.post.title);
+        this.related = (
+          await axios.get(`/api/posts?t=${tags}&e=${exclude}`)
+        ).data.data;
+        this.loading = false;
+      } catch (error) {
+        if (is404(error)) {
+          this.$toasts.error(this.$t("error.404.specific.post"));
+          this.$router.push({
+            name: "404",
+            params: { 0: "/", locale: this.$route.params.locale },
+          });
+        } else {
+          this.$toasts.error(this.$t("error.fatal"));
+        }
       }
-    }
+    },
   },
+  async created() {
+    await this.load(this.slug)
+  },
+
+  /**
+   * Watcher to reload the component when the slug changes
+   */
+  watch: {
+    slug() {
+      this.load(this.slug);
+    }
+  }
 };
 </script>
 <style scoped>
