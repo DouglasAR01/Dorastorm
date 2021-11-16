@@ -3,6 +3,24 @@ export default {
     DEBUG: true,
 
     /**
+     * Format used by dayjs to translate timestamps.
+     */
+    DATE_FORMAT: "YYYY/MM/DD",
+
+    /**
+     * App meta configuration. Turn on TEMPLATE_ON if you want to use TEMPLATE as sufix
+     * or prefix on every page.
+     * Set APP_TITLE as the lang key pointing to your app title.
+     */
+    meta: {        
+        title: {
+            APP_TITLE: "modules.app_title",
+            TEMPLATE_ON: true,
+            TEMPLATE: "%s | Dorastorm"
+        }
+    },
+
+    /**
      * Features:
      * Enable/disable features of Dorastorm by setting the feature true or false.
      * True means enabled.

@@ -32,6 +32,7 @@
 
     },
     "modules": {
+        "app_title": "Título por defecto",
         "users": {
             "create": "Crear un usuario",
             "created": "¡Usuario creado!",

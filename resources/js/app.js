@@ -11,6 +11,7 @@ import VueRouter from "vue-router";
 import Vuex from "vuex";
 import VueMeta from "vue-meta";
 import Index from "./pages/Index";
+import CONFIG from "./app.config";
 
 // Dayjs common use set up
 import dayjs from "dayjs";
@@ -45,7 +46,7 @@ Vue.use(VueMyToast, {
 Vue.use(VueMeta);
 
 Vue.filter('fromNow', value => dayjs(value).fromNow());
-Vue.filter('humanDate', value => dayjs(value).format('YYYY/MM/DD'));
+Vue.filter('humanDate', value => dayjs(value).format(CONFIG.DATE_FORMAT));
 
 const store = new Vuex.Store(DataStore);
 // GLOBAL COMPONENT REGISTRATION
@@ -80,9 +81,14 @@ function showApp() {
         components: {
             TheIndex: Index
         },
-        metaInfo: {
-            title: "Default title",
-            titleTemplate: "%s | Dorastorm"
+        metaInfo () {
+            let info = {
+                title: this.$t(CONFIG.meta.title.APP_TITLE)
+            };
+            if (CONFIG.meta.title.TEMPLATE_ON) {
+                info["titleTemplate"] = CONFIG.meta.title.TEMPLATE
+            }
+            return info;
         }
     });
 }
