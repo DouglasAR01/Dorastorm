@@ -33,6 +33,10 @@
   p {
     margin: 0;
   }
+  
+  p:empty::after {
+    content: "\00A0";
+  }
 
   pre code {
     display: block;
@@ -73,16 +77,12 @@
     }
   }
 
-  a {
-    color: inherit;
-  }
-
   blockquote {
     border-left: 3px solid rgba(0, 0, 0, 0.1);
     color: rgba(0, 0, 0, 0.8);
     padding-left: 0.8rem;
     font-style: italic;
-
+    margin: 0;
     p {
       margin: 0;
     }

@@ -1,6 +1,7 @@
 <template>
   <div class="editor border rounded bg-white">
     <single-image-upload-modal ref="imgup" @confirmed="addImage" />
+    <link-modal ref="links" @confirmed="setLink" />
     <div class="menubar border-bottom mb-0" v-if="editor">
       <div class="btn-toolbar">
         <div class="btn-group" role="group" aria-label="Group 0">
@@ -10,7 +11,6 @@
           >
             <i class="fas fa-undo"></i>
           </button>
-
           <button
             class="btn menubar__button"
             @click="editor.chain().focus().redo().run()"
@@ -75,18 +75,10 @@
 
           <button
             class="btn menubar__button"
-            :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
-            @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
-          >
-            H2
-          </button>
-
-          <button
-            class="btn menubar__button"
             :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }"
             @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
           >
-            H3
+            T1
           </button>
 
           <button
@@ -94,7 +86,15 @@
             :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }"
             @click="editor.chain().focus().toggleHeading({ level: 4 }).run()"
           >
-            H4
+            T2
+          </button>
+
+          <button
+            class="btn menubar__button"
+            :class="{ 'is-active': editor.isActive('heading', { level: 5 }) }"
+            @click="editor.chain().focus().toggleHeading({ level: 5 }).run()"
+          >
+            T3
           </button>
         </div>
         <div
@@ -161,6 +161,25 @@
         <div class="btn-group mr-1 border-right">
           <button class="btn menubar__button" @click="tryImageUpload()">
             <i class="far fa-image"></i>
+          </button>
+          <button class="btn menubar__button" @click="tryLinkInput(2)">
+            <i class="fab fa-unsplash"></i>
+          </button>
+        </div>
+        <div class="btn-group mr-1 border-right">
+          <button
+            class="btn menubar__button"
+            @click="tryLinkInput(1)"
+            :class="{ 'is-active': editor.isActive('link') }"
+          >
+            <i class="fas fa-link"></i>
+          </button>
+          <button
+            class="btn menubar__button"
+            @click="editor.chain().focus().unsetLink().run()"
+            :disabled="!editor.isActive('link')"
+          >
+            <i class="fas fa-unlink"></i>
           </button>
         </div>
         <div
@@ -283,12 +302,15 @@ import Table from "@tiptap/extension-table";
 import TableRow from "@tiptap/extension-table-row";
 import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
+import Links from "@tiptap/extension-link";
 import { Editor, EditorContent } from "@tiptap/vue-2";
-import SingleImageUploadModal from "./SingleImageUploadModal.vue";
+import SingleImageUploadModal from "./SingleImageUploadModal";
+import LinkModal from "./LinkModal";
 export default {
   components: {
     EditorContent,
     SingleImageUploadModal,
+    LinkModal,
   },
   props: {
     value: {
@@ -298,6 +320,12 @@ export default {
   data() {
     return {
       editor: null,
+      /**
+       * Type should be:
+       * 1 -> url
+       * 2 -> img url
+       */
+      linkType: null,
     };
   },
   mounted() {
@@ -305,7 +333,7 @@ export default {
       extensions: [
         StarterKit.configure({
           heading: {
-            levels: [2, 3, 4],
+            levels: [3, 4, 5],
           },
         }),
         Underline,
@@ -322,6 +350,7 @@ export default {
         TableRow,
         TableHeader,
         TableCell,
+        Links,
       ],
       content: this.value,
       onUpdate: ({ editor }) => {
@@ -339,6 +368,35 @@ export default {
     },
     addImage(payload) {
       this.editor.chain().focus().setImage(payload).run();
+    },
+    tryLinkInput(type) {
+      this.linkType = type;
+      this.$refs.links.show({
+        url: this.editor.getAttributes("link").href,
+      });
+    },
+    setLink(payload) {
+      const url = payload.url;
+      if (this.linkType === 1) {
+        // empty
+        if (url === "") {
+          this.editor.chain().focus().extendMarkRange("link").unsetLink().run();
+          return;
+        }
+
+        // update link
+        this.editor
+          .chain()
+          .focus()
+          .extendMarkRange("link")
+          .setLink({ href: url })
+          .run();
+      } else if (this.linkType === 2) {
+        if (url === "") {
+          return;
+        }
+        this.editor.chain().focus().setImage({ src: url }).run();
+      }
     },
   },
   computed: {
