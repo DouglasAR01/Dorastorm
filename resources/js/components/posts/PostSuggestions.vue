@@ -25,7 +25,9 @@
       </div>
     </div>
   </div>
-  <div v-else>Oops.</div>
+  <div v-else>
+    {{ $t("modules.posts.no_recommendations") }}
+  </div>
 </template>
 <script>
 export default {

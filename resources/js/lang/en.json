@@ -31,7 +31,7 @@
         }
     },
     "modules": {
-        "app_title": "Título por defecto",
+        "app_title": "Default title",
         "users": {
             "create": "Create user",
             "created": "User created!",
@@ -85,7 +85,7 @@
             "previous": "Newer",
             "next": "Older",
             "first": "Newest",
-            "recent": "Lastest posts",
+            "recent": "Latest posts",
             "banner": "Post banner",
             "replace_banner_title": "Replace banner",
             "replace_banner_message": "Are you sure you want to replace this post banner?",
@@ -97,6 +97,7 @@
             "private_index": "Staff posts",
             "my_posts": "My posts",
             "recommended": "You should read:",
+            "no_recommendations": "No recommendations available",
             "tags": {
                 "discard": "Discard search",
                 "placeholder": "Add a tag and press enter",

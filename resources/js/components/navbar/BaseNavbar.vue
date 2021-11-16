@@ -16,7 +16,7 @@
           {{ $t("modules.posts.index") }}
         </router-link>
       </single-navbar-list-element>
-      <div class="navbar-nav" v-if="features.AUTH" key="f-auth">
+      <div class="navbar-nav" v-if="features.AUTH && features.LOGIN_BUTTON" key="f-auth">
         <!-- Login -->
         <single-navbar-list-element v-if="!isLoggedIn">
           <router-link
@@ -180,6 +180,7 @@
           >
         </single-navbar-list-element>
       </div>
+      <slot name="after-content"></slot>
     </base-navbar-collapse-list>
   </nav>
 </template>

@@ -8,10 +8,15 @@
         Dorastorm
       </router-link>
     </template>
-    <!-- Links inside the collapse button -->
   </base-navbar>
 </template>
 <script>
+/**
+ * BaseNavbar includes #brand, #after-content and default slots. 
+ * #brand in intented to use it as a Brand logo or button.
+ * The default slot put everything before the default features.
+ * #after-content slot put everything AFTER the default features.
+ */
 import BaseNavbar from "./BaseNavbar";
 export default {
   components: {

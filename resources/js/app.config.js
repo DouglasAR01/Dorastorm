@@ -24,9 +24,11 @@ export default {
      * Features:
      * Enable/disable features of Dorastorm by setting the feature true or false.
      * True means enabled.
+     * LOGIN_BUTTON allows a default "Log in" link appear in the navbar.
      */
     features: {
         AUTH: true,
+        LOGIN_BUTTON: true,
         USERS_MANAGEMENT: true, //Requires AUTH
         POSTS: true, //Requires AUTH
         QUOTES: true //Requires AUTH

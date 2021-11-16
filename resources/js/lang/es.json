@@ -98,6 +98,7 @@
             "private_index": "Publicaciones para el personal",
             "my_posts": "Mis publicaciones",
             "recommended": "Te recomendamos leer:",
+            "no_recommendations": "No tenemos recomendaciones disponibles",
             "tags": {
                 "discard": "Descartar búsqueda",
                 "placeholder": "Agrega una etiqueta y oprime enter",
