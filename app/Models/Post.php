@@ -29,7 +29,7 @@ class Post extends Model
     {
         $slug = Str::slug($this->title, '-');
         $isUnique = Post::where('slug', '=', $slug)->first();
-        if (!empty($isUnique)) {
+        if (!empty($isUnique) && $this->id != $isUnique->id) {
             $slug = Str::slug($this->title .'-'. Carbon::now()->subSeconds(1), '-');
         }
         $this->slug = $slug;
