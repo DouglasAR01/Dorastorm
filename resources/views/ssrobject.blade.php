@@ -17,3 +17,9 @@
 @endsection
 
 @section('seo-hidden-title', $meta['title'])
+
+@section('body-extra-content')
+    <div class="d-none">
+        {!! $obj->content !!}
+    </div>
+@endsection

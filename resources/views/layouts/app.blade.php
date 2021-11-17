@@ -6,7 +6,7 @@
     @section('meta')
         Meta tags
     @show
-    @section('analytics')
+    @section('extra-headers')
         
     @show
 </head>
@@ -16,6 +16,9 @@
         <h1 class="d-none">
             @yield('seo-hidden-title')
         </h1>
+        @section('body-extra-content')
+            {{-- Extra content you would like to server render             --}}
+        @show
         <the-index></the-index>
         <noscript>
             <div style="height: 100vh">

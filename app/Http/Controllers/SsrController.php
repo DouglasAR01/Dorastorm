@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
+use Jaybizzle\LaravelCrawlerDetect\Facades\LaravelCrawlerDetect as Crawler;
 
 class SsrController extends Controller
 {
@@ -17,8 +19,12 @@ class SsrController extends Controller
 
     public function ssrPostRead(Request $request, $slug)
     {
-        $post = PostController::getPost($request, $slug);
+        if (!Crawler::isCrawler()) {
+            return $this->response();
+        }
+        $post = Post::getPostWithChecks($slug);
         return $this->response('ssrobject', [
+            'obj' => $post,
             'meta' => [
                 'title' => $post->title,
                 'description' => $post->description

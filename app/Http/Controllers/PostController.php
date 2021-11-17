@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\PostResource;
 use App\Http\Resources\PostsTags;
 use App\Models\Post;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -75,38 +76,14 @@ class PostController extends Controller
     }
 
     /**
-     * Returns a Post model searching by its slug. Returns 404 if not found.
-     * 
-     * @param  \Illuminate\Http\Request  $request
-     * @param String $slug
-     * @return App\Models\Post
-     */
-    public static function getPost(Request $request, $slug)
-    {
-        $post = Post::findBySlugOrFail($slug);
-        if ($post->visible && !$post->private) {
-            return $post;
-        }
-        // If the post is visible and its private the user must be authenticated 
-        if ($post->visible && $post->private && Auth::check()) {
-            return $post;
-        }
-        // If the post is not visible the user should not see it unless he is the owner of the post or have permissions of updating
-        if (!$post->visible && Auth::check() && $request->user()->can('update', $post)) {
-            return $post;
-        }
-        abort(403);
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $slug)
+    public function show($slug)
     {
-        return new PostResource($this->getPost($request, $slug));
+        return new PostResource(Post::getPostWithChecks($slug));
     }
 
     /**
