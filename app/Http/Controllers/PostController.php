@@ -74,12 +74,16 @@ class PostController extends Controller
         return new PostResource($newPost);
     }
 
+    /**
+     * Returns a Post model searching by its slug. Returns 404 if not found.
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @param String $slug
+     * @return App\Models\Post
+     */
     public static function getPost(Request $request, $slug)
     {
-        $post = Post::where('slug', '=', $slug)->first();
-        if (empty($post)) {
-            abort(404);
-        }
+        $post = Post::findBySlugOrFail($slug);
         if ($post->visible && !$post->private) {
             return $post;
         }

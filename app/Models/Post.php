@@ -4,14 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
 use Conner\Tagging\Taggable;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use Illuminate\Support\Facades\Auth;
 
 class Post extends Model
 {
     use HasFactory;
     use Taggable;
+    use Sluggable;
+    use SluggableScopeHelpers;
 
     protected $guarded = [
         'private'
@@ -25,14 +28,12 @@ class Post extends Model
         ]);
     }
 
-    public function save(array $options  = [])
+    public function sluggable(): array
     {
-        $slug = Str::slug($this->title, '-');
-        $isUnique = Post::where('slug', '=', $slug)->first();
-        if (!empty($isUnique) && $this->id != $isUnique->id) {
-            $slug = Str::slug($this->title .'-'. Carbon::now()->subSeconds(1), '-');
-        }
-        $this->slug = $slug;
-        return parent::save($options);
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
 }
