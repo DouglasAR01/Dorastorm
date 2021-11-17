@@ -23,6 +23,7 @@ class SsrController extends Controller
             return $this->response();
         }
         $post = Post::getPostWithChecks($slug);
+        $bannerUrl = !empty($post->banner) ? asset(config('filesystems.disks.public.url') . '/' . $post->banner) : null;
         return $this->response('ssrobject', [
             'obj' => $post,
             'meta' => [
@@ -34,7 +35,7 @@ class SsrController extends Controller
                 'og:title' => $post->title,
                 'og:description' => $post->description,
                 'og:type' => 'website',
-                'og:image' => asset(config('filesystems.disks.public.url') . '/' . $post->banner) ?? null,
+                'og:image' =>  $bannerUrl,
             ],
             'twitter' => [
                 'twitter:card' => 'summary',
