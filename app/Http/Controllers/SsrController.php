@@ -18,7 +18,7 @@ class SsrController extends Controller
     public function ssrPostRead(Request $request, $slug)
     {
         $post = PostController::getPost($request, $slug);
-        return $this->response([
+        return $this->response('ssrobject', [
             'meta' => [
                 'title' => $post->title,
                 'description' => $post->description
@@ -42,9 +42,9 @@ class SsrController extends Controller
         return $this->response();
     }
 
-    private function response($aditionalParams = [])
+    private function response($view = 'index', $aditionalParams = [])
     {
         $params = array_merge($this->globalParams, $aditionalParams);
-        return view('index', $params);
+        return view($view, $params);
     }
 }
