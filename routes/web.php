@@ -13,10 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/{any?}', function () {
-    return view('index', [
-        'locales' => config('app.supported_locales')
-    ]);
-})->where('any', '^(?!api\/)[\/\w\.\,-]*');
+Route::get('/posts/{slug}', 'SsrController@ssrPostRead');
+Route::get('/{any?}', 'SsrController@ssrIndex')->where('any', '^(?!api\/)[\/\w\.\,-]*');
 
 Route::post('/locale', 'TranslationController')->name('localization.set');

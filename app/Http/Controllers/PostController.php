@@ -74,6 +74,26 @@ class PostController extends Controller
         return new PostResource($newPost);
     }
 
+    public static function getPost(Request $request, $slug)
+    {
+        $post = Post::where('slug', '=', $slug)->first();
+        if (empty($post)) {
+            abort(404);
+        }
+        if ($post->visible && !$post->private) {
+            return $post;
+        }
+        // If the post is visible and its private the user must be authenticated 
+        if ($post->visible && $post->private && Auth::check()) {
+            return $post;
+        }
+        // If the post is not visible the user should not see it unless he is the owner of the post or have permissions of updating
+        if (!$post->visible && Auth::check() && $request->user()->can('update', $post)) {
+            return $post;
+        }
+        abort(403);
+    }
+
     /**
      * Display the specified resource.
      *
@@ -82,22 +102,7 @@ class PostController extends Controller
      */
     public function show(Request $request, $slug)
     {
-        $post = Post::where('slug', '=', $slug)->first();
-        if (empty($post)) {
-            abort(404);
-        }
-        if ($post->visible && !$post->private) {
-            return new PostResource($post);
-        }
-        // If the post is visible and its private the user must be authenticated 
-        if ($post->visible && $post->private && Auth::check()) {
-            return new PostResource($post);
-        }
-        // If the post is not visible the user should not see it unless he is the owner of the post or have permissions of updating
-        if (!$post->visible && Auth::check() && $request->user()->can('update', $post)) {
-            return new PostResource($post);
-        }
-        abort(403);
+        return new PostResource($this->getPost($request, $slug));
     }
 
     /**
