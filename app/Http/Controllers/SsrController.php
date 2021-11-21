@@ -24,7 +24,8 @@ class SsrController extends Controller
         }
         $post = Post::getPostWithChecks($slug);
         $bannerUrl = !empty($post->banner) ? asset(config('filesystems.disks.public.url') . '/' . $post->banner) : null;
-        return $this->response('ssrobject', [
+
+        $responseData = [
             'obj' => $post,
             'meta' => [
                 'title' => $post->title,
@@ -34,14 +35,19 @@ class SsrController extends Controller
                 'og:url' => $request->url(),
                 'og:title' => $post->title,
                 'og:description' => $post->description,
-                'og:type' => 'website',
+                'og:type' => config('meta.og.type'),
                 'og:image' =>  $bannerUrl,
-            ],
-            'twitter' => [
-                'twitter:card' => 'summary',
-                'twitter:site' => '@nuwebsco'
             ]
-        ]);
+        ];
+
+        if (config('meta.twitter.enabled')) {
+            $responseData['twitter'] = [
+                'twitter:card' => config('meta.twitter.card'),
+                'twitter:site' => config('meta.twitter.site'),
+            ];
+        }
+
+        return $this->response('ssrobject', $responseData);
     }
 
     public function ssrIndex()
