@@ -26,7 +26,6 @@
               <label for="upload">{{ $t("modules.posts.banner") }}</label>
               <div v-if="bannerURL">
                 <image-modal ref="imgm" />
-                <confirm-dialogue-modal ref="cdm" />
                 <image-hover-options :src="bannerURL" max-height="37">
                   <!-- <image-view-option-button> </image-view-option-button> -->
                   <button
@@ -137,6 +136,7 @@
         {{ $t("message.submit") }}
       </button>
     </div>
+    <confirm-dialogue-modal ref="cdm" />
   </div>
 </template>
 <script>
@@ -165,6 +165,7 @@ export default {
     return {
       loading: false,
       submitting: false,
+      ogPost: null,
       post: null,
       errors: null,
       tempPath: null,
@@ -189,6 +190,7 @@ export default {
         });
       }
       this.existingTags = (await axios.get("/api/tags/posts")).data.data;
+      this.ogPost = _.clone(this.post);
     } catch (error) {
       if (is404(error)) {
         this.$toasts.error(this.$t("error.404.specific.post"));
@@ -259,6 +261,16 @@ export default {
       }
       return this.checkUserPermission(user, this.corePms.UPDATE_ELSES_POSTS);
     },
+  },
+  async beforeRouteLeave(to, from, next) {
+    if (_.isEqual(this.ogPost, this.post)) next();
+    const ok = await this.$refs.cdm.show({
+      title: this.$t("modules.posts.check_save_title"),
+      message: this.$t("modules.posts.check_save_message"),
+      okButton: this.$t("modules.posts.check_save_ok"),
+      okButtonColor: "btn-warning",
+    });
+    if (ok) next();
   },
 };
 </script>

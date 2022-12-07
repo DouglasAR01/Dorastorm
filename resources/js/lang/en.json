@@ -103,7 +103,11 @@
                 "placeholder": "Add a tag and press enter",
                 "tags": "Tags:",
                 "no_tags": "This post doesn't have any tag"
-            }
+            },
+            "check_save_title": "Warning",
+            "check_save_message": "You didn't save the post. Do you want to proceed?",
+            "check_save_ok": "Proceed without saving"
+
         },
         "quotes": {
             "index": "View quotes",

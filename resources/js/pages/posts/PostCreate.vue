@@ -107,6 +107,7 @@
     >
       {{ $t("message.submit") }}
     </button>
+    <confirm-dialogue-modal ref="cdm" />
   </div>
 </template>
 <script>
@@ -116,12 +117,14 @@ import SingleFileUpload from "../../components/SingleFileUpload";
 import { is422 } from "../../shared/utils/responses";
 import TagsInput from "@voerro/vue-tagsinput";
 import TagsMixin from "../../shared/mixins/tags";
+import ConfirmDialogueModal from "../../components/modals/ConfirmDialogueModal";
 export default {
   components: {
     TextEditor,
     ValidationError,
     SingleFileUpload,
     TagsInput,
+    ConfirmDialogueModal
   },
   mixins: [TagsMixin],
   data() {
@@ -172,6 +175,32 @@ export default {
       }
       this.submitting = false;
     },
+    hasContent() {
+      let baseChecks = [
+        'title',
+        'description',
+        'banner'
+      ];
+      for (let check of baseChecks){
+        if (this.newPost[check] != '' && this.newPost[check] != null){
+          return true;
+        }
+      }
+      if (this.newPost.content != '<p></p>' && this.newPost.content!= null) return true;
+      if (this.selectedTags.length > 0) return true;
+      
+      return false;
+    }
   },
+  async beforeRouteLeave(to, from, next) {
+    if (!this.hasContent()) next();
+    const ok = await this.$refs.cdm.show({
+      title: this.$t("modules.posts.check_save_title"),
+      message: this.$t("modules.posts.check_save_message"),
+      okButton: this.$t("modules.posts.check_save_ok"),
+      okButtonColor: "btn-warning",
+    });
+    if (ok) next();
+  }
 };
 </script>

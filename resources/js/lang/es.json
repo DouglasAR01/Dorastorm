@@ -104,7 +104,10 @@
                 "placeholder": "Agrega una etiqueta y oprime enter",
                 "tags": "Etiquetas:",
                 "no_tags": "Esta publicación no tiene ningua etiqueta"
-            }
+            },
+            "check_save_title": "Advertencia",
+            "check_save_message": "No has guardado la publicación. ¿Deseas continuar?",
+            "check_save_ok": "Continuar sin guardar"
         },
         "quotes": {
             "index": "Ver cotizaciones",
