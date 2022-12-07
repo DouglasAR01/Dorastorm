@@ -6,7 +6,7 @@
         <div class="row no-gutters">
           <div class="col-sm-4 px-4 p-sm-2 d-flex justify-content-center">
             <img
-              src="https://socialsciences.uottawa.ca/human-motivation/sites/socialsciences.uottawa.ca.human-motivation/files/generic_female_0.jpg"
+              :src="require('../../../assets/default-user.svg')"
               alt=""
               class="profile-img"
             />
@@ -64,6 +64,7 @@ export default {
 .profile-img {
   border-radius: calc(0.25rem - 1px);
   width: 100%;
+  filter: invert(77%) sepia(9%) saturate(112%) hue-rotate(122deg) brightness(96%) contrast(90%);
 }
 .user-data-cog {
   position: absolute;
