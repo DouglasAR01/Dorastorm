@@ -1,5 +1,5 @@
 <template>
-<div class="container wp">
+<article class="container wp">
    <div class="row">
     <div class="col-md-3 col-lg-4"></div>
     <div class="col-md-6 col-lg-4">
@@ -57,7 +57,7 @@
     </div>
     <div class="col-md-3 col-lg-4"></div>
   </div>
-</div> 
+</article> 
 </template>
 <script>
 import { is422 } from "../../shared/utils/responses";

@@ -1,10 +1,10 @@
 <template>
-  <div class="container wp bg-light">
-    <div class="text-center">
+  <article class="container wp bg-light">
+    <section class="text-center">
       <h3>{{ $t("modules.quotes.list") }}</h3>
-    </div>
+    </section>
     <div v-if="loading" key="load">{{ $t("message.loading") }}</div>
-    <div v-else key="load">
+    <section v-else key="load">
       <div class="table-responsive">
         <table class="table table-hover">
           <thead>
@@ -62,8 +62,8 @@
         @navigating="navigate"
       ></simple-pagination>
       <confirm-dialogue-modal ref="confirmDialogue"></confirm-dialogue-modal>
-    </div>
-  </div>
+    </section>
+  </article>
 </template>
 <script>
 import QuoteTableItemData from "../../components/quotes/QuoteTableItemData";

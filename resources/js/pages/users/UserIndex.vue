@@ -1,10 +1,10 @@
 <template>
-  <div class="container wp bg-light">
-    <div class="row justify-content-center">
+  <article class="container wp bg-light">
+    <section class="row justify-content-center">
       <h3>{{ $t("modules.users.list") }}</h3>
-    </div>
+    </section>
     <div v-if="loading">{{ $t("message.loading") }}</div>
-    <div v-else>
+    <section v-else>
       <div class="table-responsive">
         <table class="table table-hover">
           <thead>
@@ -79,8 +79,8 @@
         @navigating="navigate"
       ></simple-pagination>
       <confirm-dialogue-modal ref="confirmDialogue"></confirm-dialogue-modal>
-    </div>
-  </div>
+    </section>
+  </article>
 </template>
 <script>
 import ConfirmDialogueModal from "../../components/modals/ConfirmDialogueModal";

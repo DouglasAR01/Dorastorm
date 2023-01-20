@@ -1,12 +1,12 @@
 {
-    "/js/app.js": "/js/app.js?id=3ac4c16a4fd6d1900bb5",
+    "/js/app.js": "/js/app.js?id=66c2f62905bb1a59ce3a",
     "/css/app.css": "/css/app.css?id=a85ae163d87bba5f4ad7",
-    "/js/auth.js": "/js/auth.js?id=bd929d5cb75c958dc45f",
+    "/js/auth.js": "/js/auth.js?id=7a0369d0f78ec781cf35",
     "/js/es-json.js": "/js/es-json.js?id=dac42be3e085f96826db",
-    "/js/posts.js": "/js/posts.js?id=07d908b210b0f9360321",
-    "/js/quotes.js": "/js/quotes.js?id=6464aecfd24c731ae417",
-    "/js/roles.js": "/js/roles.js?id=c3d277ecdb76977acb0b",
-    "/js/users.js": "/js/users.js?id=4a49ba74c39bcd2e68a7",
+    "/js/posts.js": "/js/posts.js?id=ecf0f6b2786b87f7d964",
+    "/js/quotes.js": "/js/quotes.js?id=36a773902c6b7ab671f5",
+    "/js/roles.js": "/js/roles.js?id=8d1cd09d69cd5a24e62f",
+    "/js/users.js": "/js/users.js?id=a9199d76b73ccc97e9d4",
     "/js/vendors~posts.js": "/js/vendors~posts.js?id=412fde6384e9d1eece27",
     "/js/vendors~roles.js": "/js/vendors~roles.js?id=42d45ad9fc9a2a27346b"
 }

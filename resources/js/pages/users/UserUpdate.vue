@@ -1,12 +1,12 @@
 <template>
-  <div class="container wp bg-light">
+  <article class="container wp bg-light">
     <div v-if="loading">{{ $t("message.loading") }}</div>
     <div v-else>
       <div v-if="!success">{{ $t("error.fatal") }}</div>
       <div v-else>
         <h3>{{ $t("modules.users.user_info") }}</h3>
         <form @submit.prevent="submit">
-          <div class="form-group">
+          <section class="form-group">
             <validation-error :errors="errors" name="name" #default="{ e }">
               <label for="name">{{ $t("modules.users.name") }}</label>
               <input
@@ -18,8 +18,8 @@
                 required
               />
             </validation-error>
-          </div>
-          <div class="form-group">
+          </section>
+          <section class="form-group">
             <validation-error :errors="errors" name="email" #default="{ e }">
               <label for="email">{{ $t("message.email") }}</label>
               <input
@@ -31,11 +31,11 @@
                 required
               />
             </validation-error>
-          </div>
+          </section>
           <div v-if="loadingAvailableRoles" key="loadingRoles">
             {{ $t("message.loading") }}
           </div>
-          <div v-else key="loadingRoles">
+          <section v-else key="loadingRoles">
             <div
               class="form-group"
               v-if="
@@ -71,7 +71,7 @@
                 </select>
               </validation-error>
             </div>
-          </div>
+          </section>
           <input
             type="submit"
             :value="$t('modules.users.update')"
@@ -95,7 +95,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </article>
 </template>
 <script>
 import * as Responses from "../../shared/utils/responses";

@@ -2,9 +2,9 @@
   <div v-if="loading">
     {{ $t("message.loading") }}
   </div>
-  <div class="container wp bg-light" v-else>
+  <article class="container wp bg-light" v-else>
     <form @submit.prevent="submit">
-      <div class="form-group">
+      <section class="form-group">
         <validation-error :errors="errors" name="name" #default="{ e }">
           <label for="name">{{ $t("modules.roles.name") }}</label>
           <input
@@ -16,8 +16,8 @@
             required
           />
         </validation-error>
-      </div>
-      <div class="form-group">
+      </section>
+      <section class="form-group">
         <validation-error :errors="errors" name="description" #default="{ e }">
           <label for="description">{{ $t("modules.roles.description") }}</label>
           <textarea
@@ -28,8 +28,8 @@
             required
           ></textarea>
         </validation-error>
-      </div>
-      <div class="row">
+      </section>
+      <section class="row">
         <div class="col-md-8">
           <role-permission-selector
             :preselected-permissions="initialPermissions"
@@ -42,7 +42,7 @@
             :rid="role.id"
           ></role-hierarchy-selector>
         </div>
-      </div>
+      </section>
       <input
         type="submit"
         :value="$t('message.submit')"
@@ -50,7 +50,7 @@
         :disabled="submitting"
       />
     </form>
-  </div>
+  </article>
 </template>
 <script>
 import { is404, is422 } from "../../shared/utils/responses";

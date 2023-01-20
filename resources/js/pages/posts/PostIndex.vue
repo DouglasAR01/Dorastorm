@@ -1,15 +1,15 @@
 <template>
-  <div class="container wp">
+  <article class="container wp">
     <posts-loading v-if="loading"></posts-loading>
     <div v-else>
-      <div class="row mb-2">
+      <section class="row mb-2">
         <div class="col-sm-8">
           <h3>{{ $t("modules.posts.recent") }}</h3>
         </div>
         <div class="col-sm-4">
           <search-input @search="navigate(1)" v-model="params.q"></search-input>
         </div>
-      </div>
+      </section>
       <post-list :posts="data" class="mb-2"></post-list>
       <simple-pagination
         :meta="meta"
@@ -22,7 +22,7 @@
         @navigating="navigate"
       ></simple-pagination>
     </div>
-  </div>
+  </article>
 </template>
 <script>
 import PostList from "../../components/posts/PostList";

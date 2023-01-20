@@ -1,10 +1,10 @@
 <template>
-  <div class="container wp">
-    <div v-if="loading">{{ $t("message.loading") }}</div>
-    <div v-else>
+  <article class="container wp">
+    <section v-if="loading">{{ $t("message.loading") }}</section>
+    <section v-else>
       <user-data-card :user="user" class="mb-2"/>
-    </div>
-  </div>
+    </section>
+  </article>
 </template>
 <script>
 import UserDataCard from "../../components/users/UserDataCard";

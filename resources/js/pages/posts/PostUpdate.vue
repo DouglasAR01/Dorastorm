@@ -1,110 +1,116 @@
 <template>
-  <div class="container wp bg-light">
+  <article class="container wp bg-light">
     <div v-if="loading">
       {{ $t("message.loading") }}
     </div>
     <div v-else>
       <h3>{{ $t("modules.posts.update") }}</h3>
-      <form>
-        <div class="form-row">
-          <div class="col-md-8">
-            <div class="form-group">
-              <validation-error :errors="errors" name="title" #default="{ e }">
-                <label for="title">{{ $t("modules.posts.title") }}</label>
-                <input
-                  type="text"
+      <section>
+        <form>
+          <div class="form-row">
+            <div class="col-md-8">
+              <div class="form-group">
+                <validation-error
+                  :errors="errors"
                   name="title"
-                  class="form-control"
-                  v-model="post.title"
-                  :class="[{ 'is-invalid': e }]"
-                />
-              </validation-error>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <label for="upload">{{ $t("modules.posts.banner") }}</label>
-              <div v-if="bannerURL">
-                <image-modal ref="imgm" />
-                <image-hover-options :src="bannerURL" max-height="37">
-                  <!-- <image-view-option-button> </image-view-option-button> -->
-                  <button
-                    class="btn btn-info btn-sm"
-                    @click.prevent="
-                      $refs.imgm.show({
-                        src: bannerURL,
-                      })
-                    "
-                  >
-                    {{ $t("message.view") }}
-                  </button>
-                  <button
-                    class="btn btn-warning btn-sm"
-                    @click.prevent="replaceBanner()"
-                  >
-                    {{ $t("modules.posts.replace_banner_ok") }}
-                  </button>
-                </image-hover-options>
-              </div>
-              <div v-else>
-                <single-file-upload
-                  name="upload"
-                  endpoint="/api/upload/image"
-                  disk="public"
-                  v-model="tempPath"
-                ></single-file-upload>
+                  #default="{ e }"
+                >
+                  <label for="title">{{ $t("modules.posts.title") }}</label>
+                  <input
+                    type="text"
+                    name="title"
+                    class="form-control"
+                    v-model="post.title"
+                    :class="[{ 'is-invalid': e }]"
+                  />
+                </validation-error>
               </div>
             </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="upload">{{ $t("modules.posts.banner") }}</label>
+                <div v-if="bannerURL">
+                  <image-modal ref="imgm" />
+                  <image-hover-options :src="bannerURL" max-height="37">
+                    <!-- <image-view-option-button> </image-view-option-button> -->
+                    <button
+                      class="btn btn-info btn-sm"
+                      @click.prevent="
+                        $refs.imgm.show({
+                          src: bannerURL,
+                        })
+                      "
+                    >
+                      {{ $t("message.view") }}
+                    </button>
+                    <button
+                      class="btn btn-warning btn-sm"
+                      @click.prevent="replaceBanner()"
+                    >
+                      {{ $t("modules.posts.replace_banner_ok") }}
+                    </button>
+                  </image-hover-options>
+                </div>
+                <div v-else>
+                  <single-file-upload
+                    name="upload"
+                    endpoint="/api/upload/image"
+                    disk="public"
+                    v-model="tempPath"
+                  ></single-file-upload>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="form-row">
-          <div class="col-md-8">
-            <div class="form-group">
-              <validation-error
-                :errors="errors"
-                name="description"
-                #default="{ e }"
-              >
-                <label for="description">{{
-                  $t("modules.posts.description")
-                }}</label>
-                <textarea
+          <div class="form-row">
+            <div class="col-md-8">
+              <div class="form-group">
+                <validation-error
+                  :errors="errors"
                   name="description"
-                  class="form-control"
-                  v-model="post.description"
-                  :class="[{ 'is-invalid': e }]"
-                ></textarea>
-              </validation-error>
+                  #default="{ e }"
+                >
+                  <label for="description">{{
+                    $t("modules.posts.description")
+                  }}</label>
+                  <textarea
+                    name="description"
+                    class="form-control"
+                    v-model="post.description"
+                    :class="[{ 'is-invalid': e }]"
+                  ></textarea>
+                </validation-error>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label>{{ $t("modules.posts.options") }}</label>
+              <div class="custom-control custom-switch">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="visible"
+                  v-model="post.visible"
+                />
+                <label class="custom-control-label" for="visible">{{
+                  $t("modules.posts.visible")
+                }}</label>
+              </div>
+              <div class="custom-control custom-switch">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="private"
+                  v-model="post.private"
+                />
+                <label class="custom-control-label" for="private">{{
+                  $t("modules.posts.private")
+                }}</label>
+              </div>
             </div>
           </div>
-          <div class="col-md-4">
-            <label>{{ $t("modules.posts.options") }}</label>
-            <div class="custom-control custom-switch">
-              <input
-                type="checkbox"
-                class="custom-control-input"
-                id="visible"
-                v-model="post.visible"
-              />
-              <label class="custom-control-label" for="visible">{{
-                $t("modules.posts.visible")
-              }}</label>
-            </div>
-            <div class="custom-control custom-switch">
-              <input
-                type="checkbox"
-                class="custom-control-input"
-                id="private"
-                v-model="post.private"
-              />
-              <label class="custom-control-label" for="private">{{
-                $t("modules.posts.private")
-              }}</label>
-            </div>
-          </div>
-        </div>
-      </form>
-      <div class="form-group">
+        </form>
+      </section>
+      <section class="form-group">
         <validation-error :errors="errors" name="content" #default="{ e }">
           <label for="content">{{ $t("modules.posts.content") }}</label>
           <text-editor
@@ -112,8 +118,8 @@
             :class="[{ 'is-invalid': e }]"
           ></text-editor>
         </validation-error>
-      </div>
-      <div class="form-group" v-if="!loading">
+      </section>
+      <section class="form-group" v-if="!loading">
         <label for="tags">{{ $t("modules.posts.tags.tags") }}</label>
         <tags-input
           name="tags"
@@ -127,7 +133,7 @@
           :discard-search-text="$t('modules.posts.tags.discard')"
           :placeholder="$t('modules.posts.tags.placeholder')"
         />
-      </div>
+      </section>
       <button
         class="btn btn-primary btn-block"
         :disabled="submitting"
@@ -137,7 +143,7 @@
       </button>
     </div>
     <confirm-dialogue-modal ref="cdm" />
-  </div>
+  </article>
 </template>
 <script>
 import { is404, is422 } from "../../shared/utils/responses";

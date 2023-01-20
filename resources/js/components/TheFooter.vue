@@ -1,5 +1,5 @@
 <template>
-  <div class="jumbotron jumbotron-fluid mt-auto mb-0">
+  <footer class="jumbotron jumbotron-fluid mt-auto mb-0">
     <div class="row justify-content-between">
       <div class="col-auto"></div>
       <div class="col-auto">
@@ -36,7 +36,7 @@
     <div class="text-center">
       <p>© Copyright {{ year }}</p>
     </div>
-  </div>
+  </footer>
 </template>
 <script>
 import dayjs from "dayjs";

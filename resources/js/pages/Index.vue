@@ -1,9 +1,9 @@
 <template>
   <div class="d-flex flex-column min-vh-100">
     <the-navbar></the-navbar>
-    <div>
+    <main>
       <router-view></router-view>
-    </div>
+    </main>
     <the-footer></the-footer>
   </div>
 </template>

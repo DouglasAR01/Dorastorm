@@ -1,12 +1,12 @@
 <template>
-  <div class="container wp bg-light">
-    <div class="row justify-content-center">
+  <article class="container wp bg-light">
+    <section class="row justify-content-center">
       <h3>{{ $t("modules.roles.list") }}</h3>
-    </div>
+    </section>
     <div v-if="loading">
       {{ $t("message.loading") }}
     </div>
-    <div class="table-responsive" v-else>
+    <section class="table-responsive" v-else>
       <table class="table table-hover">
         <thead>
           <th scope="col">{{ $t("message.id") }}</th>
@@ -65,8 +65,8 @@
         </tbody>
       </table>
       <confirm-dialogue-modal ref="confirmDialogue"></confirm-dialogue-modal>
-    </div>
-  </div>
+    </section>
+  </article>
 </template>
 <script>
 import ConfirmDialogueModal from "../../components/modals/ConfirmDialogueModal";

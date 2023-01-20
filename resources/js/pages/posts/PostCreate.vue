@@ -1,82 +1,84 @@
 <template>
-  <div class="container wp bg-light">
+  <article class="container wp bg-light">
     <h3>{{ $t("modules.posts.create") }}</h3>
-    <form>
-      <div class="form-row">
-        <div class="col-md-8">
-          <div class="form-group">
-            <validation-error :errors="errors" name="title" #default="{ e }">
-              <label for="title">{{ $t("modules.posts.title") }}</label>
-              <input
-                type="text"
-                name="title"
-                class="form-control"
-                v-model="newPost.title"
-                :class="[{ 'is-invalid': e }]"
-              />
-            </validation-error>
+    <section>
+      <form>
+        <div class="form-row">
+          <div class="col-md-8">
+            <div class="form-group">
+              <validation-error :errors="errors" name="title" #default="{ e }">
+                <label for="title">{{ $t("modules.posts.title") }}</label>
+                <input
+                  type="text"
+                  name="title"
+                  class="form-control"
+                  v-model="newPost.title"
+                  :class="[{ 'is-invalid': e }]"
+                />
+              </validation-error>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="upload">{{ $t("modules.posts.banner") }}</label>
+              <single-file-upload
+                name="upload"
+                endpoint="/api/upload/image"
+                disk="public"
+                v-model="newPost.banner"
+              ></single-file-upload>
+            </div>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="upload">{{ $t("modules.posts.banner") }}</label>
-            <single-file-upload
-              name="upload"
-              endpoint="/api/upload/image"
-              disk="public"
-              v-model="newPost.banner"
-            ></single-file-upload>
-          </div>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="col-md-8">
-          <div class="form-group">
-            <validation-error
-              :errors="errors"
-              name="description"
-              #default="{ e }"
-            >
-              <label for="description">{{
-                $t("modules.posts.description")
-              }}</label>
-              <textarea
+        <div class="form-row">
+          <div class="col-md-8">
+            <div class="form-group">
+              <validation-error
+                :errors="errors"
                 name="description"
-                class="form-control"
-                v-model="newPost.description"
-                :class="[{ 'is-invalid': e }]"
-              ></textarea>
-            </validation-error>
+                #default="{ e }"
+              >
+                <label for="description">{{
+                  $t("modules.posts.description")
+                }}</label>
+                <textarea
+                  name="description"
+                  class="form-control"
+                  v-model="newPost.description"
+                  :class="[{ 'is-invalid': e }]"
+                ></textarea>
+              </validation-error>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label>{{ $t("modules.posts.options") }}</label>
+            <div class="custom-control custom-switch">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="visible"
+                v-model="newPost.visible"
+              />
+              <label class="custom-control-label" for="visible">{{
+                $t("modules.posts.visible")
+              }}</label>
+            </div>
+            <div class="custom-control custom-switch">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="private"
+                v-model="newPost.private"
+              />
+              <label class="custom-control-label" for="private">{{
+                $t("modules.posts.private")
+              }}</label>
+            </div>
           </div>
         </div>
-        <div class="col-md-4">
-          <label>{{ $t("modules.posts.options") }}</label>
-          <div class="custom-control custom-switch">
-            <input
-              type="checkbox"
-              class="custom-control-input"
-              id="visible"
-              v-model="newPost.visible"
-            />
-            <label class="custom-control-label" for="visible">{{
-              $t("modules.posts.visible")
-            }}</label>
-          </div>
-          <div class="custom-control custom-switch">
-            <input
-              type="checkbox"
-              class="custom-control-input"
-              id="private"
-              v-model="newPost.private"
-            />
-            <label class="custom-control-label" for="private">{{
-              $t("modules.posts.private")
-            }}</label>
-          </div>
-        </div>
-      </div>
-    </form>
-    <div class="form-group">
+      </form>
+    </section>
+    <section class="form-group">
       <validation-error :errors="errors" name="content" #default="{ e }">
         <label for="content">{{ $t("modules.posts.content") }}</label>
         <text-editor
@@ -84,8 +86,8 @@
           :class="[{ 'is-invalid': e }]"
         ></text-editor>
       </validation-error>
-    </div>
-    <div class="form-group" v-if="!loading">
+    </section>
+    <section class="form-group" v-if="!loading">
       <label for="tags">{{ $t("modules.posts.tags.tags") }}</label>
       <tags-input
         name="tags"
@@ -99,7 +101,7 @@
         :discard-search-text="$t('modules.posts.tags.discard')"
         :placeholder="$t('modules.posts.tags.placeholder')"
       />
-    </div>
+    </section>
     <button
       class="btn btn-primary btn-block"
       :disabled="submitting"
@@ -108,7 +110,7 @@
       {{ $t("message.submit") }}
     </button>
     <confirm-dialogue-modal ref="cdm" />
-  </div>
+  </article>
 </template>
 <script>
 import TextEditor from "../../components/text-editor/RichTextEditor";
@@ -124,7 +126,7 @@ export default {
     ValidationError,
     SingleFileUpload,
     TagsInput,
-    ConfirmDialogueModal
+    ConfirmDialogueModal,
   },
   mixins: [TagsMixin],
   data() {
@@ -176,21 +178,18 @@ export default {
       this.submitting = false;
     },
     hasContent() {
-      let baseChecks = [
-        'title',
-        'description',
-        'banner'
-      ];
-      for (let check of baseChecks){
-        if (this.newPost[check] != '' && this.newPost[check] != null){
+      let baseChecks = ["title", "description", "banner"];
+      for (let check of baseChecks) {
+        if (this.newPost[check] != "" && this.newPost[check] != null) {
           return true;
         }
       }
-      if (this.newPost.content != '<p></p>' && this.newPost.content!= null) return true;
+      if (this.newPost.content != "<p></p>" && this.newPost.content != null)
+        return true;
       if (this.selectedTags.length > 0) return true;
-      
+
       return false;
-    }
+    },
   },
   async beforeRouteLeave(to, from, next) {
     if (!this.hasContent()) next();
@@ -201,6 +200,6 @@ export default {
       okButtonColor: "btn-warning",
     });
     if (ok) next();
-  }
+  },
 };
 </script>

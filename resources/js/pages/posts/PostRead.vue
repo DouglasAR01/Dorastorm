@@ -1,17 +1,17 @@
 <template>
-  <div class="wp mt-2">
+  <article class="wp mt-2">
     <post-loading v-if="loading"> </post-loading>
     <div v-else>
-      <div class="container">
+      <section class="container">
         <post-creator-options
           :author-id="post.author.id"
           :post-id="post.id"
           class="wp bg-light mt-0"
         ></post-creator-options>
-      </div>
-      <div class="container-fluid">
+      </section>
+      <section class="container-fluid">
         <div class="row">
-          <div class="col-md-9 pl-md-4">
+          <article class="col-md-9 pl-md-4">
             <div class="bg-light p-4 rounded">
               <h1>{{ post.title }}</h1>
               <img
@@ -54,8 +54,8 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-md-3">
+          </article>
+          <aside class="col-md-3">
             <div class="bg-light p-4 rounded">
               <h3>
                 {{ $t("modules.posts.recommended") }}
@@ -64,11 +64,11 @@
                 :related-posts="related.slice(0, 3)"
               />
             </div>
-          </div>
+          </aside>
         </div>
-      </div>
+      </section>
     </div>
-  </div>
+  </article>
 </template>
 <script>
 import { is404 } from "../../shared/utils/responses";

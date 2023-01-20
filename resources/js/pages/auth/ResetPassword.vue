@@ -1,5 +1,5 @@
 <template>
-  <div class="container wp bg-light">
+  <article class="container wp bg-light">
     <h2>{{ $t("message.reset_password") }}</h2>
     <form @submit.prevent="submit">
       <div class="form-group">
@@ -52,7 +52,7 @@
         :disabled="submitting"
       />
     </form>
-  </div>
+  </article>
 </template>
 <script>
 import ValidationError from "../../components/ValidationError";

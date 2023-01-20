@@ -1,5 +1,5 @@
 <template>
-  <div class="container wp">
+  <article class="container wp">
     <h1 class="display-3">Dorastorm</h1>
     <p class="lead">Dorastorm has been successfully installed.
       If you have already done the database seeding, you should be able to log in with a user.
@@ -8,7 +8,7 @@
     <div class="p-2 bg-light">
       <quote-form></quote-form>
     </div>
-  </div>
+  </article>
 </template>
 <script>
 import QuoteForm from "../components/quotes/QuoteForm.vue";

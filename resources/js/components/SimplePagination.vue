@@ -1,5 +1,5 @@
 <template>
-  <div class="row d-flex justify-content-center">
+  <section class="row d-flex justify-content-center">
     <button
       class="btn btn-primary mr-1"
       v-if="hasPrev"
@@ -24,7 +24,7 @@
       {{ messages.next }}
       <i class="fas fa-forward"></i>
     </button>
-  </div>
+  </section>
 </template>
 <script>
 export default {
